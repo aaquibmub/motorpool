@@ -14,5 +14,10 @@ class TripStatus {
   static const AssignedToDriver = 20;
   static const TripStarted = 30;
   static const VehicalDispatched = 40;
+  static const ArrivedAtPickupLocation = 50;
+  static const WaitingForPassenger = 52;
+  static const PassengerOnboarded = 55;
+  static const ArrivedAtStop = 60;
+  static const ArrivedAtDropoff = 70;
   static const Completed = 400;
 }

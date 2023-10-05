@@ -80,6 +80,7 @@ class TripDetailWidget extends StatelessWidget {
                   TripStatusUpdate(
                     _tripDetail.id,
                     TripStatus.TripStarted,
+                    null,
                     '',
                   ),
                 )

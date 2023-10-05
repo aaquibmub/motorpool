@@ -1,8 +1,10 @@
+import 'package:motorpool/helpers/models/common/dropdown_item.dart';
+
 class TripEnrouteItem {
-  final DateTime start;
-  final DateTime end;
+  final String start;
+  final String end;
   final String title;
-  final String location;
+  final DropdownItem<String> location;
   final bool completed;
 
   TripEnrouteItem(
@@ -14,10 +16,12 @@ class TripEnrouteItem {
   );
 
   factory TripEnrouteItem.fromJson(dynamic json) => TripEnrouteItem(
-        json['start'] != null ? DateTime.parse(json['start']) : null,
-        json['end'] != null ? DateTime.parse(json['end']) : null,
+        // json['start'] != null ? DateTime.parse(json['start']) : null,
+        // json['end'] != null ? DateTime.parse(json['end']) : null,
+        json['start'] as String,
+        json['end'] as String,
         json['title'] as String,
-        json['location'] as String,
+        DropdownItem<String>.fromJson(json['location']),
         json['completed'] as bool,
       );
 }

@@ -4,6 +4,7 @@ class TripEnroute {
   final String tripId;
   final String tripRoute;
   final String tripDestination;
+  final int tripStatus;
   final int numberOfLocations;
   final int numberOfPassengers;
   final List<TripEnrouteItem> items;
@@ -12,6 +13,7 @@ class TripEnroute {
     this.tripId,
     this.tripRoute,
     this.tripDestination,
+    this.tripStatus,
     this.numberOfLocations,
     this.numberOfPassengers,
     this.items,
@@ -31,6 +33,7 @@ class TripEnroute {
       json['tripId'] as String,
       json['tripRoute'] as String,
       json['tripDestination'] as String,
+      json['tripStatus'] as int,
       json['numberOfLocations'] as int,
       json['numberOfPassengers'] as int,
       items,

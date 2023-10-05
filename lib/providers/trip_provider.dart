@@ -109,14 +109,13 @@ class TripProvider with ChangeNotifier {
         case HttpStatus.ok:
           final value = json.decode(response.body) as dynamic;
           _tripEnroute = TripEnroute.fromJson((value));
+          notifyListeners();
           break;
         case HttpStatus.forbidden:
           break;
       }
-
-      notifyListeners();
     } catch (error) {
-      // throw error;
+      throw error;
     }
   }
 

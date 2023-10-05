@@ -8,7 +8,7 @@ class DropdownItem<T> {
   );
 
   factory DropdownItem.fromJson(dynamic json) => DropdownItem(
-        json['value'] as T,
-        json['text'] as String,
+        json != null ? json['value'] as T : null,
+        json != null ? json['text'] as String : null,
       );
 }
