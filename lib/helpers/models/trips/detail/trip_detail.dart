@@ -50,7 +50,7 @@ class TripDetail {
       pickups,
       stops,
       dropoffs,
-      json['vehcial'] != null ? Vehical.fromJson(json['vehical']) : null,
+      Vehical.fromJson(json['vehical']),
     );
   }
 

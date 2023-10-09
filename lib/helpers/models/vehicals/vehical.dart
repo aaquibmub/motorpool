@@ -11,12 +11,14 @@ class Vehical {
     this.modelYear,
   );
 
-  factory Vehical.fromJson(dynamic json) => json != null
-      ? Vehical(
-          json['id'] as String,
-          json['make'] as String,
-          json['model'] as String,
-          json['modelYear'] as int,
-        )
-      : null;
+  factory Vehical.fromJson(dynamic json) {
+    return json != null
+        ? Vehical(
+            json['id'] as String,
+            json['make'] as String,
+            json['model'] as String,
+            json['modelYear'] as int,
+          )
+        : null;
+  }
 }
