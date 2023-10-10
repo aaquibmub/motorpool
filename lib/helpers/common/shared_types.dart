@@ -21,3 +21,9 @@ class TripStatus {
   static const ArrivedAtDropoff = 70;
   static const Completed = 400;
 }
+
+class DestinationType {
+  static const Pickup = 10;
+  static const Stop = 20;
+  static const Dropoff = 30;
+}

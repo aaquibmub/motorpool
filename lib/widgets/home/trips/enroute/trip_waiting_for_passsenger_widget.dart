@@ -30,6 +30,16 @@ class _TripWaitingForPassengerWidgetState
 
   @override
   void initState() {
+    final latestItem =
+        widget._tripEnroute.items[widget._tripEnroute.items.length - 1];
+    final seconds = latestItem != null && latestItem.startTime != null
+        ? DateTime.now().difference(latestItem.startTime).inSeconds
+        : 0;
+
+    setState(() {
+      timeInSeconds = seconds;
+    });
+
     Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         timeInSeconds++;
@@ -59,6 +69,7 @@ class _TripWaitingForPassengerWidgetState
                 TripStatusUpdate(
                   widget._tripEnroute.tripId,
                   TripStatus.PassengerOnboarded,
+                  Utility.getNextTripDestinationId(widget._tripEnroute),
                   Utility.getNextTripAddressId(widget._tripEnroute),
                   '',
                 ),

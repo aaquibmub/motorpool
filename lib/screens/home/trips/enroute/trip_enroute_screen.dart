@@ -44,7 +44,7 @@ class _TripEnrouteScreenState extends State<TripEnrouteScreen> {
               child: Consumer<TripProvider>(
                 builder: (ctx, provider, _) {
                   return provider.tripEnroute.tripStatus !=
-                          TripStatus.ArrivedAtPickupLocation
+                          TripStatus.WaitingForPassenger
                       ? TripEnrouteWidget(
                           provider.tripEnroute,
                           _updateState,

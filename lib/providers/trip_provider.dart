@@ -56,6 +56,45 @@ class TripProvider with ChangeNotifier {
     }
   }
 
+  List<Trip> _completedTrips = [];
+
+  List<Trip> get completedTrips {
+    return [..._completedTrips];
+  }
+
+  Future<void> populateCompletedTrips() async {
+    var url = '${Constants.baseUrl}trip/get-completed-trip-list';
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $authToken',
+          // 'Content-Type': 'application/json'
+        },
+      );
+
+      switch (response.statusCode) {
+        case HttpStatus.ok:
+          final extractedData = json.decode(response.body) as List<dynamic>;
+          final List<Trip> loadedProducts = [];
+          if (extractedData != null) {
+            extractedData.forEach((value) {
+              Trip prod = Trip.fromJson((value));
+              loadedProducts.add(prod);
+            });
+          }
+          _completedTrips = loadedProducts;
+          break;
+        case HttpStatus.forbidden:
+          break;
+      }
+
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
+  }
+
   TripDetail _tripDetail;
 
   TripDetail get tripDetail {

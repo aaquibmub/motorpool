@@ -67,34 +67,62 @@ class Utility {
         });
   }
 
-  static int getNextTripStatus(int status) {
-    switch (status) {
-      case TripStatus.TripStarted:
-        {
-          return TripStatus.VehicalDispatched;
-        }
-      case TripStatus.VehicalDispatched:
-        {
-          return TripStatus.ArrivedAtPickupLocation;
-        }
-      case TripStatus.ArrivedAtPickupLocation:
-        {
-          return TripStatus.WaitingForPassenger;
-        }
-      case TripStatus.WaitingForPassenger:
-        {
-          return TripStatus.PassengerOnboarded;
-        }
-      case TripStatus.PassengerOnboarded:
-        {
-          return TripStatus.ArrivedAtStop;
-        }
-      case TripStatus.ArrivedAtStop:
-        {
-          return TripStatus.ArrivedAtDropoff;
-        }
+  static void errorAlert(BuildContext context, String title, String msg) {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text(title ?? "ERROR!"),
+            content: Text(msg),
+            actions: [
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                  child: Text('Okay'))
+            ],
+          );
+        });
+  }
+
+  static int getNextTripStatus(TripEnroute _tripEnroute) {
+    final status = _tripEnroute.tripStatus;
+    final nextDestination = _tripEnroute.items[_tripEnroute.items.length - 1];
+    final endTrip = nextDestination.completed;
+
+    if (endTrip) {
+      return TripStatus.Completed;
     }
-    return 0;
+
+    if (status == TripStatus.TripStarted) {
+      return TripStatus.VehicalDispatched;
+    }
+    if (status == TripStatus.VehicalDispatched) {
+      return TripStatus.ArrivedAtPickupLocation;
+    }
+    if (status == TripStatus.ArrivedAtPickupLocation ||
+        status == TripStatus.ArrivedAtStop) {
+      return TripStatus.WaitingForPassenger;
+    }
+    if (status == TripStatus.WaitingForPassenger) {
+      return TripStatus.PassengerOnboarded;
+    }
+    final destinationType = nextDestination.destinationType.value;
+    if (destinationType == DestinationType.Pickup ||
+        destinationType == DestinationType.Stop) {
+      return TripStatus.WaitingForPassenger;
+    } else {
+      return TripStatus.ArrivedAtDropoff;
+    }
+  }
+
+  static String getNextTripDestinationId(TripEnroute _tripEnroute) {
+    var index = _tripEnroute.items.length - 1;
+    var tripEnrouteItem = _tripEnroute.items[index];
+    var destinationId =
+        tripEnrouteItem != null ? tripEnrouteItem.destinationId : null;
+
+    return destinationId;
   }
 
   static String getNextTripAddressId(TripEnroute _tripEnroute) {
@@ -105,34 +133,29 @@ class Utility {
     return address != null ? address.value : null;
   }
 
-  static String getTripEnrouteButtonText(int status) {
-    switch (status) {
-      case TripStatus.TripStarted:
-        {
-          return "DISPATCH";
-        }
-      case TripStatus.VehicalDispatched:
-        {
-          return "ARRIVED AT PICKUP";
-        }
-      case TripStatus.ArrivedAtPickupLocation:
-        {
-          return "RESUME TRIP";
-        }
-      case TripStatus.WaitingForPassenger:
-        {
-          return "PASSENGER ON BOARDED";
-        }
-      case TripStatus.PassengerOnboarded:
-        {
-          return "ARRIVED AT STOP";
-        }
-      case TripStatus.ArrivedAtStop:
-        {
-          return "ARRIVED AT DROPOFF";
-        }
+  static String getTripEnrouteButtonText(TripEnroute _tripEnroute) {
+    final status = _tripEnroute.tripStatus;
+    final nextDestination = _tripEnroute.items[_tripEnroute.items.length - 1];
+    final endTrip = nextDestination.completed;
+
+    if (endTrip) {
+      return "END TRIP";
     }
-    return "";
+
+    if (status == TripStatus.TripStarted) {
+      return "DISPATCH";
+    }
+    if (status == TripStatus.VehicalDispatched) {
+      return "ARRIVED AT PICKUP";
+    }
+    if (status == TripStatus.ArrivedAtPickupLocation ||
+        status == TripStatus.ArrivedAtStop) {
+      return "RESUME TRIP";
+    }
+    if (status == TripStatus.WaitingForPassenger) {
+      return "PASSENGER ON BOARDED";
+    }
+    return "ARRIVED AT " + nextDestination.destinationType.text.toUpperCase();
   }
 
   static String formatHHMMSS(int seconds) {
