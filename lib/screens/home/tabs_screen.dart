@@ -13,8 +13,8 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   void initState() {
     _pages = [
-      {'page': TripScreen(), 'title': 'Categories'},
-      {'page': VehicalsScreen(), 'title': 'Your Favorites'},
+      {'page': TripScreen(), 'title': 'Trips'},
+      {'page': VehicalsScreen(), 'title': 'Vehicals'},
     ];
     super.initState();
   }
@@ -38,7 +38,7 @@ class _TabsScreenState extends State<TabsScreen> {
         currentIndex: _selectedPageIndex,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.card_travel), label: ''),
         ],
       ),
     );
