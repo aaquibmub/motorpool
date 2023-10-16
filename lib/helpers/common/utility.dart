@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:motorpool/helpers/common/constants.dart';
+import 'package:motorpool/helpers/models/common/dropdown_item.dart';
 import 'package:motorpool/helpers/models/trips/enroute/trip_enroute.dart';
 
 import 'shared_types.dart';
@@ -57,7 +57,7 @@ class Utility {
             title: Text('Work in progress'),
             content: Text('To be implemented'),
             actions: [
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.of(ctx).pop();
                   },
@@ -75,7 +75,7 @@ class Utility {
             title: Text(title ?? "ERROR!"),
             content: Text(msg),
             actions: [
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.of(ctx).pop();
                   },
@@ -172,5 +172,25 @@ class Utility {
     // }
 
     return "$hoursStr:$minutesStr:$secondsStr";
+  }
+
+  static Map<T, List<S>> myGroupBy<S, T>(
+      Iterable<S> values, T Function(S) key) {
+    var map = <T, List<S>>{};
+    for (var element in values) {
+      (map[key(element)] ??= []).add(element);
+    }
+    return map;
+  }
+
+  static List<DropdownItem<int>> getDamageLevelList() {
+    return [
+      DropdownItem(DamageLevel.S1, 'S1'),
+      DropdownItem(DamageLevel.S2, 'S2'),
+      DropdownItem(DamageLevel.D1, 'D1'),
+      DropdownItem(DamageLevel.D2, 'D2'),
+      DropdownItem(DamageLevel.M1, 'M1'),
+      DropdownItem(DamageLevel.M2, 'M2'),
+    ];
   }
 }

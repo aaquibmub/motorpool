@@ -81,7 +81,7 @@ class CartDesktopLeft extends StatelessWidget {
           ),
           Expanded(
             flex: 1,
-            child: RaisedButton(
+            child: ElevatedButton(
               child: Text(
                 'CHECKOUT',
                 style: TextStyle(
@@ -91,7 +91,10 @@ class CartDesktopLeft extends StatelessWidget {
                 ),
               ),
               onPressed: () {},
-              color: Constants.colorYellow,
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Constants.colorYellow),
+              ),
             ),
           )
         ],

@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
             primaryColor: Constants.primaryColor,
             fontFamily: Constants.fontFamilyMontserrat,
             primaryTextTheme: Theme.of(context).primaryTextTheme.copyWith(
-                  button: TextStyle(
+                  labelLarge: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                     color: Colors.white,
@@ -66,26 +66,26 @@ class MyApp extends StatelessWidget {
                       ),
                     ),
             textTheme: Theme.of(context).textTheme.copyWith(
-                  headline1: TextStyle(
+                  displayLarge: TextStyle(
                     fontSize: 62,
                     fontWeight: FontWeight.w300,
                     color: Constants.primaryColor,
                   ),
-                  headline2: TextStyle(
+                  displayMedium: TextStyle(
                     fontSize: 62,
                     fontWeight: FontWeight.bold,
                     color: Constants.textColor,
                   ),
-                  headline3: TextStyle(
+                  displaySmall: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
                     color: Constants.textColor,
                   ),
-                  headline4: TextStyle(
+                  headlineMedium: TextStyle(
                     fontSize: 32,
                     color: Constants.textColor,
                   ),
-                  bodyText1: TextStyle(
+                  bodyLarge: TextStyle(
                     fontSize: 18,
                     color: Constants.textColor,
                   ),

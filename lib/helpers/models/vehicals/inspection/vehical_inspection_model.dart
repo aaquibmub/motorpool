@@ -1,5 +1,5 @@
 import 'package:motorpool/helpers/models/common/dropdown_item.dart';
-import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_body_item_model.dart';
+import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_body_side_item_model.dart';
 import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_general_item_model.dart';
 
 class VehicalInspectionModel {
@@ -13,7 +13,7 @@ class VehicalInspectionModel {
   final int modelYear;
   final String registrationPlate;
   final List<VehicalInspectionGeneralItemModel> generalInspectionItems;
-  final List<VehicalInspectionBodyItemModel> bodyInspectionItems;
+  final List<VehicalInspectionBodySideItemModel> bodyInspectionItems;
   final String bodyInspectionComments;
 
   final DropdownItem<int> fuelLevel;
@@ -51,12 +51,12 @@ class VehicalInspectionModel {
       });
     }
 
-    final List<VehicalInspectionBodyItemModel> bodyInspectionItems = [];
+    final List<VehicalInspectionBodySideItemModel> bodyInspectionItems = [];
     final exBodyInspectionItems = json['bodyInspectionItems'] as List<dynamic>;
     if (exBodyInspectionItems != null) {
       exBodyInspectionItems.forEach((value) {
-        VehicalInspectionBodyItemModel prod =
-            VehicalInspectionBodyItemModel.fromJson((value));
+        VehicalInspectionBodySideItemModel prod =
+            VehicalInspectionBodySideItemModel.fromJson((value));
         bodyInspectionItems.add(prod);
       });
     }

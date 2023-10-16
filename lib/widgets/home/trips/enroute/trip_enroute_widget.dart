@@ -89,8 +89,12 @@ class TripEnrouteWidget extends StatelessWidget {
         Container(
           width: double.infinity,
           height: 60,
-          child: RaisedButton(
-            color: Constants.colorGreen,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(
+                Constants.colorGreen,
+              ),
+            ),
             onPressed: () {
               final tripStatus = Utility.getNextTripStatus(
                 _tripEnroute,
@@ -123,10 +127,10 @@ class TripEnrouteWidget extends StatelessWidget {
             },
             child: Text(
               Utility.getTripEnrouteButtonText(_tripEnroute),
-              style: Theme.of(context).primaryTextTheme.button,
+              style: Theme.of(context).primaryTextTheme.labelLarge,
             ),
-            elevation: 0,
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            // elevation: 0,
+            // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
         )
       ],

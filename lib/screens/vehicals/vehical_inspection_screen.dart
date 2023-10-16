@@ -21,9 +21,9 @@ class VehicalInspectionScreen extends StatefulWidget {
 }
 
 class _VehicalInspectionScreenState extends State<VehicalInspectionScreen> {
-  _updateState() {
-    setState(() {});
-  }
+  // _updateState() {
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +63,9 @@ class _VehicalInspectionScreenState extends State<VehicalInspectionScreen> {
                           child: TabBarView(
                             children: <Widget>[
                               VehicalInspectionGeneralScreen(
-                                  provider.inspectionResponseModel.result,
-                                  _updateState),
+                                provider.inspectionResponseModel.result,
+                                // _updateState,
+                              ),
                               VehicalInspectionBodyScreen(
                                 provider.inspectionResponseModel.result,
                               ),
@@ -76,8 +77,11 @@ class _VehicalInspectionScreenState extends State<VehicalInspectionScreen> {
                         Container(
                           width: double.infinity,
                           height: 60,
-                          child: RaisedButton(
-                            color: Constants.colorGreen,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Constants.colorGreen)),
                             onPressed: () => {
                               // Provider.of<VehicalProvider>(context, listen: false)
                               //     .updateStatus(
@@ -101,11 +105,12 @@ class _VehicalInspectionScreenState extends State<VehicalInspectionScreen> {
                             },
                             child: Text(
                               'SUBMIT',
-                              style: Theme.of(context).primaryTextTheme.button,
+                              style:
+                                  Theme.of(context).primaryTextTheme.labelLarge,
                             ),
-                            elevation: 0,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
+                            // elevation: 0,
+                            // materialTapTargetSize:
+                            //     MaterialTapTargetSize.shrinkWrap,
                           ),
                         )
                       ],

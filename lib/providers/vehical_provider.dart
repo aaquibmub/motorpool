@@ -2,13 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:motorpool/helpers/common/constants.dart';
 import 'package:motorpool/helpers/models/common/response_model.dart';
 import 'package:motorpool/helpers/models/user.dart';
-import 'package:http/http.dart' as http;
 import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_general_item_model.dart';
 import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_model.dart';
 import 'package:motorpool/helpers/models/vehicals/vehical_history.dart';
+
+import '../helpers/models/vehicals/inspection/vehical_inspection_body_part_item_model.dart';
 
 class VehicalProvider with ChangeNotifier {
   final String authToken;
@@ -88,6 +90,31 @@ class VehicalProvider with ChangeNotifier {
   Future<void> saveGeneralInspectionItem(
       VehicalInspectionGeneralItemModel model) async {
     final url = '${Constants.baseUrl}vehical/save-general-item';
+    try {
+      return await http
+          .post(
+        url,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $authToken',
+        },
+        body: jsonEncode(model.toJson()),
+      )
+          .then((response) {
+        // final responseData = json.decode(response.body);
+        // ResponseModel<VehicalInspectionModel> result =
+        //     ResponseModel<VehicalInspectionModel>.fromJson(responseData);
+        // _inspectionResponseModel = result;
+        // notifyListeners();
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<void> saveBodyInspectionItem(
+      VehicalInspectionBodyPartItemModel model) async {
+    final url = '${Constants.baseUrl}vehical/save-body-item';
     try {
       return await http
           .post(

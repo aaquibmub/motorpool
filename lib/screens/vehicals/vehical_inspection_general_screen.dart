@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_model.dart';
 import 'package:motorpool/providers/vehical_provider.dart';
@@ -7,11 +5,11 @@ import 'package:provider/provider.dart';
 
 class VehicalInspectionGeneralScreen extends StatefulWidget {
   final VehicalInspectionModel _model;
-  final Function _updateState;
+  // final Function _updateState;
 
   VehicalInspectionGeneralScreen(
     this._model,
-    this._updateState,
+    // this._updateState,
   );
   @override
   State<VehicalInspectionGeneralScreen> createState() =>
@@ -73,7 +71,7 @@ class _VehicalInspectionGeneralScreenState
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(),
-                                    child: Image.memory(base64Decode(m.id)),
+                                    // child: Image.memory(base64Decode(m.id)),
                                   ),
                                   Text(
                                     m.option.text,
@@ -85,13 +83,13 @@ class _VehicalInspectionGeneralScreenState
                                 value: m.answer,
                                 activeColor: Colors.red,
                                 onChanged: (bool value) {
-                                  m.answer = value;
+                                  setState(() {
+                                    m.answer = value;
+                                  });
                                   Provider.of<VehicalProvider>(context,
                                           listen: false)
                                       .saveGeneralInspectionItem(m)
-                                      .then((response) {
-                                    widget._updateState();
-                                  });
+                                      .then((response) {});
                                 },
                               ),
                             ],

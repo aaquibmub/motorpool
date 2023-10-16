@@ -72,8 +72,12 @@ class TripDetailWidget extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 60,
-            child: RaisedButton(
-              color: Constants.colorGreen,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  Constants.colorGreen,
+                ),
+              ),
               onPressed: () => {
                 Provider.of<TripProvider>(context, listen: false)
                     .updateStatus(
@@ -97,10 +101,10 @@ class TripDetailWidget extends StatelessWidget {
               },
               child: Text(
                 'START',
-                style: Theme.of(context).primaryTextTheme.button,
+                style: Theme.of(context).primaryTextTheme.labelLarge,
               ),
-              elevation: 0,
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              // elevation: 0,
+              // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
           )
         ],

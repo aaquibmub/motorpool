@@ -33,7 +33,7 @@ class FormTextField extends StatelessWidget {
         children: [
           Text(
             fieldLabel,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           Container(
             margin: EdgeInsets.symmetric(

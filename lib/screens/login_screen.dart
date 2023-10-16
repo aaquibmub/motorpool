@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
             title: Text('An error occured'),
             content: Text(message),
             actions: [
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.of(ctx).pop();
                   },
@@ -91,15 +91,17 @@ class _LoginScreenState extends State<LoginScreen> {
     final deviceSize = MediaQuery.of(context).size;
 
     Widget buildSignupButton() {
-      return RaisedButton(
-        color: Theme.of(context).primaryColor,
+      return ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+                Theme.of(context).primaryColor)),
         onPressed: () => _submit(context),
         child: Text(
           'SIGN IN',
-          style: Theme.of(context).primaryTextTheme.button,
+          style: Theme.of(context).primaryTextTheme.labelLarge,
         ),
-        elevation: 0,
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        // elevation: 0,
+        // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       );
     }
 
@@ -128,14 +130,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 Text(
                                   'Sign In',
-                                  style: Theme.of(context).textTheme.headline3,
+                                  style:
+                                      Theme.of(context).textTheme.displaySmall,
                                 ),
                                 SizedBox(
                                   height: 40,
                                 ),
                                 Text(
                                   'Welcome back!',
-                                  style: Theme.of(context).textTheme.headline4,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium,
                                 ),
                                 SizedBox(
                                   height: 70,
@@ -166,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                     Container(
                                       alignment: Alignment.topRight,
-                                      child: FlatButton(
+                                      child: TextButton(
                                         onPressed: () {},
                                         child: Text('Forgot Password?'),
                                       ),

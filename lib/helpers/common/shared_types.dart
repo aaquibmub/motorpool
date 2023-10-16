@@ -27,3 +27,14 @@ class DestinationType {
   static const Stop = 20;
   static const Dropoff = 30;
 }
+
+class DamageLevel {
+  static const S1 = 10;
+  static const S2 = 20;
+
+  static const D1 = 30;
+  static const D2 = 40;
+
+  static const M1 = 50;
+  static const M2 = 60;
+}
