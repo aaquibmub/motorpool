@@ -47,11 +47,11 @@ class _VehicalInspectionBodyScreenState
     ) {
       return ImageMapRegion.fromCircle(
         center: Offset(dx, dy),
-        radius: 10,
+        radius: 20,
         color: _selectedSidePart != null &&
                 _selectedSidePart.part.value == part.value
             ? const Color.fromRGBO(50, 200, 50, 0.5)
-            : Colors.black,
+            : Colors.transparent,
         title: part.value,
       );
     }
@@ -61,87 +61,260 @@ class _VehicalInspectionBodyScreenState
       String imagePath,
     ) {
       return Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 30,
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Center(
-              child: Text(i.side.text),
+            Container(
+              width: double.infinity,
+              height: 80,
+              child: Center(
+                child: Text(i.side.text),
+              ),
             ),
-            ImageMap(
-              image: Image.asset(imagePath),
-              onTap: (region) {
-                // ignore: avoid_print
-                print('Pressed: ${region.title} / ${region.link}');
-                setState(() {
-                  _selectedSidePart = i.parts.firstWhereOrNull(
-                      (VehicalInspectionBodyPartItemModel element) =>
-                          element.part.value == region.title);
-                });
-              },
-              regions: i.parts.map((e) {
-                if (e.part != null) {
-                  // Front
-                  if (e.part.value ==
-                      Constants.vehicalBodyPartFrontSideWindshieldId) {
-                    return getImageRegion(
-                      e.part,
-                      225,
-                      55,
-                    );
+            Container(
+              width: double.infinity,
+              height: 280,
+              child: ImageMap(
+                image: Image.asset(imagePath),
+                onTap: (region) {
+                  // ignore: avoid_print
+                  print('Pressed: ${region.title} / ${region.link}');
+                  setState(() {
+                    _selectedSidePart = i.parts.firstWhereOrNull(
+                        (VehicalInspectionBodyPartItemModel element) =>
+                            element.part.value == region.title);
+                  });
+                },
+                regions: i.parts.map((e) {
+                  if (e.part != null) {
+                    // Front
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartFrontSideWindshieldId) {
+                      return getImageRegion(
+                        e.part,
+                        225,
+                        55,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartFrontSideHoodId) {
+                      return getImageRegion(
+                        e.part,
+                        225,
+                        118,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartFrontSideGrillId) {
+                      return getImageRegion(
+                        e.part,
+                        225,
+                        180,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartFrontSideFrontBumperId) {
+                      return getImageRegion(
+                        e.part,
+                        225,
+                        280,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartFrontSideLeftHeadlightId) {
+                      return getImageRegion(
+                        e.part,
+                        50,
+                        160,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartFrontSideRightHeadlightId) {
+                      return getImageRegion(
+                        e.part,
+                        400,
+                        160,
+                      );
+                    }
+                    // Back
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartBackSideWindshieldId) {
+                      return getImageRegion(
+                        e.part,
+                        205,
+                        65,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartBackSideTrunkId) {
+                      return getImageRegion(
+                        e.part,
+                        205,
+                        190,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartBackSideRearBumperId) {
+                      return getImageRegion(
+                        e.part,
+                        205,
+                        275,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartBackSideLeftTaillightId) {
+                      return getImageRegion(
+                        e.part,
+                        65,
+                        140,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartBackSideRightTaillightId) {
+                      return getImageRegion(
+                        e.part,
+                        335,
+                        140,
+                      );
+                    }
+                    // Roof
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartRoofSideRoofId) {
+                      return getImageRegion(
+                        e.part,
+                        380,
+                        130,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartRoofSideSunRoofId) {
+                      return getImageRegion(
+                        e.part,
+                        260,
+                        130,
+                      );
+                    }
+                    // Left
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartLeftSideFrontFenderId) {
+                      return getImageRegion(
+                        e.part,
+                        75,
+                        105,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartLeftSideSideMirrorId) {
+                      return getImageRegion(
+                        e.part,
+                        185,
+                        85,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartLeftSideFrontDoorId) {
+                      return getImageRegion(
+                        e.part,
+                        225,
+                        115,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartLeftSideRearDoorId) {
+                      return getImageRegion(
+                        e.part,
+                        330,
+                        115,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartLeftSideRearFenderId) {
+                      return getImageRegion(
+                        e.part,
+                        480,
+                        115,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartLeftSideFrontWheelId) {
+                      return getImageRegion(
+                        e.part,
+                        90,
+                        165,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartLeftSideRearWheelId) {
+                      return getImageRegion(
+                        e.part,
+                        400,
+                        165,
+                      );
+                    }
+                    // Right
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartRightSideRearFenderId) {
+                      return getImageRegion(
+                        e.part,
+                        40,
+                        115,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartRightSideRearWheelId) {
+                      return getImageRegion(
+                        e.part,
+                        120,
+                        165,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartRightSideRearDoorId) {
+                      return getImageRegion(
+                        e.part,
+                        190,
+                        115,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartRightSideFrontDoorId) {
+                      return getImageRegion(
+                        e.part,
+                        300,
+                        115,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartRightSideSideMirrorId) {
+                      return getImageRegion(
+                        e.part,
+                        340,
+                        85,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartRightSideFrontFenderId) {
+                      return getImageRegion(
+                        e.part,
+                        450,
+                        105,
+                      );
+                    }
+                    if (e.part.value ==
+                        Constants.vehicalBodyPartRightSideFrontWheelId) {
+                      return getImageRegion(
+                        e.part,
+                        435,
+                        165,
+                      );
+                    }
                   }
-                  if (e.part.value ==
-                      Constants.vehicalBodyPartFrontSideHoodId) {
-                    return getImageRegion(
-                      e.part,
-                      225,
-                      118,
-                    );
-                  }
-                  if (e.part.value ==
-                      Constants.vehicalBodyPartFrontSideGrillId) {
-                    return getImageRegion(
-                      e.part,
-                      225,
-                      180,
-                    );
-                  }
-                  // Back
-                  if (e.part.value ==
-                      Constants.vehicalBodyPartBackSideWindshieldId) {
-                    return getImageRegion(
-                      e.part,
-                      205,
-                      65,
-                    );
-                  }
-                  // Roof
-                  if (e.part.value == Constants.vehicalBodyPartRoofSideRoofId) {
-                    return getImageRegion(
-                      e.part,
-                      205,
-                      65,
-                    );
-                  }
-                  // Left
-                  if (e.part.value ==
-                      Constants.vehicalBodyPartLeftSideFrontFenderId) {
-                    return getImageRegion(
-                      e.part,
-                      100,
-                      65,
-                    );
-                  }
-                  // Right
-                  if (e.part.value ==
-                      Constants.vehicalBodyPartRightSideFrontFenderId) {
-                    return getImageRegion(
-                      e.part,
-                      100,
-                      65,
-                    );
-                  }
-                }
-              }).toList(),
+                }).toList(),
+              ),
             ),
             Expanded(
               child: _selectedSidePart != null
@@ -163,7 +336,7 @@ class _VehicalInspectionBodyScreenState
                                   .then((response) {});
                             },
                             child: Container(
-                              padding: EdgeInsets.all(20),
+                              padding: EdgeInsets.all(10),
                               margin: EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   color: _selectedSidePart.damageLevel !=
@@ -196,7 +369,13 @@ class _VehicalInspectionBodyScreenState
             child: Column(
             children: [
               CarouselSlider(
-                options: CarouselOptions(height: 800),
+                options: CarouselOptions(
+                    height: 800,
+                    onPageChanged: (index, r) {
+                      setState(() {
+                        _selectedSidePart = null;
+                      });
+                    }),
                 items: widget._model.bodyInspectionItems.map((i) {
                   return Builder(
                     builder: (BuildContext context) {
@@ -221,13 +400,13 @@ class _VehicalInspectionBodyScreenState
                       if (i.side.value == Constants.vehicalBodySideLeftId) {
                         return getBodySide(
                           i,
-                          'assets/images/inspections/body-back.png',
+                          'assets/images/inspections/body-left.png',
                         );
                       }
                       if (i.side.value == Constants.vehicalBodySideRightId) {
                         return getBodySide(
                           i,
-                          'assets/images/inspections/body-back.png',
+                          'assets/images/inspections/body-right.png',
                         );
                       }
                       return Text('no item');
