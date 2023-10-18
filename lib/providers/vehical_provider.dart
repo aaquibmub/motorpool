@@ -118,20 +118,32 @@ class VehicalProvider with ChangeNotifier {
     try {
       return await http
           .post(
-        url,
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer $authToken',
-        },
-        body: jsonEncode(model.toJson()),
-      )
-          .then((response) {
-        // final responseData = json.decode(response.body);
-        // ResponseModel<VehicalInspectionModel> result =
-        //     ResponseModel<VehicalInspectionModel>.fromJson(responseData);
-        // _inspectionResponseModel = result;
-        // notifyListeners();
-      });
+            url,
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8',
+              'Authorization': 'Bearer $authToken',
+            },
+            body: jsonEncode(model.toJson()),
+          )
+          .then((response) {});
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<void> submitInspection(VehicalInspectionModel model) async {
+    final url = '${Constants.baseUrl}vehical/submit-inspection';
+    try {
+      return await http
+          .post(
+            url,
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8',
+              'Authorization': 'Bearer $authToken',
+            },
+            body: jsonEncode(model.toJson()),
+          )
+          .then((response) {});
     } catch (error) {
       throw error;
     }

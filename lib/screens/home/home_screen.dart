@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:motorpool/screens/home/tabs_screen.dart';
+import 'package:provider/provider.dart';
+
+import '../../helpers/common/routes.dart';
+import '../../providers/auth.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
+              Provider.of<Auth>(
+                context,
+                listen: false,
+              ).logout();
+            },
+            child: Text('Logout'),
+          ),
+        ],
+      ),
       body: TabsScreen(),
       // body: Container(
       //   padding: !Utility.isPhone(deviceSize)

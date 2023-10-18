@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:motorpool/helpers/common/constants.dart';
 import 'package:motorpool/providers/vehical_provider.dart';
 import 'package:motorpool/screens/vehicals/vehical_inspection_body_screen.dart';
 import 'package:motorpool/screens/vehicals/vehical_inspection_fuel_screen.dart';
@@ -74,45 +73,6 @@ class _VehicalInspectionScreenState extends State<VehicalInspectionScreen> {
                             ],
                           ),
                         ),
-                        Container(
-                          width: double.infinity,
-                          height: 60,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Constants.colorGreen)),
-                            onPressed: () => {
-                              // Provider.of<VehicalProvider>(context, listen: false)
-                              //     .updateStatus(
-                              //   TripStatusUpdate(
-                              //     _tripDetail.id,
-                              //     TripStatus.TripStarted,
-                              //     null,
-                              //     null,
-                              //     '',
-                              //   ),
-                              // )
-                              //     .then((response) {
-                              //   Navigator.pushReplacement(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => TripEnrouteScreen(
-                              //               _tripDetail.id,
-                              //             )),
-                              //   );
-                              // })
-                            },
-                            child: Text(
-                              'SUBMIT',
-                              style:
-                                  Theme.of(context).primaryTextTheme.labelLarge,
-                            ),
-                            // elevation: 0,
-                            // materialTapTargetSize:
-                            //     MaterialTapTargetSize.shrinkWrap,
-                          ),
-                        )
                       ],
                     )
                   : Center(

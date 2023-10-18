@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:motorpool/providers/cart_provider.dart';
 import 'package:motorpool/providers/trip_provider.dart';
 import 'package:motorpool/providers/vehical_provider.dart';
 import 'package:motorpool/screens/home/home_screen.dart';
+import 'package:motorpool/screens/home/vehicals_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:motorpool/providers/cart_provider.dart';
-import './screens/cart/desktop/cart_desktop_screen.dart';
 
 import './helpers/common/constants.dart';
 import './helpers/common/routes.dart';
-
 import './providers/auth.dart';
-
-import './screens/splash_screen.dart';
+import './screens/cart/desktop/cart_desktop_screen.dart';
 import './screens/login_screen.dart';
+import './screens/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -108,6 +107,7 @@ class MyApp extends StatelessWidget {
           routes: {
             Routes.loginScreen: (ctx) => LoginScreen(),
             Routes.homeScreen: (ctx) => HomeScreen(),
+            Routes.vehicalsScreen: (ctx) => VehicalsScreen(),
             Routes.cartDesktopScreen: (ctx) => CartDesktopScreen(),
           },
         ),

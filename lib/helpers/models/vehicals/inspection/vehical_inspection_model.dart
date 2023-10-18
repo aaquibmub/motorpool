@@ -1,4 +1,3 @@
-import 'package:motorpool/helpers/models/common/dropdown_item.dart';
 import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_body_side_item_model.dart';
 import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_general_item_model.dart';
 
@@ -14,12 +13,10 @@ class VehicalInspectionModel {
   final String registrationPlate;
   final List<VehicalInspectionGeneralItemModel> generalInspectionItems;
   final List<VehicalInspectionBodySideItemModel> bodyInspectionItems;
-  final String bodyInspectionComments;
+  String bodyInspectionComments;
 
-  final DropdownItem<int> fuelLevel;
-  final int odoMeter;
-
-  final bool submitted;
+  num fuelLevel;
+  int odoMeter;
 
   VehicalInspectionModel(
     this.id,
@@ -36,7 +33,6 @@ class VehicalInspectionModel {
     this.bodyInspectionComments,
     this.fuelLevel,
     this.odoMeter,
-    this.submitted,
   );
 
   factory VehicalInspectionModel.fromJson(dynamic json) {
@@ -74,9 +70,18 @@ class VehicalInspectionModel {
       generalInspectionItems,
       bodyInspectionItems,
       json['bodyInspectionComments'] as String,
-      DropdownItem<int>.fromJson(json['fuelLevel']),
+      json['fuelLevel'] as num,
       json['odoMeter'] as int,
-      json['submitted'] as bool,
     );
   }
+
+  Map<String, dynamic> toJson() => vehicalInspectionModelToJson(this);
+
+  Map<String, dynamic> vehicalInspectionModelToJson(
+          VehicalInspectionModel instance) =>
+      <String, dynamic>{
+        'id': instance.id,
+        'fuelLevel': instance.fuelLevel,
+        'odoMeter': instance.odoMeter,
+      };
 }
