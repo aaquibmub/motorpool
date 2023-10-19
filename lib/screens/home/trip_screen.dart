@@ -3,6 +3,8 @@ import 'package:motorpool/screens/home/trips/cancelled_trip_screen.dart';
 import 'package:motorpool/screens/home/trips/completed_trip_screen.dart';
 import 'package:motorpool/screens/home/trips/upcoming_trip_screen.dart';
 
+import '../../helpers/common/utility.dart';
+
 class TripScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -10,7 +12,13 @@ class TripScreen extends StatelessWidget {
       length: 3,
       // initialIndex: 0,
       child: Scaffold(
+        drawer: Utility.buildDrawer(context),
         appBar: AppBar(
+          title: Center(
+            child: Text(
+              'Trips',
+            ),
+          ),
           bottom: TabBar(
             tabs: <Widget>[
               Tab(

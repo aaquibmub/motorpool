@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:motorpool/helpers/common/custom_icons.dart';
+import 'package:motorpool/screens/home/dashboard_screen.dart';
 import 'package:motorpool/screens/home/trip_screen.dart';
 import 'package:motorpool/screens/home/vehicals_screen.dart';
 
@@ -13,8 +15,10 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   void initState() {
     _pages = [
-      {'page': TripScreen(), 'title': 'Trips'},
-      {'page': VehicalsScreen(), 'title': 'Vehicals'},
+      {'page': DashboardScreen()},
+      {'page': TripScreen()},
+      {'page': VehicalsScreen()},
+      {'page': VehicalsScreen()},
     ];
     super.initState();
   }
@@ -32,13 +36,35 @@ class _TabsScreenState extends State<TabsScreen> {
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
-        backgroundColor: Theme.of(context).primaryColor,
         selectedItemColor: Colors.white,
-        unselectedItemColor: Theme.of(context).colorScheme.secondary,
+        unselectedItemColor: Colors.white,
         currentIndex: _selectedPageIndex,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.card_travel), label: ''),
+          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColor,
+            icon: Icon(
+              MyFlutterApp.ico_home,
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              MyFlutterApp.ico_trip,
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              MyFlutterApp.ico_vehicle,
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              MyFlutterApp.ico_vehicle_inspection,
+            ),
+            label: '',
+          ),
         ],
       ),
     );

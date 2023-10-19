@@ -2,9 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:motorpool/helpers/common/constants.dart';
+import 'package:motorpool/helpers/common/routes.dart';
 import 'package:motorpool/helpers/models/common/dropdown_item.dart';
 import 'package:motorpool/helpers/models/trips/enroute/trip_enroute.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/auth.dart';
+import '../models/user.dart';
 import 'shared_types.dart';
 
 class Utility {
@@ -192,5 +196,51 @@ class Utility {
       DropdownItem(DamageLevel.M1, 'M1'),
       DropdownItem(DamageLevel.M2, 'M2'),
     ];
+  }
+
+  static Drawer buildDrawer(BuildContext context) {
+    final User _currentuser = Provider.of<Auth>(context).currentUser;
+
+    return Drawer(
+      child: ListView(
+        // Important: Remove any padding from the ListView.
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Constants.primaryColor,
+            ),
+            child: Text(
+              'Hello, ' + (_currentuser != null ? _currentuser.firstName : ''),
+            ),
+          ),
+          ListTile(
+            title: const Text('Home'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(
+                Routes.homeScreen,
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Report an Incident'),
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(Routes.newIncidentScreen);
+            },
+          ),
+          ListTile(
+            title: const Text('Logout'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
+              Provider.of<Auth>(
+                context,
+                listen: false,
+              ).logout();
+            },
+          ),
+        ],
+      ), // Populate the Drawer in the next step.
+    );
   }
 }

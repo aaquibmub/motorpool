@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:motorpool/providers/cart_provider.dart';
+import 'package:motorpool/providers/incident_provider.dart';
 import 'package:motorpool/providers/trip_provider.dart';
 import 'package:motorpool/providers/vehical_provider.dart';
 import 'package:motorpool/screens/home/home_screen.dart';
 import 'package:motorpool/screens/home/vehicals_screen.dart';
+import 'package:motorpool/screens/incidents/new_incident_screen.dart';
 import 'package:provider/provider.dart';
 
 import './helpers/common/constants.dart';
@@ -43,54 +45,61 @@ class MyApp extends StatelessWidget {
             return VehicalProvider(auth.token, auth.currentUser);
           },
         ),
+        ChangeNotifierProxyProvider<Auth, IncidentProvider>(
+          update: (ctx, auth, _) {
+            return IncidentProvider(auth.token, auth.currentUser);
+          },
+        ),
       ],
       child: Consumer<Auth>(
         builder: (ctx, authData, child) => MaterialApp(
           title: 'motorpool',
           theme: ThemeData(
-            primaryColor: Constants.primaryColor,
-            fontFamily: Constants.fontFamilyMontserrat,
-            primaryTextTheme: Theme.of(context).primaryTextTheme.copyWith(
-                  labelLarge: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
-                ),
-            inputDecorationTheme:
-                Theme.of(context).inputDecorationTheme.copyWith(
-                      hintStyle: TextStyle(
-                        color: Constants.textFieldHintColor,
-                        fontWeight: FontWeight.normal,
-                      ),
+              primaryColor: Constants.primaryColor,
+              fontFamily: Constants.fontFamilyMontserrat,
+              primaryTextTheme: Theme.of(context).primaryTextTheme.copyWith(
+                    labelLarge: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.white,
                     ),
-            textTheme: Theme.of(context).textTheme.copyWith(
-                  displayLarge: TextStyle(
-                    fontSize: 62,
-                    fontWeight: FontWeight.w300,
-                    color: Constants.primaryColor,
                   ),
-                  displayMedium: TextStyle(
-                    fontSize: 62,
-                    fontWeight: FontWeight.bold,
-                    color: Constants.textColor,
+              inputDecorationTheme:
+                  Theme.of(context).inputDecorationTheme.copyWith(
+                        hintStyle: TextStyle(
+                          color: Constants.textFieldHintColor,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+              textTheme: Theme.of(context).textTheme.copyWith(
+                    displayLarge: TextStyle(
+                      fontSize: 62,
+                      fontWeight: FontWeight.w300,
+                      color: Constants.primaryColor,
+                    ),
+                    displayMedium: TextStyle(
+                      fontSize: 62,
+                      fontWeight: FontWeight.bold,
+                      color: Constants.textColor,
+                    ),
+                    displaySmall: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: Constants.textColor,
+                    ),
+                    headlineMedium: TextStyle(
+                      fontSize: 32,
+                      color: Constants.textColor,
+                    ),
+                    bodyLarge: TextStyle(
+                      fontSize: 18,
+                      color: Constants.textColor,
+                    ),
                   ),
-                  displaySmall: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: Constants.textColor,
-                  ),
-                  headlineMedium: TextStyle(
-                    fontSize: 32,
-                    color: Constants.textColor,
-                  ),
-                  bodyLarge: TextStyle(
-                    fontSize: 18,
-                    color: Constants.textColor,
-                  ),
-                ),
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              appBarTheme: AppBarTheme.of(context).copyWith(
+                backgroundColor: Constants.primaryColor,
+              )),
           home: authData.isAuth
               ? HomeScreen()
               : FutureBuilder(
@@ -108,6 +117,7 @@ class MyApp extends StatelessWidget {
             Routes.loginScreen: (ctx) => LoginScreen(),
             Routes.homeScreen: (ctx) => HomeScreen(),
             Routes.vehicalsScreen: (ctx) => VehicalsScreen(),
+            Routes.newIncidentScreen: (ctx) => NewIncidentScreen(),
             Routes.cartDesktopScreen: (ctx) => CartDesktopScreen(),
           },
         ),

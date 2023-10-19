@@ -3,6 +3,7 @@ import 'package:motorpool/providers/vehical_provider.dart';
 import 'package:motorpool/widgets/home/vehicals/vehical_history_card_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../../helpers/common/utility.dart';
 import '../loading_screen.dart';
 
 class VehicalsScreen extends StatefulWidget {
@@ -17,9 +18,10 @@ class _VehicalsScreenState extends State<VehicalsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: Text('Vehical History'),
+          child: Text('Vehicals'),
         ),
       ),
+      drawer: Utility.buildDrawer(context),
       body: Center(
         child: FutureBuilder(
             future: Provider.of<VehicalProvider>(context, listen: false)

@@ -1,10 +1,10 @@
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:motorpool/helpers/common/utility.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 import '../helpers/common/constants.dart';
 import '../helpers/models/user.dart';
@@ -83,7 +83,7 @@ class Auth with ChangeNotifier {
         final userData = json.encode({
           'token': _token,
           // 'refresh_token': _refreshToken,
-          'user': jsonEncode(_user),
+          'user': jsonEncode(_user.toJson()),
           'expiryDate': _expiryDate.toIso8601String(),
         });
         prefs.setString('userData', userData);

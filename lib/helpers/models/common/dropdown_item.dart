@@ -1,5 +1,5 @@
 class DropdownItem<T> {
-  final T value;
+  T value;
   final String text;
 
   DropdownItem(

@@ -9,6 +9,7 @@ class FormTextField extends StatelessWidget {
   final void Function(String value) onSaveFn;
   final void Function(String value) onFieldSubmittedFn;
   final bool obscureText;
+  final bool readonly;
   final TextInputAction textInputAction;
   final FocusNode focusNode;
   final TextEditingController controller;
@@ -18,6 +19,7 @@ class FormTextField extends StatelessWidget {
     @required this.validatorFn,
     @required this.onSaveFn,
     this.obscureText = false,
+    this.readonly = false,
     this.controller,
     this.hintLabel,
     this.textInputAction,
@@ -40,6 +42,7 @@ class FormTextField extends StatelessWidget {
               vertical: 10,
             ),
             child: TextFormField(
+              readOnly: readonly,
               controller: controller,
               obscureText: obscureText,
               decoration: InputDecoration(
