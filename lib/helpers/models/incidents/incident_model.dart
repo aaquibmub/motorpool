@@ -32,9 +32,18 @@ class IncidentModel {
   ) =>
       <String, dynamic>{
         'id': instance.id,
-        'category': {'value': instance.category.value},
-        'vehical': {'value': instance.vehical.value},
-        'driver': {'value': instance.driver.value},
+        'category': {
+          'value': instance.category.value,
+          'text': instance.category.text,
+        },
+        'vehical': {
+          'value': instance.vehical.value,
+          'text': instance.vehical.text,
+        },
+        'driver': {
+          'value': instance.driver.value,
+          'text': instance.driver.text,
+        },
         'photo': instance.photo,
         'remarks': instance.remarks,
       };

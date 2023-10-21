@@ -1,26 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:motorpool/helpers/models/common/dropdown_item.dart';
-import 'package:motorpool/helpers/models/incidents/incident_model.dart';
 import 'package:motorpool/providers/auth.dart';
 import 'package:motorpool/providers/incident_provider.dart';
+import 'package:motorpool/widgets/form/image_input.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/models/user.dart';
 import '../form/form_text_field.dart';
 
 class NewIncidentForm extends StatefulWidget {
-  IncidentModel _model;
   final GlobalKey<FormState> formKey;
   final void Function(
-    IncidentModel model,
-  ) setModelFn;
+    DropdownItem<String> category,
+  ) setCategoryFn;
+  final void Function(
+    DropdownItem<String> vehical,
+  ) setVehicalFn;
+  final void Function(
+    DropdownItem<String> driver,
+  ) setDriverFn;
+  final void Function(
+    String photo,
+  ) setPhotoFn;
   final void Function(
     BuildContext context,
   ) submitFormFn;
   final BuildContext parentContext;
   NewIncidentForm(
     this.formKey,
-    this.setModelFn,
+    this.setCategoryFn,
+    this.setVehicalFn,
+    this.setDriverFn,
+    this.setPhotoFn,
     this.submitFormFn,
     this.parentContext,
   );
@@ -33,33 +44,29 @@ class _NewIncidentFormState extends State<NewIncidentForm> {
   // final _passwordFocusNode = FocusNode();
   final _vehicalController = TextEditingController();
   final _driverController = TextEditingController();
+  DropdownItem<String> _selectedCategory = null;
 
   @override
   void initState() {
-    widget._model = IncidentModel(
-      '',
-      null,
-      null,
-      null,
-      '',
-      '',
-    );
-
     super.initState();
+  }
+
+  void _selectedImage(String pickedImage) {
+    widget.setPhotoFn(pickedImage);
   }
 
   @override
   Widget build(BuildContext context) {
     final User _currentuser = Provider.of<Auth>(context).currentUser;
 
-    widget._model.vehical = _currentuser?.vehical;
     _vehicalController.text = _currentuser?.vehical?.text;
+    widget.setVehicalFn(_currentuser?.vehical);
 
-    widget._model.driver = DropdownItem<String>(
+    _driverController.text = _currentuser.firstName;
+    widget.setDriverFn(DropdownItem<String>(
       _currentuser.id,
       _currentuser.firstName,
-    );
-    _driverController.text = widget._model.driver.text;
+    ));
 
     Provider.of<IncidentProvider>(
       context,
@@ -86,7 +93,7 @@ class _NewIncidentFormState extends State<NewIncidentForm> {
                 child: Consumer<IncidentProvider>(builder: (ctx, provider, _) {
                   return DropdownButton<String>(
                     isExpanded: true,
-                    value: widget._model?.category?.value,
+                    value: _selectedCategory?.value,
                     elevation: 16,
                     style: const TextStyle(color: Colors.deepPurple),
                     underline: Container(
@@ -101,9 +108,12 @@ class _NewIncidentFormState extends State<NewIncidentForm> {
                             .first;
                         if (item != null) {
                           String text = item.text;
-                          widget._model.category = DropdownItem(
+                          _selectedCategory = DropdownItem(
                             value,
                             text,
+                          );
+                          widget.setCategoryFn(
+                            _selectedCategory,
                           );
                         }
                       });
@@ -135,6 +145,9 @@ class _NewIncidentFormState extends State<NewIncidentForm> {
                   );
                 }),
               ),
+              SizedBox(
+                height: 30,
+              ),
               FormTextField(
                 readonly: true,
                 fieldLabel: 'Vehical',
@@ -152,7 +165,7 @@ class _NewIncidentFormState extends State<NewIncidentForm> {
                 },
                 onSaveFn: (value) {
                   // widget._model.category = value;
-                  widget.setModelFn(widget._model);
+                  // widget.setModelFn(widget._model);
                 },
               ),
               SizedBox(
@@ -175,9 +188,24 @@ class _NewIncidentFormState extends State<NewIncidentForm> {
                 },
                 onSaveFn: (value) {
                   // widget._model.category = value;
-                  widget.setModelFn(widget._model);
+                  // widget.setModelFn(widget._model);
                 },
               ),
+              SizedBox(
+                height: 30,
+              ),
+              Center(
+                child: Text(
+                  'Incident Photo',
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              ImageInput(
+                true,
+                _selectedImage,
+              )
             ],
           ),
         ),

@@ -78,10 +78,15 @@ class IncidentProvider with ChangeNotifier {
         body: jsonEncode(model.toJson()),
       )
           .then((response) {
+        if (response.statusCode == HttpStatus.forbidden) {
+          return ResponseModel(null, 'Operation not allowed', true);
+        }
         final responseData = json.decode(response.body);
         ResponseModel<String> result =
             ResponseModel<String>.fromJson(responseData);
         return result;
+      }).onError((error, stackTrace) {
+        throw error;
       });
     } catch (error) {
       throw error;

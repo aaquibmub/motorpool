@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_guid/flutter_guid.dart';
+import 'package:motorpool/helpers/models/common/dropdown_item.dart';
 import 'package:motorpool/providers/incident_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -19,12 +21,32 @@ class _NewIncidentScreenState extends State<NewIncidentScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   bool _isLoading = false;
 
-  IncidentModel _model;
-
-  void _setModel(
-    IncidentModel model,
+  DropdownItem<String> _category;
+  void _setCategory(
+    DropdownItem<String> category,
   ) {
-    _model = model;
+    _category = category;
+  }
+
+  DropdownItem<String> _vehical;
+  void _setVehical(
+    DropdownItem<String> vehical,
+  ) {
+    _vehical = vehical;
+  }
+
+  DropdownItem<String> _driver;
+  void _setDriver(
+    DropdownItem<String> driver,
+  ) {
+    _driver = driver;
+  }
+
+  String _photo;
+  void _setPhoto(
+    String photo,
+  ) {
+    _photo = photo;
   }
 
   void _showErrorDialogue(BuildContext context, String message) {
@@ -59,7 +81,14 @@ class _NewIncidentScreenState extends State<NewIncidentScreen> {
         context,
         listen: false,
       ).createIncident(
-        _model,
+        IncidentModel(
+          Guid.newGuid.toString(),
+          _category,
+          _vehical,
+          _driver,
+          _photo,
+          '',
+        ),
       );
 
       setState(() {
@@ -108,54 +137,63 @@ class _NewIncidentScreenState extends State<NewIncidentScreen> {
       drawer: Utility.buildDrawer(context),
       body: _isLoading
           ? LoadingScreen()
-          : SingleChildScrollView(
-              child: Center(
-                child: Container(
-                  height: deviceSize.height,
-                  width: 500,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  padding: EdgeInsets.all(20),
-                                  child: Center(
-                                    child: Text(
-                                      'Report new Incident',
-                                    ),
+          : Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Center(
+                      child: Container(
+                        height: deviceSize.height,
+                        width: 500,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.all(20),
+                                        child: Center(
+                                          child: Text(
+                                            'Report new Incident',
+                                          ),
+                                        ),
+                                      ),
+                                      NewIncidentForm(
+                                        _formKey,
+                                        _setCategory,
+                                        _setVehical,
+                                        _setDriver,
+                                        _setPhoto,
+                                        _submit,
+                                        context,
+                                      ),
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                NewIncidentForm(
-                                  _formKey,
-                                  _setModel,
-                                  _submit,
-                                  context,
-                                ),
-                                SizedBox(
-                                  height: 30,
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
-                      if (Utility.isPhone(deviceSize))
-                        Container(
-                          width: double.infinity,
-                          height: 60,
-                          child: buildSubmitButton(),
-                        ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
+                Container(
+                  width: double.infinity,
+                  height: 60,
+                  child: buildSubmitButton(),
+                )
+              ],
             ),
     );
   }
