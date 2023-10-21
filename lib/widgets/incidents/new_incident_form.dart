@@ -44,7 +44,7 @@ class _NewIncidentFormState extends State<NewIncidentForm> {
   // final _passwordFocusNode = FocusNode();
   final _vehicalController = TextEditingController();
   final _driverController = TextEditingController();
-  DropdownItem<String> _selectedCategory = null;
+  DropdownItem<String> _selectedCategory;
 
   @override
   void initState() {

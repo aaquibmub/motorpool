@@ -73,6 +73,17 @@ class _NewIncidentScreenState extends State<NewIncidentScreen> {
       return;
     }
     _formKey.currentState.save();
+
+    if (_category == null) {
+      _showErrorDialogue(context, 'Please select category');
+      return;
+    }
+
+    if (_vehical == null) {
+      _showErrorDialogue(context, 'Your are not assigned a vehical yet');
+      return;
+    }
+
     setState(() {
       _isLoading = true;
     });
