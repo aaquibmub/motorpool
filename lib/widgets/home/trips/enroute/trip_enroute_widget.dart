@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:motorpool/helpers/common/constants.dart';
 import 'package:motorpool/helpers/common/shared_types.dart';
 import 'package:motorpool/helpers/common/utility.dart';
 import 'package:motorpool/helpers/models/trips/enroute/trip_enroute.dart';
 import 'package:motorpool/helpers/models/trips/enroute/trip_status_update.dart';
 import 'package:motorpool/providers/trip_provider.dart';
+import 'package:motorpool/screens/destinations/add_trip_destination_screen.dart';
 import 'package:motorpool/screens/home/trip_screen.dart';
 import 'package:motorpool/widgets/home/trips/enroute/trip_enroute_item_widget.dart';
 import 'package:provider/provider.dart';
@@ -33,9 +35,22 @@ class TripEnrouteWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
+                height: 50,
                 child: InkWell(
-                  onTap: () => {},
-                  child: Icon(Icons.access_alarm),
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddTripDestinationScreen(
+                                _tripEnroute.tripId,
+                              )),
+                    )
+                  },
+                  child: new SvgPicture.asset(
+                    Constants.svgPathAddDropoff,
+                    semanticsLabel: 'Add Destination',
+                    color: Colors.white,
+                  ),
                 ),
               ),
               Container(

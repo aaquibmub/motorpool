@@ -30,7 +30,7 @@ class TripCardWidget extends StatelessWidget {
           }
           if (_trip.tripStatus.value > TripStatus.AssignedToDriver &&
               _trip.tripStatus.value < TripStatus.Completed) {
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => TripEnrouteScreen(

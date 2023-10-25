@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="ico-add-stop-location" transform="translate(0 -13)">
+    <rect id="Rectangle_1547" data-name="Rectangle 1547" width="24" height="24" transform="translate(0 13)" fill="none"/>
+    <path id="stops-location" d="M88.842-742.316v-2.526h2.526a10.9,10.9,0,0,0-3.726-7.232A11.173,11.173,0,0,0,80-754.947v-2.526a13.771,13.771,0,0,1,7.484,2.147,13.626,13.626,0,0,1,5.147,5.811,16.077,16.077,0,0,1,3.158-4.532,22.169,22.169,0,0,1,4.389-3.426H95.158V-760H104v8.842h-2.526v-4.168a19.325,19.325,0,0,0-5.053,4.453,11.767,11.767,0,0,0-2.526,6.032h2.526v2.526Z" transform="translate(-80 776)" fill="#ff6926"/>
+  </g>
+</svg>

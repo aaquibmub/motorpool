@@ -187,6 +187,20 @@ class Utility {
     return map;
   }
 
+  static List<DropdownItem<int>> getDestinationTypeList() {
+    return [
+      DropdownItem(DestinationType.Pickup, 'Pickup'),
+      DropdownItem(DestinationType.Stop, 'Stop'),
+      DropdownItem(DestinationType.Dropoff, 'Dropoff'),
+    ];
+  }
+
+  static String getDestinationTypeText(int type) {
+    final list = getDestinationTypeList();
+    final item = list.firstWhere((element) => element.value == type);
+    return item != null ? item.text : '';
+  }
+
   static List<DropdownItem<int>> getDamageLevelList() {
     return [
       DropdownItem(DamageLevel.S1, 'S1'),
