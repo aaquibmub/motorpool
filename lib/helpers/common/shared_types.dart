@@ -18,6 +18,8 @@ class TripStatus {
   static const WaitingForPassenger = 52;
   static const PassengerOnboarded = 55;
   static const ArrivedAtStop = 60;
+  static const WaitingForStopActivity = 62;
+  static const TripResumedAfterStop = 65;
   static const ArrivedAtDropoff = 70;
   static const Completed = 400;
 }

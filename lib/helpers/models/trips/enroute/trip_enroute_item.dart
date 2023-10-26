@@ -8,6 +8,7 @@ class TripEnrouteItem {
   final String destinationId;
   final DropdownItem<int> destinationType;
   final DropdownItem<String> location;
+  final int sequence;
   final bool completed;
 
   TripEnrouteItem(
@@ -18,6 +19,7 @@ class TripEnrouteItem {
     this.destinationId,
     this.destinationType,
     this.location,
+    this.sequence,
     this.completed,
   );
 
@@ -30,6 +32,7 @@ class TripEnrouteItem {
         json['destinationId'] as String,
         DropdownItem<int>.fromJson(json['destinationType']),
         DropdownItem<String>.fromJson(json['location']),
+        json['sequence'] as int,
         json['completed'] as bool,
       );
 }

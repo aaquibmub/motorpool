@@ -104,17 +104,23 @@ class Utility {
     if (status == TripStatus.VehicalDispatched) {
       return TripStatus.ArrivedAtPickupLocation;
     }
-    if (status == TripStatus.ArrivedAtPickupLocation ||
-        status == TripStatus.ArrivedAtStop) {
+    if (status == TripStatus.ArrivedAtPickupLocation) {
       return TripStatus.WaitingForPassenger;
     }
     if (status == TripStatus.WaitingForPassenger) {
       return TripStatus.PassengerOnboarded;
     }
+    if (status == TripStatus.ArrivedAtStop) {
+      return TripStatus.WaitingForStopActivity;
+    }
+    if (status == TripStatus.WaitingForPassenger) {
+      return TripStatus.TripResumedAfterStop;
+    }
     final destinationType = nextDestination.destinationType.value;
-    if (destinationType == DestinationType.Pickup ||
-        destinationType == DestinationType.Stop) {
-      return TripStatus.WaitingForPassenger;
+    if (destinationType == DestinationType.Pickup) {
+      return TripStatus.ArrivedAtPickupLocation;
+    } else if (destinationType == DestinationType.Stop) {
+      return TripStatus.ArrivedAtStop;
     } else {
       return TripStatus.ArrivedAtDropoff;
     }

@@ -6,9 +6,11 @@ import 'package:motorpool/screens/destinations/add_new_destination_screen.dart';
 
 class AddTripDestinationScreen extends StatefulWidget {
   final String _tripId;
+  final int _sequence;
 
   AddTripDestinationScreen(
     this._tripId,
+    this._sequence,
   );
 
   @override
@@ -31,6 +33,7 @@ class _AddTripDestinationScreenState extends State<AddTripDestinationScreen> {
               builder: (context) => AddNewDestinationScreen(
                     widget._tripId,
                     destinationType,
+                    widget._sequence,
                   )),
         )
       },

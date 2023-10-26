@@ -37,14 +37,17 @@ class TripEnrouteWidget extends StatelessWidget {
               Container(
                 height: 50,
                 child: InkWell(
-                  onTap: () => {
+                  onTap: () {
+                    final int sequence = _tripEnroute
+                        .items[_tripEnroute.items.length - 1].sequence;
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => AddTripDestinationScreen(
                                 _tripEnroute.tripId,
+                                sequence,
                               )),
-                    )
+                    );
                   },
                   child: new SvgPicture.asset(
                     Constants.svgPathAddDropoff,

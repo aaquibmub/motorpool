@@ -25,11 +25,9 @@ class TripEnrouteItemWidget extends StatelessWidget {
               Text(_item.end == null || _item.end == "" ? "" : _item.end),
             ],
           ),
-          Text(_item.title == null || _item.title == ""
-              ? "No title"
-              : _item.title),
+          Text(_item.title == null || _item.title == "" ? "" : _item.title),
           Text(_item.location == null || _item.location.text == null
-              ? "<address-missing>"
+              ? ""
               : _item.location.text),
         ],
       ),

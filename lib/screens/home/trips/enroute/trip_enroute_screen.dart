@@ -43,13 +43,15 @@ class _TripEnrouteScreenState extends State<TripEnrouteScreen> {
               width: deviceSize.width,
               child: Consumer<TripProvider>(
                 builder: (ctx, provider, _) {
-                  return provider.tripEnroute.tripStatus !=
-                          TripStatus.WaitingForPassenger
-                      ? TripEnrouteWidget(
+                  return (provider.tripEnroute.tripStatus ==
+                              TripStatus.ArrivedAtPickupLocation ||
+                          provider.tripEnroute.tripStatus ==
+                              TripStatus.ArrivedAtStop)
+                      ? TripWaitingForPassengerWidget(
                           provider.tripEnroute,
                           _updateState,
                         )
-                      : TripWaitingForPassengerWidget(
+                      : TripEnrouteWidget(
                           provider.tripEnroute,
                           _updateState,
                         );

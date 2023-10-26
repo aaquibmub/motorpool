@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Constants {
-  static const String baseUrl = 'http://135.125.212.110:8095/api/';
-  // static const String baseUrl = 'http://10.0.2.2:9000/api/';
+  // static const String baseUrl = 'http://135.125.212.110:8095/api/';
+  static const String baseUrl = 'http://10.0.2.2:9000/api/';
   // static const String baseUrl = 'http://127.0.0.1:9000/';
 
   static const String clientID = '6a582387-93d6-4b35-8ab6-ce888083c804';
@@ -20,7 +20,7 @@ class Constants {
   static const Color textFieldHintColor = Color.fromRGBO(167, 166, 187, 1.0);
   static const Color colorGrey = Color.fromRGBO(194, 197, 206, 1.0);
   static const Color colorLightGrey = Color.fromRGBO(234, 237, 248, 1.0);
-  static const Color colorGreen = Color.fromRGBO(57, 154, 120, 1.0);
+  static const Color colorGreen = Color.fromRGBO(48, 190, 67, 1.0);
   static const Color colorYellow = Color.fromRGBO(255, 233, 90, 1.0);
   static const Color colorPurpleDark = Color.fromRGBO(74, 48, 132, 1.0);
   static const Color colorBadgeBg = Color.fromRGBO(255, 242, 232, 1.0);

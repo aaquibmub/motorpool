@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:motorpool/helpers/common/constants.dart';
 import 'package:motorpool/helpers/common/shared_types.dart';
@@ -6,7 +8,6 @@ import 'package:motorpool/helpers/models/trips/enroute/trip_enroute.dart';
 import 'package:motorpool/helpers/models/trips/enroute/trip_status_update.dart';
 import 'package:motorpool/providers/trip_provider.dart';
 import 'package:provider/provider.dart';
-import 'dart:async';
 
 class TripWaitingForPassengerWidget extends StatefulWidget {
   final TripEnroute _tripEnroute;
@@ -26,7 +27,7 @@ class _TripWaitingForPassengerWidgetState
     extends State<TripWaitingForPassengerWidget> {
   String _timeString = "";
   int timeInSeconds = 0;
-  // late Timer _timer;
+  Timer _timer;
 
   @override
   void initState() {
@@ -40,13 +41,19 @@ class _TripWaitingForPassengerWidgetState
       timeInSeconds = seconds;
     });
 
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         timeInSeconds++;
         _timeString = Utility.formatHHMMSS(timeInSeconds);
       });
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
