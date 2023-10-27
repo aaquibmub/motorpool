@@ -17,9 +17,7 @@ class _VehicalsScreenState extends State<VehicalsScreen> {
     var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text('Vehicals'),
-        ),
+        title: Text('Vehicals'),
       ),
       drawer: Utility.buildDrawer(context),
       body: Center(

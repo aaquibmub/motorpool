@@ -14,10 +14,8 @@ class TripScreen extends StatelessWidget {
       child: Scaffold(
         drawer: Utility.buildDrawer(context),
         appBar: AppBar(
-          title: Center(
-            child: Text(
-              'Trips',
-            ),
+          title: Text(
+            'Trips',
           ),
           bottom: TabBar(
             tabs: <Widget>[

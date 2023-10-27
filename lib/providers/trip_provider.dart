@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:motorpool/helpers/common/constants.dart';
 import 'package:motorpool/helpers/models/common/response_model.dart';
 import 'package:motorpool/helpers/models/trips/detail/trip_detail.dart';
@@ -9,7 +10,6 @@ import 'package:motorpool/helpers/models/trips/enroute/trip_enroute.dart';
 import 'package:motorpool/helpers/models/trips/enroute/trip_status_update.dart';
 import 'package:motorpool/helpers/models/trips/trip.dart';
 import 'package:motorpool/helpers/models/user.dart';
-import 'package:http/http.dart' as http;
 
 class TripProvider with ChangeNotifier {
   final String authToken;
@@ -84,6 +84,45 @@ class TripProvider with ChangeNotifier {
             });
           }
           _completedTrips = loadedProducts;
+          break;
+        case HttpStatus.forbidden:
+          break;
+      }
+
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  List<Trip> _cancelledTrips = [];
+
+  List<Trip> get cancelledTrips {
+    return [..._cancelledTrips];
+  }
+
+  Future<void> populateCancelledTrips() async {
+    var url = '${Constants.baseUrl}trip/get-cancelled-trip-list';
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $authToken',
+          // 'Content-Type': 'application/json'
+        },
+      );
+
+      switch (response.statusCode) {
+        case HttpStatus.ok:
+          final extractedData = json.decode(response.body) as List<dynamic>;
+          final List<Trip> loadedProducts = [];
+          if (extractedData != null) {
+            extractedData.forEach((value) {
+              Trip prod = Trip.fromJson((value));
+              loadedProducts.add(prod);
+            });
+          }
+          _cancelledTrips = loadedProducts;
           break;
         case HttpStatus.forbidden:
           break;

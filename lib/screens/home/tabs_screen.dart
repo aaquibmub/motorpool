@@ -48,18 +48,21 @@ class _TabsScreenState extends State<TabsScreen> {
             label: '',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(
               MyFlutterApp.ico_trip,
             ),
             label: '',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(
               MyFlutterApp.ico_vehicle,
             ),
             label: '',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(
               MyFlutterApp.ico_vehicle_inspection,
             ),
