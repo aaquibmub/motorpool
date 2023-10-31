@@ -91,11 +91,16 @@ class Utility {
 
   static int getNextTripStatus(TripEnroute _tripEnroute) {
     final status = _tripEnroute.tripStatus;
+
+    if (status == TripStatus.OdoMeterAtEnd) {
+      return TripStatus.Completed;
+    }
+
     final nextDestination = _tripEnroute.items[_tripEnroute.items.length - 1];
     final endTrip = nextDestination.completed;
 
     if (endTrip) {
-      return TripStatus.Completed;
+      return TripStatus.OdoMeterAtEnd;
     }
 
     if (status == TripStatus.TripStarted) {
@@ -145,14 +150,19 @@ class Utility {
 
   static String getTripEnrouteButtonText(TripEnroute _tripEnroute) {
     final status = _tripEnroute.tripStatus;
+
+    if (status == TripStatus.OdoMeterAtEnd) {
+      return "END TRIP";
+    }
+
     final nextDestination = _tripEnroute.items[_tripEnroute.items.length - 1];
     final endTrip = nextDestination.completed;
 
     if (endTrip) {
-      return "END TRIP";
+      return "METER READING";
     }
 
-    if (status == TripStatus.TripStarted) {
+    if (status == TripStatus.OdoMeterAtStart) {
       return "DISPATCH";
     }
     if (status == TripStatus.VehicalDispatched) {

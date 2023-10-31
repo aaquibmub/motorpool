@@ -9,13 +9,15 @@ import 'package:motorpool/helpers/models/trips/enroute/trip_status_update.dart';
 import 'package:motorpool/providers/trip_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../screens/home/trips/enroute/trip_enroute_screen.dart';
+
 class TripWaitingForPassengerWidget extends StatefulWidget {
   final TripEnroute _tripEnroute;
-  final Function _updateState;
+  // final Function _updateState;
 
   TripWaitingForPassengerWidget(
     this._tripEnroute,
-    this._updateState,
+    // this._updateState,
   );
 
   @override
@@ -86,7 +88,14 @@ class _TripWaitingForPassengerWidgetState
                 ),
               )
                   .then((response) {
-                widget._updateState();
+                // widget._updateState();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TripEnrouteScreen(
+                            widget._tripEnroute.tripId,
+                          )),
+                );
               });
             },
             child: Text(

@@ -5,6 +5,8 @@ import 'package:motorpool/widgets/home/trips/enroute/trip_enroute_widget.dart';
 import 'package:motorpool/widgets/home/trips/enroute/trip_waiting_for_passsenger_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../helpers/common/utility.dart';
+import '../../../../widgets/home/trips/enroute/trip_odo_meter_widget.dart';
 import '../../../loading_screen.dart';
 
 class TripEnrouteScreen extends StatefulWidget {
@@ -18,8 +20,18 @@ class TripEnrouteScreen extends StatefulWidget {
 }
 
 class _TripEnrouteScreenState extends State<TripEnrouteScreen> {
-  _updateState() {
-    setState(() {});
+  Future<void> fetchAndSetFuture;
+  // _updateState() {
+  //   setState(() {});
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAndSetFuture = Provider.of<TripProvider>(
+      context,
+      listen: false,
+    ).populateTripEnroute(widget._id);
   }
 
   @override
@@ -30,10 +42,7 @@ class _TripEnrouteScreenState extends State<TripEnrouteScreen> {
         title: Text('Trip Enroute'),
       ),
       body: FutureBuilder(
-          future: Provider.of<TripProvider>(
-            context,
-            listen: false,
-          ).populateTripEnroute(widget._id),
+          future: fetchAndSetFuture,
           builder: (ctx, data) {
             if (data.connectionState == ConnectionState.waiting) {
               return LoadingScreen();
@@ -43,18 +52,28 @@ class _TripEnrouteScreenState extends State<TripEnrouteScreen> {
               width: deviceSize.width,
               child: Consumer<TripProvider>(
                 builder: (ctx, provider, _) {
+                  final nextTripStatus = Utility.getNextTripStatus(
+                    provider.tripEnroute,
+                  );
                   return (provider.tripEnroute.tripStatus ==
                               TripStatus.ArrivedAtPickupLocation ||
                           provider.tripEnroute.tripStatus ==
                               TripStatus.ArrivedAtStop)
                       ? TripWaitingForPassengerWidget(
                           provider.tripEnroute,
-                          _updateState,
+                          // _updateState,
                         )
-                      : TripEnrouteWidget(
-                          provider.tripEnroute,
-                          _updateState,
-                        );
+                      : provider.tripEnroute.tripStatus ==
+                                  TripStatus.TripStarted ||
+                              nextTripStatus == TripStatus.OdoMeterAtEnd
+                          ? TripOdoMeterWidget(
+                              provider.tripEnroute,
+                              nextTripStatus,
+                            )
+                          : TripEnrouteWidget(
+                              provider.tripEnroute,
+                              // _updateState,
+                            );
                 },
               ),
             );

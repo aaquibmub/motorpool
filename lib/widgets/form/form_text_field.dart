@@ -5,6 +5,7 @@ import '../../helpers/common/constants.dart';
 class FormTextField extends StatelessWidget {
   final String fieldLabel;
   final String hintLabel;
+  final TextInputType keyboardType;
   final String Function(String value) validatorFn;
   final void Function(String value) onSaveFn;
   final void Function(String value) onFieldSubmittedFn;
@@ -18,6 +19,7 @@ class FormTextField extends StatelessWidget {
     @required this.fieldLabel,
     @required this.validatorFn,
     @required this.onSaveFn,
+    this.keyboardType = TextInputType.text,
     this.obscureText = false,
     this.readonly = false,
     this.controller,
@@ -42,6 +44,7 @@ class FormTextField extends StatelessWidget {
               vertical: 10,
             ),
             child: TextFormField(
+              keyboardType: keyboardType,
               readOnly: readonly,
               controller: controller,
               obscureText: obscureText,

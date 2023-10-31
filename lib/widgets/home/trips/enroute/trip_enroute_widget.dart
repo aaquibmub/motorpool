@@ -11,15 +11,16 @@ import 'package:motorpool/screens/home/trip_screen.dart';
 import 'package:motorpool/widgets/home/trips/enroute/trip_enroute_item_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../screens/home/trips/enroute/trip_enroute_screen.dart';
 import '../trip_summary_widget.dart';
 
 class TripEnrouteWidget extends StatelessWidget {
   final TripEnroute _tripEnroute;
-  final Function _updateState;
+  // final Function _updateState;
 
   TripEnrouteWidget(
     this._tripEnroute,
-    this._updateState,
+    // this._updateState,
   );
 
   @override
@@ -139,8 +140,15 @@ class TripEnrouteWidget extends StatelessWidget {
                       builder: (context) => TripScreen(),
                     ),
                   );
+                  return;
                 }
-                _updateState();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TripEnrouteScreen(
+                            _tripEnroute.tripId,
+                          )),
+                );
               });
             },
             child: Text(

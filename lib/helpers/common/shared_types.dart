@@ -13,6 +13,7 @@ class TripStatus {
   static const Created = 10;
   static const AssignedToDriver = 20;
   static const TripStarted = 30;
+  static const OdoMeterAtStart = 35;
   static const VehicalDispatched = 40;
   static const ArrivedAtPickupLocation = 50;
   static const WaitingForPassenger = 52;
@@ -21,6 +22,7 @@ class TripStatus {
   static const WaitingForStopActivity = 62;
   static const TripResumedAfterStop = 65;
   static const ArrivedAtDropoff = 70;
+  static const OdoMeterAtEnd = 80;
   static const Completed = 400;
 }
 

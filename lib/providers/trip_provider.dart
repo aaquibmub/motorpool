@@ -11,6 +11,8 @@ import 'package:motorpool/helpers/models/trips/enroute/trip_status_update.dart';
 import 'package:motorpool/helpers/models/trips/trip.dart';
 import 'package:motorpool/helpers/models/user.dart';
 
+import '../helpers/models/trips/enroute/trip_vehical_meter_model.dart';
+
 class TripProvider with ChangeNotifier {
   final String authToken;
   final User user;
@@ -199,6 +201,31 @@ class TripProvider with ChangeNotifier {
 
   Future<ResponseModel<String>> updateStatus(TripStatusUpdate model) async {
     final url = '${Constants.baseUrl}trip/update-trip-status';
+    try {
+      return await http
+          .post(
+        url,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $authToken',
+        },
+        body: jsonEncode(
+          model.toJson(),
+        ),
+      )
+          .then((response) {
+        final responseData = json.decode(response.body);
+        ResponseModel<String> result = ResponseModel.fromJson(responseData);
+        return Future.value(result);
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<ResponseModel<String>> updateTripVehicalMeter(
+      TripVehicalMeterModel model) async {
+    final url = '${Constants.baseUrl}trip/update-trip-vehical-meter';
     try {
       return await http
           .post(
