@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:motorpool/helpers/common/constants.dart';
 import 'package:motorpool/helpers/common/shared_types.dart';
 import 'package:motorpool/helpers/common/utility.dart';
@@ -11,6 +10,7 @@ import 'package:motorpool/screens/home/trip_screen.dart';
 import 'package:motorpool/widgets/home/trips/enroute/trip_enroute_item_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../helpers/common/custom_icons.dart';
 import '../../../../screens/home/trips/enroute/trip_enroute_screen.dart';
 import '../trip_summary_widget.dart';
 
@@ -36,7 +36,7 @@ class TripEnrouteWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
-                height: 50,
+                height: 40,
                 child: InkWell(
                   onTap: () {
                     final int sequence = _tripEnroute
@@ -50,9 +50,8 @@ class TripEnrouteWidget extends StatelessWidget {
                               )),
                     );
                   },
-                  child: new SvgPicture.asset(
-                    Constants.svgPathAddDropoff,
-                    semanticsLabel: 'Add Destination',
+                  child: Icon(
+                    MyFlutterApp.ico_add_stop_navigation_bar,
                     color: Colors.white,
                   ),
                 ),
@@ -60,7 +59,10 @@ class TripEnrouteWidget extends StatelessWidget {
               Container(
                 child: InkWell(
                   onTap: () => {},
-                  child: Icon(Icons.access_alarm),
+                  child: Icon(
+                    MyFlutterApp.ico_add_passenger_navigation_bar,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ],

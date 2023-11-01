@@ -29,4 +29,22 @@ class MyFlutterApp {
       IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ico_vehicle_inspection =
       IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData ico_pickup_location =
+      IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData ico_add_dropoff =
+      IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData ico_add_passenger_navigation_bar =
+      IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData ico_add_stop_location =
+      IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData ico_add_stop_navigation_bar =
+      IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData ico_badge_passengers =
+      IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData ico_badge_route =
+      IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData ico_badge_stops =
+      IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData ico_badge_trip =
+      IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

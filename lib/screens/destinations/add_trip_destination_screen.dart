@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:motorpool/helpers/common/constants.dart';
+import 'package:motorpool/helpers/common/custom_icons.dart';
 import 'package:motorpool/helpers/common/shared_types.dart';
 import 'package:motorpool/screens/destinations/add_new_destination_screen.dart';
+
+import '../../helpers/common/constants.dart';
 
 class AddTripDestinationScreen extends StatefulWidget {
   final String _tripId;
@@ -21,7 +22,7 @@ class AddTripDestinationScreen extends StatefulWidget {
 class _AddTripDestinationScreenState extends State<AddTripDestinationScreen> {
   Widget buildDestinationType(
     BuildContext context,
-    String iconPath,
+    IconData iconData,
     String title,
     int destinationType,
   ) {
@@ -48,7 +49,10 @@ class _AddTripDestinationScreenState extends State<AddTripDestinationScreen> {
           children: [
             Container(
               width: 50,
-              child: SvgPicture.asset(iconPath),
+              child: Icon(
+                iconData,
+                color: Constants.primaryColor,
+              ),
             ),
             Container(
               child: Text(
@@ -81,19 +85,19 @@ class _AddTripDestinationScreenState extends State<AddTripDestinationScreen> {
           ),
           buildDestinationType(
             context,
-            Constants.svgPathAddDropoff,
+            MyFlutterApp.ico_pickup_location,
             'Add pickup location',
             DestinationType.Pickup,
           ),
           buildDestinationType(
             context,
-            Constants.svgPathAddDropoff,
+            MyFlutterApp.ico_add_stop_location,
             'Add stop location',
             DestinationType.Stop,
           ),
           buildDestinationType(
             context,
-            Constants.svgPathAddDropoff,
+            MyFlutterApp.ico_add_dropoff,
             'Add dropoff location',
             DestinationType.Dropoff,
           ),
