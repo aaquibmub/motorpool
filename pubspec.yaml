@@ -41,6 +41,7 @@ dependencies:
   path_provider: ^1.6.28
   path: ^1.8.2
   flutter_svg: ^1.1.6
+  firebase_messaging: ^7.0.3
 
 dev_dependencies:
   flutter_test:

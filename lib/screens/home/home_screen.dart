@@ -1,7 +1,57 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:motorpool/helpers/common/utility.dart';
 import 'package:motorpool/screens/home/tabs_screen.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+import '../../helpers/models/user.dart';
+import '../../providers/auth.dart';
+
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    final fbm = FirebaseMessaging();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      User currentUser = Provider.of<Auth>(context, listen: false).currentUser;
+      fbm.subscribeToTopic(currentUser?.id);
+    });
+    fbm.requestNotificationPermissions();
+    fbm.configure(
+      onMessage: ((message) {
+        Utility.errorAlert(
+          context,
+          message['notification']['title'],
+          message['notification']['body'],
+        );
+        return;
+      }),
+      onResume: ((message) {
+        Utility.errorAlert(
+          context,
+          'Notification',
+          message.toString(),
+        );
+        return;
+      }),
+      onLaunch: ((message) {
+        if (message['notification']) {
+          Utility.errorAlert(
+            context,
+            'Notification',
+            message.toString(),
+          );
+        }
+        return;
+      }),
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
