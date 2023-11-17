@@ -5,6 +5,7 @@ import 'package:motorpool/widgets/home/trips/enroute/trip_enroute_widget.dart';
 import 'package:motorpool/widgets/home/trips/enroute/trip_waiting_for_passsenger_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../helpers/common/constants.dart';
 import '../../../../helpers/common/utility.dart';
 import '../../../../widgets/home/trips/enroute/trip_odo_meter_widget.dart';
 import '../../../loading_screen.dart';
@@ -38,6 +39,7 @@ class _TripEnrouteScreenState extends State<TripEnrouteScreen> {
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Constants.colorLightGrey,
       appBar: AppBar(
         title: Text('Trip Enroute'),
       ),

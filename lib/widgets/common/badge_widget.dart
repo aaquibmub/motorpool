@@ -14,6 +14,7 @@ class BadgeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Constants.colorBadgeBg,
@@ -25,6 +26,7 @@ class BadgeWidget extends StatelessWidget {
             child: Icon(
               _icon,
               size: 10,
+              color: Constants.colorOrange,
             ),
           ),
           Expanded(

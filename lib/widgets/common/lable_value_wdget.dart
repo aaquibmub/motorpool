@@ -20,7 +20,14 @@ class LabelValueWidget extends StatelessWidget {
             vertical: 20,
             horizontal: 10,
           ),
-          child: Text(_label),
+          child: Text(
+            _label,
+            style: TextStyle(
+              color: Constants.textColorLight,
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         Container(
           width: double.infinity,
@@ -35,7 +42,11 @@ class LabelValueWidget extends StatelessWidget {
               ),
             ),
           ),
-          child: Text(_value ?? ""),
+          child: Text(_value ?? "",
+              style: TextStyle(
+                color: Constants.textColor,
+                fontSize: 14,
+              )),
         )
       ],
     );

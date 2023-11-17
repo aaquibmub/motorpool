@@ -62,9 +62,39 @@ class _TripWaitingForPassengerWidgetState
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Container(
+          padding: const EdgeInsets.only(
+            top: 50,
+          ),
+          child: Text(
+            'WAITING FOR PASSENGER',
+            style: TextStyle(
+              fontSize: 14,
+            ),
+          ),
+        ),
         Expanded(
           child: Center(
-            child: Text(_timeString),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  _timeString,
+                  style: TextStyle(
+                    color: Constants.colorOrange,
+                    fontSize: 45,
+                  ),
+                ),
+                Text(
+                  'TIME ELAPSED',
+                  style: TextStyle(
+                    color: Constants.colorOrange,
+                    fontSize: 14,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
         Container(

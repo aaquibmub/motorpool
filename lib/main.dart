@@ -5,6 +5,7 @@ import 'package:motorpool/providers/incident_provider.dart';
 import 'package:motorpool/providers/trip_provider.dart';
 import 'package:motorpool/providers/vehical_provider.dart';
 import 'package:motorpool/screens/home/home_screen.dart';
+import 'package:motorpool/screens/home/trip_screen.dart';
 import 'package:motorpool/screens/home/vehicals_screen.dart';
 import 'package:motorpool/screens/incidents/new_incident_screen.dart';
 import 'package:provider/provider.dart';
@@ -122,6 +123,7 @@ class MyApp extends StatelessWidget {
           routes: {
             Routes.loginScreen: (ctx) => LoginScreen(),
             Routes.homeScreen: (ctx) => HomeScreen(),
+            Routes.tripsScreen: (ctx) => TripScreen(),
             Routes.vehicalsScreen: (ctx) => VehicalsScreen(),
             Routes.newIncidentScreen: (ctx) => NewIncidentScreen(),
             Routes.cartDesktopScreen: (ctx) => CartDesktopScreen(),

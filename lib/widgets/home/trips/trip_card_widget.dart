@@ -44,12 +44,17 @@ class TripCardWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(
-                vertical: 20,
-                horizontal: 10,
+              margin: new EdgeInsets.all(8),
+              padding: EdgeInsets.only(
+                top: 20,
+                bottom: 10,
               ),
               child: Text(
-                _trip.pickupTime.toString(),
+                _trip.pickupTime,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Container(

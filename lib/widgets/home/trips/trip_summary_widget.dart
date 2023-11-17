@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:motorpool/widgets/common/badge_widget.dart';
 
+import '../../../helpers/common/custom_icons.dart';
+
 class TripSummaryWiget extends StatelessWidget {
   final String _tripRoute;
   final String _tripDestination;
@@ -23,28 +25,28 @@ class TripSummaryWiget extends StatelessWidget {
           Expanded(
             flex: 2,
             child: BadgeWidget(
-              Icons.ac_unit,
+              MyFlutterApp.ico_badge_trip,
               _tripRoute,
             ),
           ),
           Expanded(
             flex: 2,
             child: BadgeWidget(
-              Icons.ac_unit,
+              MyFlutterApp.ico_add_stop_navigation_bar,
               _tripDestination,
             ),
           ),
           Expanded(
             flex: 1,
             child: BadgeWidget(
-              Icons.ac_unit,
+              MyFlutterApp.ico_badge_stops,
               _numberOfLocations.toString(),
             ),
           ),
           Expanded(
             flex: 1,
             child: BadgeWidget(
-              Icons.ac_unit,
+              Icons.person,
               _numberOfPassengers.toString(),
             ),
           ),

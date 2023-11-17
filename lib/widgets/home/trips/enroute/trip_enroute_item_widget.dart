@@ -15,20 +15,56 @@ class TripEnrouteItemWidget extends StatelessWidget {
       margin: EdgeInsets.all(8),
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
-          color: _item.completed ? Constants.colorGreen : Colors.white),
+        border: Border.all(
+          color: _item.title.toLowerCase() == 'waiting'
+              ? Constants.colorDarkYellow
+              : _item.completed
+                  ? Constants.colorDarkGreen
+                  : Constants.colorCardBorder,
+        ),
+        color: _item.title.toLowerCase() == 'waiting'
+            ? Constants.colorYellow
+            : _item.completed
+                ? Constants.colorLightGreen
+                : Colors.white,
+      ),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(_item.start == null || _item.start == "" ? "" : _item.start),
-              Text(_item.end == null || _item.end == "" ? "" : _item.end),
+              Text(
+                _item.start == null || _item.start == "" ? "" : _item.start,
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                _item.end == null || _item.end == "" ? "" : _item.end,
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
-          Text(_item.title == null || _item.title == "" ? "" : _item.title),
-          Text(_item.location == null || _item.location.text == null
-              ? ""
-              : _item.location.text),
+          Text(
+            _item.title == null || _item.title == "" ? "" : _item.title,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            _item.location == null || _item.location.text == null
+                ? ""
+                : _item.location.text,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
         ],
       ),
     );

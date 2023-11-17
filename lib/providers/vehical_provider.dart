@@ -76,6 +76,12 @@ class VehicalProvider with ChangeNotifier {
         body: jsonEncode({'vehicalId': vehicalId}),
       )
           .then((response) {
+        if (response.statusCode == 403) {
+          _inspectionResponseModel =
+              ResponseModel(null, 'Operation is not allowed to you', true);
+          notifyListeners();
+          return;
+        }
         final responseData = json.decode(response.body);
         ResponseModel<VehicalInspectionModel> result =
             ResponseModel<VehicalInspectionModel>.fromJson(responseData);

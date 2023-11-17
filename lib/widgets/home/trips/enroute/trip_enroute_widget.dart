@@ -76,11 +76,17 @@ class TripEnrouteWidget extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TripSummaryWiget(
-                            _tripEnroute.tripRoute,
-                            _tripEnroute.tripDestination,
-                            _tripEnroute.numberOfLocations,
-                            _tripEnroute.numberOfPassengers,
+                          Container(
+                            padding: const EdgeInsets.only(
+                              top: 20,
+                              bottom: 20,
+                            ),
+                            child: TripSummaryWiget(
+                              _tripEnroute.tripRoute,
+                              _tripEnroute.tripDestination,
+                              _tripEnroute.numberOfLocations,
+                              _tripEnroute.numberOfPassengers,
+                            ),
                           ),
                           _tripEnroute.items.length > 0
                               ? Container(
