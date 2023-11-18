@@ -7,6 +7,9 @@ import '../../helpers/common/custom_icons.dart';
 import '../../helpers/common/routes.dart';
 import '../../helpers/models/user.dart';
 import '../../providers/auth.dart';
+import '../../providers/dashboard_provider.dart';
+import '../loading_screen.dart';
+import '../vehicals/vehical_inspection_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key key}) : super(key: key);
@@ -96,74 +99,103 @@ class DashboardScreen extends StatelessWidget {
         ),
       ),
       drawer: Utility.buildDrawer(context),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: double.infinity,
-              height: 30,
-            ),
-            getContainer(
-              MyFlutterApp.ico_vehicle,
-              'Vehicle',
-              Text(
-                _currentuser.vehical != null &&
-                        _currentuser.vehical.text != null
-                    ? _currentuser.vehical.text
-                    : 'No Vehicle assigned',
-              ),
-              () => {
-                Navigator.of(context)
-                    .pushReplacementNamed(Routes.vehicalsScreen)
-              },
-            ),
-            getContainer(
-              MyFlutterApp.ico_trip,
-              'Ongoing Trip',
-              Text(
-                '1',
-              ),
-              () => {
-                Navigator.of(context).pushReplacementNamed(Routes.tripsScreen)
-              },
-            ),
-            getContainer(
-              MyFlutterApp.ico_badge_trip,
-              'Assigned Trips',
-              Text(
-                '2',
-              ),
-              () => {
-                Navigator.of(context).pushReplacementNamed(Routes.tripsScreen)
-              },
-            ),
-            getContainer(
-              MyFlutterApp.ico_vehicle_inspection,
-              'Pending Inspection',
-              Text(
-                '2',
-              ),
-              () => {
-                Navigator.of(context)
-                    .pushReplacementNamed(Routes.vehicalsScreen)
-              },
-            ),
-            getContainer(
-              MyFlutterApp.ico_vehicle,
-              'Issues Reported',
-              Text(
-                '2',
-              ),
-              () => {
-                Navigator.of(context)
-                    .pushReplacementNamed(Routes.newIncidentScreen)
-              },
-            ),
-          ],
-        ),
-      ),
+      body: FutureBuilder(
+          future: Provider.of<DashboardProvider>(context, listen: false)
+              .populateDashboardModel(),
+          builder: (ctx, data) {
+            if (data.connectionState == ConnectionState.waiting) {
+              return LoadingScreen();
+            }
+            return Consumer<DashboardProvider>(builder: (ctx, provider, _) {
+              return provider.dashboardModel != null
+                  ? Container(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: double.infinity,
+                              height: 30,
+                            ),
+                            getContainer(
+                              MyFlutterApp.ico_vehicle,
+                              'Vehicle',
+                              Text(
+                                _currentuser.vehical != null &&
+                                        _currentuser.vehical.text != null
+                                    ? _currentuser.vehical.text
+                                    : 'No Vehicle assigned',
+                              ),
+                              () => {
+                                Navigator.of(context)
+                                    .pushReplacementNamed(Routes.vehicalsScreen)
+                              },
+                            ),
+                            getContainer(
+                              MyFlutterApp.ico_trip,
+                              'Ongoing Trip',
+                              Text(
+                                provider.dashboardModel.ongoingTrips.toString(),
+                              ),
+                              () => {
+                                Navigator.of(context)
+                                    .pushReplacementNamed(Routes.tripsScreen)
+                              },
+                            ),
+                            getContainer(
+                              MyFlutterApp.ico_badge_trip,
+                              'Assigned Trips',
+                              Text(
+                                provider.dashboardModel.assignedTrips
+                                    .toString(),
+                              ),
+                              () => {
+                                Navigator.of(context)
+                                    .pushReplacementNamed(Routes.tripsScreen)
+                              },
+                            ),
+                            if (_currentuser.vehical != null &&
+                                provider.dashboardModel.inspectionPending)
+                              getContainer(
+                                MyFlutterApp.ico_vehicle_inspection,
+                                'Pending Inspection',
+                                Text(
+                                  '',
+                                ),
+                                () => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          VehicalInspectionScreen(
+                                        _currentuser.vehical.value,
+                                      ),
+                                    ),
+                                  )
+                                },
+                              ),
+                            getContainer(
+                              MyFlutterApp.ico_vehicle,
+                              'Issues Reported',
+                              Text(
+                                provider.dashboardModel.issuesReported
+                                    .toString(),
+                              ),
+                              () => {
+                                Navigator.of(context).pushReplacementNamed(
+                                    Routes.newIncidentScreen)
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : Center(
+                      child: Text('No data'),
+                    );
+            });
+          }),
     );
   }
 }

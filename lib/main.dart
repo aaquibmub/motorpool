@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:motorpool/providers/address_provider.dart';
 import 'package:motorpool/providers/cart_provider.dart';
+import 'package:motorpool/providers/dashboard_provider.dart';
 import 'package:motorpool/providers/incident_provider.dart';
 import 'package:motorpool/providers/trip_provider.dart';
 import 'package:motorpool/providers/vehical_provider.dart';
@@ -55,6 +56,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, AddressProvider>(
           update: (ctx, auth, _) {
             return AddressProvider(auth.token, auth.currentUser);
+          },
+        ),
+        ChangeNotifierProxyProvider<Auth, DashboardProvider>(
+          update: (ctx, auth, _) {
+            return DashboardProvider(auth.token, auth.currentUser);
           },
         ),
       ],
