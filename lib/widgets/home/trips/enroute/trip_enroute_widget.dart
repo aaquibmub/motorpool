@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../helpers/common/custom_icons.dart';
 import '../../../../screens/home/trips/enroute/trip_enroute_screen.dart';
+import '../../../../screens/home/trips/enroute/trip_passenger_screen.dart';
 import '../trip_summary_widget.dart';
 
 class TripEnrouteWidget extends StatelessWidget {
@@ -58,7 +59,16 @@ class TripEnrouteWidget extends StatelessWidget {
               ),
               Container(
                 child: InkWell(
-                  onTap: () => {},
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TripPassengerScreen(
+                          _tripEnroute.tripId,
+                        ),
+                      ),
+                    )
+                  },
                   child: Icon(
                     MyFlutterApp.ico_add_passenger_navigation_bar,
                     color: Colors.white,

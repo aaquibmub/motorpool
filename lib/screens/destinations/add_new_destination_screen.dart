@@ -6,6 +6,7 @@ import '../../helpers/common/utility.dart';
 import '../../helpers/models/address/add_destination_model.dart';
 import '../../providers/address_provider.dart';
 import '../../widgets/address/add_new_destination_form.dart';
+import '../home/trips/enroute/trip_enroute_screen.dart';
 
 class AddNewDestinationScreen extends StatefulWidget {
   final String _tripId;
@@ -79,7 +80,13 @@ class _AddNewDestinationScreenState extends State<AddNewDestinationScreen> {
       if (response.hasError) {
         _showErrorDialogue(context, response.msg);
       } else {
-        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => TripEnrouteScreen(
+                    widget._tripId,
+                  )),
+        );
       }
     } catch (error) {
       const errorMessage = 'Error';
