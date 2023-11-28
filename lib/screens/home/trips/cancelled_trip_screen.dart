@@ -11,6 +11,10 @@ class CancelledTripScreen extends StatefulWidget {
 }
 
 class _CancelledTripScreenState extends State<CancelledTripScreen> {
+  _updateState() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
@@ -31,7 +35,10 @@ class _CancelledTripScreenState extends State<CancelledTripScreen> {
                       ? ListView.builder(
                           itemCount: provider.cancelledTrips.length,
                           itemBuilder: (_a, i) {
-                            return TripCardWidget(provider.cancelledTrips[i]);
+                            return TripCardWidget(
+                              provider.cancelledTrips[i],
+                              _updateState,
+                            );
                           },
                         )
                       : Center(

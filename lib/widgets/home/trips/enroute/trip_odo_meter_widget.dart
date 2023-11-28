@@ -13,10 +13,12 @@ import '../../../../screens/home/trips/enroute/trip_enroute_screen.dart';
 class TripOdoMeterWidget extends StatefulWidget {
   final TripEnroute _tripEnroute;
   final int _tripStatus;
+  final int _tripNextStatus;
 
   TripOdoMeterWidget(
     this._tripEnroute,
     this._tripStatus,
+    this._tripNextStatus,
   );
 
   @override
@@ -71,6 +73,7 @@ class _TripOdoMeterWidgetState extends State<TripOdoMeterWidget> {
         TripVehicalMeterModel(
           widget._tripEnroute.tripId,
           _meterReading,
+          widget._tripStatus,
         ),
       );
 
@@ -81,7 +84,7 @@ class _TripOdoMeterWidgetState extends State<TripOdoMeterWidget> {
             .updateStatus(
           TripStatusUpdate(
             widget._tripEnroute.tripId,
-            widget._tripStatus,
+            widget._tripNextStatus,
             null,
             null,
             '',

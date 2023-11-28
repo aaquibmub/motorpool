@@ -41,7 +41,7 @@ class _TripEnrouteScreenState extends State<TripEnrouteScreen> {
     return Scaffold(
       backgroundColor: Constants.colorLightGrey,
       appBar: AppBar(
-        title: Text('Trip Enroute'),
+        title: Center(child: Text('Trip Enroute')),
       ),
       body: FutureBuilder(
           future: fetchAndSetFuture,
@@ -70,6 +70,7 @@ class _TripEnrouteScreenState extends State<TripEnrouteScreen> {
                               nextTripStatus == TripStatus.OdoMeterAtEnd
                           ? TripOdoMeterWidget(
                               provider.tripEnroute,
+                              provider.tripEnroute.tripStatus,
                               nextTripStatus,
                             )
                           : TripEnrouteWidget(

@@ -9,9 +9,11 @@ import 'package:motorpool/widgets/home/trips/trip_summary_widget.dart';
 
 class TripCardWidget extends StatelessWidget {
   final Trip _trip;
+  final Function _updateState;
 
   TripCardWidget(
     this._trip,
+    this._updateState,
   );
 
   @override
@@ -26,7 +28,9 @@ class TripCardWidget extends StatelessWidget {
                   builder: (context) => TripDetailScreen(
                         _trip.id,
                       )),
-            );
+            ).then((value) {
+              _updateState();
+            });
           }
           if (_trip.tripStatus.value > TripStatus.AssignedToDriver &&
               _trip.tripStatus.value < TripStatus.Completed) {
@@ -36,7 +40,9 @@ class TripCardWidget extends StatelessWidget {
                   builder: (context) => TripEnrouteScreen(
                         _trip.id,
                       )),
-            );
+            ).then((value) {
+              _updateState();
+            });
           }
         },
         child: Column(

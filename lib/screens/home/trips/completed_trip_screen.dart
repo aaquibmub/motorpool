@@ -11,6 +11,10 @@ class CompletedTripScreen extends StatefulWidget {
 }
 
 class _CompletedTripScreenState extends State<CompletedTripScreen> {
+  _updateState() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
@@ -31,7 +35,10 @@ class _CompletedTripScreenState extends State<CompletedTripScreen> {
                       ? ListView.builder(
                           itemCount: provider.completedTrips.length,
                           itemBuilder: (_a, i) {
-                            return TripCardWidget(provider.completedTrips[i]);
+                            return TripCardWidget(
+                              provider.completedTrips[i],
+                              _updateState,
+                            );
                           },
                         )
                       : Center(
