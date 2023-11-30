@@ -85,6 +85,17 @@ class VehicalProvider with ChangeNotifier {
         final responseData = json.decode(response.body);
         ResponseModel<VehicalInspectionModel> result =
             ResponseModel<VehicalInspectionModel>.fromJson(responseData);
+        final bodyPartItems = result.result.bodyInspectionItems;
+        bodyPartItems.forEach((bpi) {
+          final bodyParts = bpi.parts;
+          int index = 0;
+          bodyParts.forEach((bp) {
+            bp.index = index++;
+          });
+
+          bpi.parts = bodyParts;
+        });
+        result.result.bodyInspectionItems = bodyPartItems;
         _inspectionResponseModel = result;
         notifyListeners();
       });

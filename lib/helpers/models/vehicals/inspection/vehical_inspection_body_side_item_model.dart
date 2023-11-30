@@ -3,7 +3,7 @@ import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_
 
 class VehicalInspectionBodySideItemModel {
   final DropdownItem<String> side;
-  final List<VehicalInspectionBodyPartItemModel> parts;
+  List<VehicalInspectionBodyPartItemModel> parts;
 
   VehicalInspectionBodySideItemModel(
     this.side,

@@ -12,7 +12,7 @@ class VehicalInspectionModel {
   final int modelYear;
   final String registrationPlate;
   final List<VehicalInspectionGeneralItemModel> generalInspectionItems;
-  final List<VehicalInspectionBodySideItemModel> bodyInspectionItems;
+  List<VehicalInspectionBodySideItemModel> bodyInspectionItems;
   String bodyInspectionComments;
 
   num fuelLevel;

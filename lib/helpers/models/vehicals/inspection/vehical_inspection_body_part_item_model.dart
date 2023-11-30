@@ -3,18 +3,27 @@ import '../../common/dropdown_item.dart';
 class VehicalInspectionBodyPartItemModel {
   final String id;
   final DropdownItem<String> part;
-  DropdownItem<int> damageLevel;
+  int scraches;
+  int dents;
+  int damages;
+  int index;
 
   VehicalInspectionBodyPartItemModel(
     this.id,
     this.part,
-    this.damageLevel,
+    this.scraches,
+    this.dents,
+    this.damages,
+    this.index,
   );
   factory VehicalInspectionBodyPartItemModel.fromJson(dynamic json) =>
       VehicalInspectionBodyPartItemModel(
         json['id'] as String,
         DropdownItem<String>.fromJson(json['part']),
-        DropdownItem<int>.fromJson(json['damageLevel']),
+        json['scraches'] as int,
+        json['dents'] as int,
+        json['damages'] as int,
+        json['index'] as int,
       );
 
   Map<String, dynamic> toJson() =>
@@ -25,8 +34,9 @@ class VehicalInspectionBodyPartItemModel {
       <String, dynamic>{
         'id': instance.id,
         'part': {'value': instance.part.value},
-        'damageLevel': instance.damageLevel != null
-            ? {'value': instance.damageLevel.value}
-            : null,
+        'scraches': instance.scraches,
+        'dents': instance.dents,
+        'damages': instance.damages,
+        'index': instance.index,
       };
 }
