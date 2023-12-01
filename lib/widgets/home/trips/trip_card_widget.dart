@@ -92,14 +92,21 @@ class TripCardWidget extends StatelessWidget {
                     "DATE/TIME",
                     _trip.pickupTime,
                   ),
-                  LabelValueWidget(
-                    "PASSENGER NAME",
-                    _trip.requester,
-                  ),
-                  LabelValueWidget(
-                    "PICKUP LOCATION",
-                    _trip.pickupLocation,
-                  ),
+                  if (_trip.requester != "")
+                    LabelValueWidget(
+                      "PASSENGER NAME",
+                      _trip.requester,
+                    ),
+                  if (_trip.pickupLocation != "")
+                    LabelValueWidget(
+                      "PICKUP LOCATION",
+                      _trip.pickupLocation,
+                    ),
+                  if (_trip.addressLocation != "")
+                    LabelValueWidget(
+                      "ADDRESS LOCATION",
+                      _trip.addressLocation,
+                    ),
                 ],
               ),
             ),

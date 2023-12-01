@@ -11,6 +11,7 @@ class Trip {
   final String pickupTime;
   final String requester;
   final String pickupLocation;
+  final String addressLocation;
 
   Trip(
     this.id,
@@ -23,6 +24,7 @@ class Trip {
     this.pickupTime,
     this.requester,
     this.pickupLocation,
+    this.addressLocation,
   );
 
   factory Trip.fromJson(dynamic json) => Trip(
@@ -36,6 +38,7 @@ class Trip {
         json['pickupTime'] as String,
         json['requester'] as String,
         json['pickupLocation'] as String,
+        json['addressLocation'] as String,
       );
 
   // Map<String, dynamic> toJson() => _$TripToJson(this);
