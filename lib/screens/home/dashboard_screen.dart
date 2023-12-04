@@ -90,7 +90,6 @@ class DashboardScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Constants.colorLightGrey,
       appBar: AppBar(
         title: Center(
           child: Text(

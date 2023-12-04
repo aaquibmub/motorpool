@@ -39,7 +39,7 @@ class _TripEnrouteScreenState extends State<TripEnrouteScreen> {
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Constants.colorLightGrey,
+      backgroundColor: Constants.backgroundColor,
       appBar: AppBar(
         title: Center(child: Text('Trip Enroute')),
       ),

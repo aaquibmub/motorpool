@@ -9,6 +9,7 @@ import 'package:motorpool/screens/home/home_screen.dart';
 import 'package:motorpool/screens/home/trip_screen.dart';
 import 'package:motorpool/screens/home/vehicals_screen.dart';
 import 'package:motorpool/screens/incidents/new_incident_screen.dart';
+import 'package:motorpool/screens/loading_screen.dart';
 import 'package:provider/provider.dart';
 
 import './helpers/common/constants.dart';
@@ -16,7 +17,6 @@ import './helpers/common/routes.dart';
 import './providers/auth.dart';
 import './screens/cart/desktop/cart_desktop_screen.dart';
 import './screens/login_screen.dart';
-import './screens/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -110,6 +110,7 @@ class MyApp extends StatelessWidget {
                     ),
                   ),
               visualDensity: VisualDensity.adaptivePlatformDensity,
+              scaffoldBackgroundColor: Constants.backgroundColor,
               appBarTheme: AppBarTheme.of(context).copyWith(
                 backgroundColor: Constants.primaryColor,
               )),
@@ -119,7 +120,7 @@ class MyApp extends StatelessWidget {
                   future: authData.tryAutoLogin(),
                   builder: (ctx, snapshot) =>
                       snapshot.connectionState == ConnectionState.waiting
-                          ? SplashScreen()
+                          ? LoadingScreen()
                           : ((snapshot.data != null
                                   ? (snapshot.data as bool)
                                   : false)
