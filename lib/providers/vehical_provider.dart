@@ -10,7 +10,9 @@ import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_
 import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_model.dart';
 import 'package:motorpool/helpers/models/vehicals/vehical_history.dart';
 
+import '../helpers/models/vehicals/deallocate_vehical_model.dart';
 import '../helpers/models/vehicals/inspection/vehical_inspection_body_part_item_model.dart';
+import '../helpers/models/vehicals/inspection/vehical_inspection_history_list.dart';
 
 class VehicalProvider with ChangeNotifier {
   final String authToken;
@@ -46,6 +48,46 @@ class VehicalProvider with ChangeNotifier {
             });
           }
           _vehicalHistory = loadedProducts;
+          break;
+        case HttpStatus.forbidden:
+          break;
+      }
+
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  List<VehicalInspectionHistory> _vehicalInspectionHistory = [];
+
+  List<VehicalInspectionHistory> get vehicalInspectionHistory {
+    return [..._vehicalInspectionHistory];
+  }
+
+  Future<void> populateVehicalInspectionHistory() async {
+    var url = '${Constants.baseUrl}vehical/get-vehical-inspection-history-list';
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $authToken',
+          // 'Content-Type': 'application/json'
+        },
+      );
+
+      switch (response.statusCode) {
+        case HttpStatus.ok:
+          final extractedData = json.decode(response.body) as List<dynamic>;
+          final List<VehicalInspectionHistory> loadedProducts = [];
+          if (extractedData != null) {
+            extractedData.forEach((value) {
+              VehicalInspectionHistory prod =
+                  VehicalInspectionHistory.fromJson((value));
+              loadedProducts.add(prod);
+            });
+          }
+          _vehicalInspectionHistory = loadedProducts;
           break;
         case HttpStatus.forbidden:
           break;
@@ -161,6 +203,30 @@ class VehicalProvider with ChangeNotifier {
             body: jsonEncode(model.toJson()),
           )
           .then((response) {});
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<ResponseModel<String>> updateVehicalOdoMeter(
+      DeallocateVehicalModel model) async {
+    final url =
+        '${Constants.baseUrl}driver/update-vehical-meter-and-deallocattion';
+    try {
+      return await http
+          .post(
+        url,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $authToken',
+        },
+        body: jsonEncode(model.toJson()),
+      )
+          .then((response) {
+        final responseData = json.decode(response.body);
+        ResponseModel<String> result = ResponseModel.fromJson(responseData);
+        return Future.value(result);
+      });
     } catch (error) {
       throw error;
     }

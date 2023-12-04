@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:motorpool/helpers/common/constants.dart';
 import 'package:motorpool/helpers/common/utility.dart';
+import 'package:motorpool/helpers/models/common/notification_payload_model.dart';
 import 'package:motorpool/screens/home/tabs_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +17,33 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<dynamic> onMessage(message) {
+    final notificationStr = message.entries.toList();
+    final notification = notificationStr.first;
+    final data = notificationStr[1];
+    if (notification != null) {
+      final title = notification.value['title'];
+      final body = notification.value['body'];
+      final payload = jsonDecode(data.value['payload'] as String);
+      NotificationPayloadModel payloadModel =
+          NotificationPayloadModel.fromJson(payload);
+      if (payloadModel.EventId == Constants.notifyDriverDeallocatedVehicalID) {
+        Utility.showMeterReadingDialogue(
+          context,
+          payloadModel.Data,
+          '',
+        ).then((value) {});
+        return Future.value();
+      }
+      Utility.errorAlert(
+        context,
+        title,
+        body,
+      );
+    }
+    return Future.value();
+  }
+
   @override
   void initState() {
     final fbm = FirebaseMessaging();
@@ -22,28 +53,31 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     fbm.requestNotificationPermissions();
     fbm.configure(
-      onMessage: ((message) {
-        Utility.errorAlert(
-          context,
-          message['notification']['title'],
-          message['notification']['body'],
-        );
-        return;
-      }),
+      onMessage: onMessage,
       onResume: ((message) {
-        Utility.errorAlert(
-          context,
-          'Notification',
-          message.toString(),
-        );
+        final notificationStr = message.entries.toList();
+        final notification = notificationStr.first;
+        if (notification != null) {
+          final title = notification.value['title'];
+          final body = notification.value['body'];
+          Utility.errorAlert(
+            context,
+            title,
+            body,
+          );
+        }
         return;
       }),
       onLaunch: ((message) {
-        if (message['notification']) {
+        final notificationStr = message.entries.toList();
+        final notification = notificationStr.first;
+        if (notification != null) {
+          final title = notification.value['title'];
+          final body = notification.value['body'];
           Utility.errorAlert(
             context,
-            'Notification',
-            message.toString(),
+            title,
+            body,
           );
         }
         return;
@@ -55,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: TabsScreen(),
+      body: TabsScreen(0),
       // body: Container(
       //   padding: !Utility.isPhone(deviceSize)
       //       ? EdgeInsets.all(50)

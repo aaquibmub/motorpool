@@ -8,7 +8,9 @@ import 'package:motorpool/helpers/models/trips/enroute/trip_enroute.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/auth.dart';
+import '../../providers/vehical_provider.dart';
 import '../models/user.dart';
+import '../models/vehicals/deallocate_vehical_model.dart';
 import 'shared_types.dart';
 
 class Utility {
@@ -272,5 +274,83 @@ class Utility {
         ],
       ), // Populate the Drawer in the next step.
     );
+  }
+
+  static Future showMeterReadingDialogue(
+      BuildContext context, String id, String plateNumber) {
+    TextEditingController _meterReadingController = new TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text('Enter ODO meter reading'),
+            content: Container(
+              width: double.infinity,
+              height: 100,
+              child: Column(children: [
+                Text(plateNumber),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 10,
+                    ),
+                    filled: true,
+                    fillColor: Constants.textFieldFillColor,
+                    focusColor: Constants.textFieldFillColor,
+                    focusedBorder: InputBorder.none,
+                  ),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 4,
+                  ),
+                  controller: _meterReadingController,
+                  keyboardType: TextInputType.number,
+                ),
+                // Text('Error'),
+              ]),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final meterReading = int.tryParse(
+                    _meterReadingController.text.toString(),
+                  );
+
+                  if (meterReading == null) {
+                    return;
+                  }
+
+                  final response = await Provider.of<VehicalProvider>(
+                    context,
+                    listen: false,
+                  ).updateVehicalOdoMeter(
+                    DeallocateVehicalModel(
+                      id,
+                      meterReading,
+                    ),
+                  );
+
+                  if (response.hasError == null || response.hasError) {
+                    return;
+                  }
+                  Navigator.of(ctx).pop();
+                },
+                child: Text('Save'),
+              )
+            ],
+          );
+        });
   }
 }

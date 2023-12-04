@@ -5,6 +5,8 @@ class VehicalHistory {
   final String make;
   final String model;
   final int modelYear;
+  final bool allocated;
+  final String odoMeter;
   final DateTime assignedOn;
 
   VehicalHistory(
@@ -14,6 +16,8 @@ class VehicalHistory {
     this.make,
     this.model,
     this.modelYear,
+    this.allocated,
+    this.odoMeter,
     this.assignedOn,
   );
 
@@ -26,6 +30,8 @@ class VehicalHistory {
             json['make'] as String,
             json['model'] as String,
             json['modelYear'] as int,
+            json['allocated'] as bool,
+            json['odoMeter'] as String,
             json['assignedOn'] != null
                 ? DateTime.parse(json['assignedOn'])
                 : null,

@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:motorpool/providers/vehical_provider.dart';
-import 'package:motorpool/widgets/home/vehicals/vehical_history_card_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/common/utility.dart';
+import '../../providers/vehical_provider.dart';
+import '../../widgets/home/vehicals/vehical_inspection_history_card_widget.dart';
 import '../loading_screen.dart';
 
-class VehicalsScreen extends StatefulWidget {
+class VehicalInspectionListScreen extends StatefulWidget {
+  const VehicalInspectionListScreen({Key key}) : super(key: key);
+
   @override
-  _VehicalsScreenState createState() => _VehicalsScreenState();
+  State<VehicalInspectionListScreen> createState() =>
+      _VehicalInspectionListScreenState();
 }
 
-class _VehicalsScreenState extends State<VehicalsScreen> {
-  _updateState() {
-    setState(() {});
-  }
-
+class _VehicalInspectionListScreenState
+    extends State<VehicalInspectionListScreen> {
   @override
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Vehicals'),
+        title: Text('Vehical Inspections'),
       ),
       drawer: Utility.buildDrawer(context),
       body: Center(
         child: FutureBuilder(
             future: Provider.of<VehicalProvider>(context, listen: false)
-                .populateVehicalHistory(),
+                .populateVehicalInspectionHistory(),
             builder: (ctx, data) {
               if (data.connectionState == ConnectionState.waiting) {
                 return LoadingScreen();
@@ -37,18 +37,17 @@ class _VehicalsScreenState extends State<VehicalsScreen> {
                 width: deviceSize.width,
                 child: Consumer<VehicalProvider>(
                   builder: (ctx, provider, _) {
-                    return provider.vehicalHistory.length > 0
+                    return provider.vehicalInspectionHistory.length > 0
                         ? ListView.builder(
-                            itemCount: provider.vehicalHistory.length,
+                            itemCount: provider.vehicalInspectionHistory.length,
                             itemBuilder: (_a, i) {
-                              return VehicalHistoryCardWidget(
-                                provider.vehicalHistory[i],
-                                _updateState,
+                              return VehicalInspectionHistoryCardWidget(
+                                provider.vehicalInspectionHistory[i],
                               );
                             },
                           )
                         : Center(
-                            child: Text("no vehical assigned so far"),
+                            child: Text("no vehical inspected so far"),
                           );
                   },
                 ),

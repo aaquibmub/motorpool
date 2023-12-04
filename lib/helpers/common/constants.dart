@@ -107,4 +107,7 @@ class Constants {
       '84c32806-4f56-4b53-a8c2-4f50b070abd7';
   static const String vehicalBodyPartRightSideRearDoorId =
       'd1e16d16-cdbe-4e63-9ead-fb31a5cfa05a';
+
+  static const String notifyDriverDeallocatedVehicalID =
+      "84994fc8-8813-4a37-b486-dacd88442afe";
 }

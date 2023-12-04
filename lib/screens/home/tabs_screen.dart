@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:motorpool/helpers/common/custom_icons.dart';
 import 'package:motorpool/screens/home/dashboard_screen.dart';
 import 'package:motorpool/screens/home/trip_screen.dart';
+import 'package:motorpool/screens/home/vehical-inspection-list-screens.dart';
 import 'package:motorpool/screens/home/vehicals_screen.dart';
 
 class TabsScreen extends StatefulWidget {
+  final int index;
+
+  TabsScreen(
+    this.index,
+  );
+
   @override
   _TabsScreenState createState() => _TabsScreenState();
 }
@@ -12,22 +19,24 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   List<Map<String, Object>> _pages;
 
+  int _selectedPageIndex = 0;
+  void _selectPage(int index) {
+    setState(() {
+      _selectedPageIndex = index;
+    });
+  }
+
   @override
   void initState() {
     _pages = [
       {'page': DashboardScreen()},
       {'page': TripScreen()},
       {'page': VehicalsScreen()},
-      {'page': VehicalsScreen()},
+      {'page': VehicalInspectionListScreen()},
     ];
-    super.initState();
-  }
 
-  int _selectedPageIndex = 0;
-  void _selectPage(int index) {
-    setState(() {
-      _selectedPageIndex = index;
-    });
+    _selectedPageIndex = widget.index;
+    super.initState();
   }
 
   @override

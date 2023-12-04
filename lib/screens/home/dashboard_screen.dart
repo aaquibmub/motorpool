@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:motorpool/helpers/common/utility.dart';
+import 'package:motorpool/screens/home/tabs_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/common/constants.dart';
@@ -121,14 +122,17 @@ class DashboardScreen extends StatelessWidget {
                               MyFlutterApp.ico_vehicle,
                               'Vehicle',
                               Text(
-                                _currentuser.vehical != null &&
-                                        _currentuser.vehical.text != null
-                                    ? _currentuser.vehical.text
+                                provider.dashboardModel.assignedVehical != null
+                                    ? provider.dashboardModel.assignedVehical
                                     : 'No Vehicle assigned',
                               ),
                               () => {
-                                Navigator.of(context)
-                                    .pushReplacementNamed(Routes.vehicalsScreen)
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TabsScreen(2),
+                                  ),
+                                )
                               },
                             ),
                             getContainer(
@@ -138,8 +142,12 @@ class DashboardScreen extends StatelessWidget {
                                 provider.dashboardModel.ongoingTrips.toString(),
                               ),
                               () => {
-                                Navigator.of(context)
-                                    .pushReplacementNamed(Routes.tripsScreen)
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TabsScreen(1),
+                                  ),
+                                )
                               },
                             ),
                             getContainer(
@@ -150,8 +158,12 @@ class DashboardScreen extends StatelessWidget {
                                     .toString(),
                               ),
                               () => {
-                                Navigator.of(context)
-                                    .pushReplacementNamed(Routes.tripsScreen)
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TabsScreen(1),
+                                  ),
+                                )
                               },
                             ),
                             if (_currentuser.vehical != null &&
