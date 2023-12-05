@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:motorpool/helpers/common/constants.dart';
 import 'package:motorpool/helpers/common/utility.dart';
 import 'package:motorpool/helpers/models/vehicals/vehical_history.dart';
@@ -55,7 +56,8 @@ class _VehicalHistoryCardWidgetState extends State<VehicalHistoryCardWidget> {
                 ),
                 LabelValueWidget(
                   widget._model.allocated ? "ASSIGNED ON" : "DEALLOCATED ON",
-                  widget._model.assignedOn.toString(),
+                  DateFormat('yyyy-MM-dd – kk:mm')
+                      .format(widget._model.assignedOn),
                 ),
                 if (!widget._model.allocated &&
                     (widget._model.odoMeter == null ||

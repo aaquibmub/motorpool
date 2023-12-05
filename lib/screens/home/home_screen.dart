@@ -8,6 +8,7 @@ import 'package:motorpool/helpers/models/common/notification_payload_model.dart'
 import 'package:motorpool/screens/home/tabs_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../../helpers/models/common/notifications/vehical_deallocation_payload_model.dart';
 import '../../helpers/models/user.dart';
 import '../../providers/auth.dart';
 
@@ -28,11 +29,20 @@ class _HomeScreenState extends State<HomeScreen> {
       NotificationPayloadModel payloadModel =
           NotificationPayloadModel.fromJson(payload);
       if (payloadModel.EventId == Constants.notifyDriverDeallocatedVehicalID) {
-        Utility.showMeterReadingDialogue(
+        final payload = jsonDecode(payloadModel.Data);
+        VehicalDeallocationPayloadModel vdPayload =
+            VehicalDeallocationPayloadModel.fromJson(payload);
+        Utility.showVehicalDeallocationDialogue(
           context,
-          payloadModel.Data,
-          '',
-        ).then((value) {});
+          vdPayload.DeallocationId,
+          vdPayload.Vehical,
+        ).then((value) {
+          Utility.showMeterReadingDialogue(
+            context,
+            vdPayload.DeallocationId,
+            vdPayload.Vehical,
+          ).then((value) {});
+        });
         return Future.value();
       }
       Utility.errorAlert(

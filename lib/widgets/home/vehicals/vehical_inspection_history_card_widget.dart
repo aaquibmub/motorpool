@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../helpers/common/constants.dart';
 import '../../../helpers/models/vehicals/inspection/vehical_inspection_history_list.dart';
@@ -54,7 +55,7 @@ class VehicalInspectionHistoryCardWidget extends StatelessWidget {
                   ),
                   LabelValueWidget(
                     "INSPECTED ON",
-                    _model.inspectedOn.toString(),
+                    DateFormat('yyyy-MM-dd – kk:mm').format(_model.inspectedOn),
                   ),
                 ],
               ),

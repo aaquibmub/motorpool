@@ -233,47 +233,201 @@ class Utility {
   static Drawer buildDrawer(BuildContext context) {
     final User _currentuser = Provider.of<Auth>(context).currentUser;
 
+    Widget buildMenuItem(
+      BuildContext context,
+      String title,
+      Function onTap,
+    ) {
+      return InkWell(
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            vertical: 16,
+            horizontal: 32,
+          ),
+          child: Text(
+            title,
+            style: TextStyle(
+              color: Constants.primaryColor,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        onTap: onTap,
+      );
+    }
+
     return Drawer(
-      child: ListView(
-        // Important: Remove any padding from the ListView.
-        padding: EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           DrawerHeader(
             decoration: BoxDecoration(
               color: Constants.primaryColor,
             ),
-            child: Text(
-              'Hello, ' + (_currentuser != null ? _currentuser.firstName : ''),
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Text(
+                      'Hello!',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Text(
+                      (_currentuser != null ? _currentuser.firstName : ''),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                            right: 16,
+                          ),
+                          child: Text(
+                            'STATUS',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          'LOGGED IN',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          ListTile(
-            title: const Text('Home'),
-            onTap: () {
-              Navigator.of(context).pushReplacementNamed(
-                Routes.homeScreen,
-              );
-            },
-          ),
-          ListTile(
-            title: const Text('Report an Incident'),
-            onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(Routes.newIncidentScreen);
-            },
-          ),
-          ListTile(
-            title: const Text('Logout'),
-            onTap: () {
-              Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
-              Provider.of<Auth>(
-                context,
-                listen: false,
-              ).logout();
-            },
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      buildMenuItem(
+                        context,
+                        'Home',
+                        () {
+                          Navigator.of(context).pushReplacementNamed(
+                            Routes.homeScreen,
+                          );
+                        },
+                      ),
+                      buildMenuItem(
+                        context,
+                        'Report an Incident',
+                        () {
+                          Navigator.of(context).pushReplacementNamed(
+                            Routes.newIncidentScreen,
+                          );
+                        },
+                      ),
+                      buildMenuItem(
+                        context,
+                        'Off Duty',
+                        () {
+                          Navigator.of(context).pushReplacementNamed(
+                            Routes.homeScreen,
+                          );
+                        },
+                      ),
+                      buildMenuItem(
+                        context,
+                        'Support',
+                        () {
+                          Navigator.of(context).pushReplacementNamed(
+                            Routes.homeScreen,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    bottom: 16,
+                  ),
+                  child: buildMenuItem(
+                    context,
+                    'Logout',
+                    () {
+                      Navigator.of(context)
+                          .pushReplacementNamed(Routes.loginScreen);
+                      Provider.of<Auth>(
+                        context,
+                        listen: false,
+                      ).logout();
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ), // Populate the Drawer in the next step.
     );
+  }
+
+  static Future showVehicalDeallocationDialogue(
+      BuildContext context, String id, String plateNumber) {
+    return showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text('Vehicle Deallocation'),
+            content: Container(
+              width: double.infinity,
+              height: 100,
+              child: Column(children: [
+                Text('Dispatcher requested to deallocate the vehicle'),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(plateNumber),
+              ]),
+            ),
+            actions: [
+              Center(
+                child: TextButton(
+                  onPressed: () async {
+                    Navigator.of(ctx).pop();
+                  },
+                  child: Text('Proceed'),
+                ),
+              ),
+            ],
+          );
+        });
   }
 
   static Future showMeterReadingDialogue(
