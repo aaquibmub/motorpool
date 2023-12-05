@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:motorpool/helpers/common/constants.dart';
 import 'package:motorpool/helpers/common/routes.dart';
 import 'package:motorpool/helpers/models/common/dropdown_item.dart';
+import 'package:motorpool/helpers/models/common/response_model.dart';
 import 'package:motorpool/helpers/models/trips/enroute/trip_enroute.dart';
 import 'package:provider/provider.dart';
 
@@ -311,7 +312,10 @@ class Utility {
                           ),
                         ),
                         Text(
-                          'LOGGED IN',
+                          (_currentuser.onDuty != null && _currentuser.onDuty
+                                  ? 'On Duty'
+                                  : 'Off Duty')
+                              .toUpperCase(),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -354,11 +358,64 @@ class Utility {
                       ),
                       buildMenuItem(
                         context,
-                        'Off Duty',
-                        () {
-                          Navigator.of(context).pushReplacementNamed(
-                            Routes.homeScreen,
-                          );
+                        _currentuser.onDuty != null && _currentuser.onDuty
+                            ? 'Off Duty'
+                            : 'On Duty',
+                        () async {
+                          final currentUser =
+                              await Provider.of<Auth>(context, listen: false)
+                                  .refreshUserData();
+                          final onDuty =
+                              currentUser.onDuty != null && currentUser.onDuty;
+                          if (!onDuty) {
+                            Provider.of<Auth>(context, listen: false)
+                                .updateDuty(
+                              currentUser.id,
+                              !onDuty,
+                            )
+                                .then((value) {
+                              // setst
+                            });
+                          } else {
+                            final vehicalAllocated =
+                                currentUser.vehical != null &&
+                                    currentUser.vehical.value != null;
+                            if (vehicalAllocated) {
+                              final response = await Utility
+                                  .showVehicalDeallocationByDriverDialogue(
+                                context,
+                                currentUser.id,
+                                currentUser.vehical,
+                              );
+
+                              Navigator.of(context).pop();
+                              if (response.hasError) {
+                                Utility.showErrorDialogue(
+                                  context,
+                                  response.msg,
+                                );
+                                return;
+                              }
+
+                              Provider.of<Auth>(context, listen: false)
+                                  .updateDuty(
+                                currentUser.id,
+                                !onDuty,
+                              )
+                                  .then((value) {
+                                // setst
+                              });
+                            } else {
+                              Provider.of<Auth>(context, listen: false)
+                                  .updateDuty(
+                                currentUser.id,
+                                !onDuty,
+                              )
+                                  .then((value) {
+                                // setst
+                              });
+                            }
+                          }
                         },
                       ),
                       buildMenuItem(
@@ -423,6 +480,51 @@ class Utility {
                     Navigator.of(ctx).pop();
                   },
                   child: Text('Proceed'),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
+  static Future<ResponseModel<String>> showVehicalDeallocationByDriverDialogue(
+    BuildContext context,
+    String driverId,
+    DropdownItem<String> vehical,
+  ) {
+    return showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text('Vehicle Deallocation'),
+            content: Container(
+              width: double.infinity,
+              height: 100,
+              child: Column(children: [
+                Text(vehical.text),
+              ]),
+            ),
+            actions: [
+              Center(
+                child: TextButton(
+                  onPressed: () async {
+                    Provider.of<VehicalProvider>(context, listen: false)
+                        .deallocate(
+                      driverId,
+                    )
+                        .then((value) async {
+                      if (value.hasError) {
+                        Navigator.of(ctx).pop(value);
+                      }
+                      await Utility.showMeterReadingDialogue(
+                        context,
+                        value.result,
+                        vehical.text,
+                      ).then((value1) {});
+                      Navigator.of(ctx).pop(value);
+                    });
+                  },
+                  child: Text('Deallocate'),
                 ),
               ),
             ],
@@ -503,6 +605,24 @@ class Utility {
                 },
                 child: Text('Save'),
               )
+            ],
+          );
+        });
+  }
+
+  static void showErrorDialogue(BuildContext context, String message) {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text('An error occured'),
+            content: Text(message),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                  child: Text('Okay'))
             ],
           );
         });

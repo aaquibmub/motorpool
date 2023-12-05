@@ -7,6 +7,7 @@ import 'package:motorpool/helpers/common/utility.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/common/constants.dart';
+import '../helpers/models/common/response_model.dart';
 import '../helpers/models/user.dart';
 
 class Auth with ChangeNotifier {
@@ -119,7 +120,7 @@ class Auth with ChangeNotifier {
       // notifyListeners();
       return true;
     }
-    // notifyListeners();
+    notifyListeners();
     _autoLogout();
     return true;
   }
@@ -190,5 +191,73 @@ class Auth with ChangeNotifier {
     }
     final timeToExpiry = _expiryDate.difference(DateTime.now()).inSeconds;
     _authTimer = Timer(Duration(seconds: timeToExpiry), refreshToken);
+  }
+
+  Future<String> updateDuty(
+    String id,
+    bool onDuty,
+  ) async {
+    final url =
+        '${Constants.baseUrl}driver/${onDuty ? 'on-duty' : 'off-duty'}/$id';
+    try {
+      final response = await http.delete(
+        url,
+        headers: {
+          'Authorization': 'Bearer $_token',
+        },
+      );
+      if (response != null) {
+        final responseData = json.decode(response.body);
+        ResponseModel<String> result =
+            ResponseModel<String>.fromJson(responseData);
+        if (result.hasError) {
+          var error = result.msg;
+          return error;
+        }
+
+        _user.onDuty = onDuty;
+        final prefs = await SharedPreferences.getInstance();
+        final userData = json.encode({
+          'token': _token,
+          'refresh_token': _refreshToken,
+          'user': jsonEncode(_user),
+          'expiryDate': _expiryDate.toIso8601String(),
+        });
+        prefs.setString('userData', userData);
+        notifyListeners();
+      }
+      return '';
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<User> refreshUserData() async {
+    final url = '${Constants.baseUrl}user/get-current-user';
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $_token',
+        },
+      );
+      if (response != null) {
+        final userObj = json.decode(response.body);
+        _user = User.fromJson(userObj);
+
+        final prefs = await SharedPreferences.getInstance();
+        final userData = json.encode({
+          'token': _token,
+          'refresh_token': _refreshToken,
+          'user': jsonEncode(_user),
+          'expiryDate': _expiryDate.toIso8601String(),
+        });
+        prefs.setString('userData', userData);
+        return _user;
+      }
+      return null;
+    } catch (error) {
+      throw error;
+    }
   }
 }

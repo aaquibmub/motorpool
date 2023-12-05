@@ -231,4 +231,26 @@ class VehicalProvider with ChangeNotifier {
       throw error;
     }
   }
+
+  Future<ResponseModel<String>> deallocate(String driverId) async {
+    final url = '${Constants.baseUrl}driver/deallocate-vehical';
+    try {
+      return await http
+          .post(
+        url,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $authToken',
+        },
+        body: json.encode({'id': driverId}),
+      )
+          .then((response) {
+        final responseData = json.decode(response.body);
+        ResponseModel<String> result = ResponseModel.fromJson(responseData);
+        return Future.value(result);
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
 }

@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../helpers/common/routes.dart';
-
 import '../helpers/common/utility.dart';
-
 import '../providers/auth.dart';
-
 import '../screens/loading_screen.dart';
-
 import '../widgets/login_form.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -35,24 +31,6 @@ class _LoginScreenState extends State<LoginScreen> {
     _password = password;
   }
 
-  void _showErrorDialogue(BuildContext context, String message) {
-    showDialog(
-        context: context,
-        builder: (ctx) {
-          return AlertDialog(
-            title: Text('An error occured'),
-            content: Text(message),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(ctx).pop();
-                  },
-                  child: Text('Okay'))
-            ],
-          );
-        });
-  }
-
   Future<void> _submit(BuildContext context) async {
     if (!_formKey.currentState.validate()) {
       // Invalid!
@@ -73,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
       });
 
       if (error != '') {
-        _showErrorDialogue(context, error);
+        Utility.showErrorDialogue(context, error);
       } else {
         Navigator.of(context).pushReplacementNamed(Routes.homeScreen);
       }
@@ -82,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _isLoading = false;
       });
       const errorMessage = 'Could not authenticate';
-      _showErrorDialogue(context, errorMessage);
+      Utility.showErrorDialogue(context, errorMessage);
     }
   }
 
