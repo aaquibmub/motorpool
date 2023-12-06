@@ -47,4 +47,6 @@ class MyFlutterApp {
       IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ico_badge_trip =
       IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData telephone_ico =
+      IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

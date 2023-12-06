@@ -9,7 +9,13 @@ class SupportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deviceSize = MediaQuery.of(context).size;
     final String motorPool = '0114238994';
+    final String trafic = '993';
+    final String police = '999';
+    final String ambulance = '997';
+    final String emergency = '911';
+    final String najam = '920000560';
     EdgeInsets getMargin() {
       return EdgeInsets.only(
         top: 10,
@@ -21,7 +27,7 @@ class SupportScreen extends StatelessWidget {
 
     EdgeInsets getPadding() {
       return EdgeInsets.symmetric(
-        vertical: 30,
+        vertical: 20,
         horizontal: 10,
       );
     }
@@ -37,14 +43,15 @@ class SupportScreen extends StatelessWidget {
     }
 
     Widget getContainer(
-      IconData iconData,
       String title,
+      String arabicTitle,
       String subtitle,
       Function onTap,
     ) {
       return InkWell(
         onTap: onTap,
         child: Container(
+          width: deviceSize.width,
           padding: getPadding(),
           decoration: getBoxDecoration(),
           margin: getMargin(),
@@ -57,7 +64,7 @@ class SupportScreen extends StatelessWidget {
                 ),
                 width: 50,
                 child: Icon(
-                  iconData,
+                  MyFlutterApp.telephone_ico,
                   color: Constants.primaryColor,
                 ),
               ),
@@ -66,11 +73,28 @@ class SupportScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    child: Text(
-                      title,
+                    width: deviceSize.width - 130,
+                    child: SingleChildScrollView(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            title,
+                          ),
+                          Expanded(
+                            child: Text(
+                              arabicTitle,
+                              textAlign: TextAlign.right,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Container(
+                    margin: const EdgeInsets.only(
+                      top: 8,
+                    ),
                     child: Text(
                       subtitle,
                       style: TextStyle(
@@ -106,12 +130,62 @@ class SupportScreen extends StatelessWidget {
                 height: 30,
               ),
               getContainer(
-                MyFlutterApp.ico_vehicle,
                 'Motor Pool',
+                'کنٹرول',
                 motorPool,
                 () async => {
                   await Utility.makePhoneCall(
                     motorPool,
+                  )
+                },
+              ),
+              getContainer(
+                'Traffic Accidents',
+                'حوادث المرور',
+                trafic,
+                () async => {
+                  await Utility.makePhoneCall(
+                    trafic,
+                  )
+                },
+              ),
+              getContainer(
+                'Police',
+                'شرطة',
+                police,
+                () async => {
+                  await Utility.makePhoneCall(
+                    police,
+                  )
+                },
+              ),
+              getContainer(
+                'Ambulance',
+                'سياره اسعاف',
+                ambulance,
+                () async => {
+                  await Utility.makePhoneCall(
+                    ambulance,
+                  )
+                },
+              ),
+              getContainer(
+                'Unified Emergency Number',
+                'رقم الطوارئ الموحد',
+                emergency,
+                () async => {
+                  await Utility.makePhoneCall(
+                    emergency,
+                  )
+                },
+              ),
+              getContainer(
+                'Najm',
+                'نجم',
+                najam,
+                () async => {
+                  await Utility.makePhoneCall(
+                    najam,
                   )
                 },
               ),

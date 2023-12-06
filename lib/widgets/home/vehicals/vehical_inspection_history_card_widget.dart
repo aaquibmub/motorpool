@@ -18,13 +18,15 @@ class VehicalInspectionHistoryCardWidget extends StatelessWidget {
     return Container(
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => VehicalInspectionScreen(
-                      _model.vehicalId,
-                    )),
-          );
+          if (!_model.submitted) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => VehicalInspectionScreen(
+                        _model.vehicalId,
+                      )),
+            );
+          }
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

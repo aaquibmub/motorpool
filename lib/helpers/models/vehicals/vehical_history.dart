@@ -8,6 +8,8 @@ class VehicalHistory {
   final bool allocated;
   final String odoMeter;
   final DateTime assignedOn;
+  final String inspectionId;
+  final bool inspectionCompleted;
 
   VehicalHistory(
     this.id,
@@ -19,6 +21,8 @@ class VehicalHistory {
     this.allocated,
     this.odoMeter,
     this.assignedOn,
+    this.inspectionId,
+    this.inspectionCompleted,
   );
 
   factory VehicalHistory.fromJson(dynamic json) {
@@ -35,6 +39,8 @@ class VehicalHistory {
             json['assignedOn'] != null
                 ? DateTime.parse(json['assignedOn'])
                 : null,
+            json['inspectionId'] as String,
+            json['inspectionCompleted'] as bool,
           )
         : null;
   }

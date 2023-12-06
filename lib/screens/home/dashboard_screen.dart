@@ -172,7 +172,7 @@ class DashboardScreen extends StatelessWidget {
                                 MyFlutterApp.ico_vehicle_inspection,
                                 'Pending Inspection',
                                 Text(
-                                  '',
+                                  '1',
                                 ),
                                 () => {
                                   Navigator.push(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:motorpool/helpers/common/constants.dart';
 import 'package:motorpool/helpers/common/shared_types.dart';
+import 'package:motorpool/helpers/common/utility.dart';
 import 'package:motorpool/helpers/models/trips/detail/trip_detail.dart';
 import 'package:motorpool/helpers/models/trips/enroute/trip_status_update.dart';
 import 'package:motorpool/providers/trip_provider.dart';
@@ -90,6 +91,13 @@ class TripDetailWidget extends StatelessWidget {
                   ),
                 )
                     .then((response) {
+                  if (response.hasError) {
+                    Utility.showErrorDialogue(
+                      context,
+                      response.msg,
+                    );
+                    return;
+                  }
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
