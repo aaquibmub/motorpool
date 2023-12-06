@@ -7,6 +7,7 @@ import 'package:motorpool/helpers/models/common/dropdown_item.dart';
 import 'package:motorpool/helpers/models/common/response_model.dart';
 import 'package:motorpool/helpers/models/trips/enroute/trip_enroute.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../providers/auth.dart';
 import '../../providers/vehical_provider.dart';
@@ -121,14 +122,22 @@ class Utility {
     if (status == TripStatus.ArrivedAtStop) {
       return TripStatus.WaitingForStopActivity;
     }
-    if (status == TripStatus.WaitingForPassenger) {
+    if (status == TripStatus.WaitingForStopActivity) {
       return TripStatus.TripResumedAfterStop;
+    }
+    if (status == TripStatus.ArrivedAtAddress) {
+      return TripStatus.WaitingForAddressActivity;
+    }
+    if (status == TripStatus.WaitingForAddressActivity) {
+      return TripStatus.TripResumedAfterAddress;
     }
     final destinationType = nextDestination.destinationType.value;
     if (destinationType == DestinationType.Pickup) {
       return TripStatus.ArrivedAtPickupLocation;
     } else if (destinationType == DestinationType.Stop) {
       return TripStatus.ArrivedAtStop;
+    } else if (destinationType == DestinationType.Address) {
+      return TripStatus.ArrivedAtAddress;
     } else {
       return TripStatus.ArrivedAtDropoff;
     }
@@ -172,11 +181,18 @@ class Utility {
       return "ARRIVED AT PICKUP";
     }
     if (status == TripStatus.ArrivedAtPickupLocation ||
-        status == TripStatus.ArrivedAtStop) {
+        status == TripStatus.ArrivedAtStop ||
+        status == TripStatus.ArrivedAtAddress) {
       return "RESUME TRIP";
     }
     if (status == TripStatus.WaitingForPassenger) {
       return "PASSENGER ON BOARDED";
+    }
+    if (status == TripStatus.WaitingForStopActivity) {
+      return "RESUME TRIP";
+    }
+    if (status == TripStatus.WaitingForAddressActivity) {
+      return "RESUME TRIP";
     }
     return "ARRIVED AT " + nextDestination.destinationType.text.toUpperCase();
   }
@@ -423,7 +439,7 @@ class Utility {
                         'Support',
                         () {
                           Navigator.of(context).pushReplacementNamed(
-                            Routes.homeScreen,
+                            Routes.supportScreen,
                           );
                         },
                       ),
@@ -626,5 +642,9 @@ class Utility {
             ],
           );
         });
+  }
+
+  static Future<void> makePhoneCall(String phoneNumber) async {
+    await launch("tel://$phoneNumber");
   }
 }

@@ -21,6 +21,9 @@ class TripStatus {
   static const ArrivedAtStop = 60;
   static const WaitingForStopActivity = 62;
   static const TripResumedAfterStop = 65;
+  static const ArrivedAtAddress = 66;
+  static const WaitingForAddressActivity = 67;
+  static const TripResumedAfterAddress = 68;
   static const ArrivedAtDropoff = 70;
   static const OdoMeterAtEnd = 80;
   static const Completed = 400;
@@ -30,6 +33,7 @@ class DestinationType {
   static const Pickup = 10;
   static const Stop = 20;
   static const Dropoff = 30;
+  static const Address = 40;
 }
 
 class DamageLevel {
