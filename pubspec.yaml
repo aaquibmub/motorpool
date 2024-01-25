@@ -43,6 +43,8 @@ dependencies:
   flutter_svg: ^1.1.6
   firebase_messaging: ^7.0.3
   url_launcher: ^6.0.5
+  uuid: ^2.2.2
+  flutter_randomcolor: ^1.0.14
 
 dev_dependencies:
   flutter_test:

@@ -2,10 +2,12 @@ import 'package:motorpool/helpers/models/common/dropdown_item.dart';
 import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_body_part_item_model.dart';
 
 class VehicalInspectionBodySideItemModel {
+  final String id;
   final DropdownItem<String> side;
   List<VehicalInspectionBodyPartItemModel> parts;
 
   VehicalInspectionBodySideItemModel(
+    this.id,
     this.side,
     this.parts,
   );
@@ -21,6 +23,7 @@ class VehicalInspectionBodySideItemModel {
       });
     }
     return VehicalInspectionBodySideItemModel(
+      json['id'] as String,
       DropdownItem<String>.fromJson(json['side']),
       parts,
     );

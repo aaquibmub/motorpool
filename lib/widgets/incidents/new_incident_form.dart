@@ -59,8 +59,8 @@ class _NewIncidentFormState extends State<NewIncidentForm> {
   Widget build(BuildContext context) {
     final User _currentuser = Provider.of<Auth>(context).currentUser;
 
-    _vehicalController.text = _currentuser?.vehical?.text;
-    widget.setVehicalFn(_currentuser?.vehical);
+    _vehicalController.text = _currentuser?.vehicals[0]?.text;
+    widget.setVehicalFn(_currentuser?.vehicals[0]);
 
     _driverController.text = _currentuser.firstName;
     widget.setDriverFn(DropdownItem<String>(

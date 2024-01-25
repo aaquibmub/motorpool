@@ -6,7 +6,7 @@ import 'package:motorpool/helpers/models/trips/enroute/trip_enroute.dart';
 import 'package:motorpool/helpers/models/trips/enroute/trip_status_update.dart';
 import 'package:motorpool/providers/trip_provider.dart';
 import 'package:motorpool/screens/destinations/add_trip_destination_screen.dart';
-import 'package:motorpool/screens/home/trip_screen.dart';
+import 'package:motorpool/screens/home/tabs_screen.dart';
 import 'package:motorpool/widgets/home/trips/enroute/trip_enroute_item_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -155,7 +155,7 @@ class TripEnrouteWidget extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TripScreen(),
+                      builder: (context) => TabsScreen(1), // TripsScreen
                     ),
                   );
                   return;

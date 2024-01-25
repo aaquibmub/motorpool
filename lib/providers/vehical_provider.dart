@@ -127,6 +127,12 @@ class VehicalProvider with ChangeNotifier {
         final responseData = json.decode(response.body);
         ResponseModel<VehicalInspectionModel> result =
             ResponseModel<VehicalInspectionModel>.fromJson(responseData);
+        // if (result.hasError) {
+        //   _inspectionResponseModel =
+        //       ResponseModel(null, 'Operation is not allowed to you', true);
+        //   notifyListeners();
+        //   return;
+        // }
         final bodyPartItems = result.result.bodyInspectionItems;
         bodyPartItems.forEach((bpi) {
           final bodyParts = bpi.parts;
@@ -232,7 +238,10 @@ class VehicalProvider with ChangeNotifier {
     }
   }
 
-  Future<ResponseModel<String>> deallocate(String driverId) async {
+  Future<ResponseModel<String>> deallocate(
+    String driverId,
+    String vehicleId,
+  ) async {
     final url = '${Constants.baseUrl}driver/deallocate-vehical';
     try {
       return await http
@@ -242,7 +251,7 @@ class VehicalProvider with ChangeNotifier {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $authToken',
         },
-        body: json.encode({'id': driverId}),
+        body: json.encode({'id': driverId, 'vehicalId': vehicleId}),
       )
           .then((response) {
         final responseData = json.decode(response.body);

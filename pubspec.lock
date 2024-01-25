@@ -265,6 +265,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.11"
+  flutter_randomcolor:
+    dependency: "direct main"
+    description:
+      name: flutter_randomcolor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.14"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -750,7 +757,7 @@ packages:
     source: hosted
     version: "2.0.2"
   uuid:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: uuid
       url: "https://pub.dartlang.org"

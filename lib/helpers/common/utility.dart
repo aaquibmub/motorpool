@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../providers/auth.dart';
 import '../../providers/vehical_provider.dart';
+import '../../screens/vehicals/vehical_inspection_screen.dart';
 import '../models/user.dart';
 import '../models/vehicals/deallocate_vehical_model.dart';
 import 'shared_types.dart';
@@ -394,14 +395,14 @@ class Utility {
                             });
                           } else {
                             final vehicalAllocated =
-                                currentUser.vehical != null &&
-                                    currentUser.vehical.value != null;
+                                currentUser.vehicals != null &&
+                                    currentUser.vehicals.length > 0;
                             if (vehicalAllocated) {
                               final response = await Utility
                                   .showVehicalDeallocationByDriverDialogue(
                                 context,
                                 currentUser.id,
-                                currentUser.vehical,
+                                currentUser.vehicals[0],
                               );
 
                               Navigator.of(context).pop();
@@ -527,10 +528,12 @@ class Utility {
                     Provider.of<VehicalProvider>(context, listen: false)
                         .deallocate(
                       driverId,
+                      vehical.value,
                     )
                         .then((value) async {
                       if (value.hasError) {
                         Navigator.of(ctx).pop(value);
+                        return;
                       }
                       await Utility.showMeterReadingDialogue(
                         context,
@@ -615,6 +618,10 @@ class Utility {
                   );
 
                   if (response.hasError == null || response.hasError) {
+                    Utility.showErrorDialogue(
+                      context,
+                      response.msg,
+                    );
                     return;
                   }
                   Navigator.of(ctx).pop();
@@ -622,6 +629,45 @@ class Utility {
                 child: Text('Save'),
               )
             ],
+          );
+        });
+  }
+
+  static Future showVehiclesForInspectionDialogue(
+    BuildContext context,
+    List<DropdownItem<String>> vehicles,
+  ) {
+    return showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text('Allocated Vehicles'),
+            content: Container(
+              width: double.infinity,
+              height: 100,
+              child: Column(children: [
+                ...vehicles.map(
+                  (v) => InkWell(
+                    child: Container(
+                      child: Column(
+                        children: [
+                          Text(v.text),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                    ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VehicalInspectionScreen(v.value),
+                      ),
+                    ),
+                  ),
+                )
+              ]),
+            ),
           );
         });
   }

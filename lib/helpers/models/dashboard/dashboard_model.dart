@@ -2,7 +2,7 @@ class DashboardModel {
   final String assignedVehical;
   final int ongoingTrips;
   final int assignedTrips;
-  final bool inspectionPending;
+  final int inspectionPending;
   final int issuesReported;
 
   DashboardModel(
@@ -17,7 +17,7 @@ class DashboardModel {
         json['assignedVehical'] as String,
         json['ongoingTrips'] as int,
         json['assignedTrips'] as int,
-        json['inspectionPending'] as bool,
+        json['inspectionPending'] as int,
         json['issuesReported'] as int,
       );
 }

@@ -1,29 +1,38 @@
-import '../../common/dropdown_item.dart';
-
 class VehicalInspectionBodyPartItemModel {
   final String id;
-  final DropdownItem<String> part;
+  String sideItemId;
+  // final DropdownItem<String> part;
+  num xaxis;
+  num yaxis;
   int scraches;
   int dents;
   int damages;
   int index;
+  String hexColor;
 
   VehicalInspectionBodyPartItemModel(
     this.id,
-    this.part,
+    this.sideItemId,
+    this.xaxis,
+    this.yaxis,
     this.scraches,
     this.dents,
     this.damages,
     this.index,
+    this.hexColor,
   );
   factory VehicalInspectionBodyPartItemModel.fromJson(dynamic json) =>
       VehicalInspectionBodyPartItemModel(
         json['id'] as String,
-        DropdownItem<String>.fromJson(json['part']),
+        json['sideItemId'] as String,
+        // DropdownItem<String>.fromJson(json['part']),
+        json['xaxis'] as num,
+        json['yaxis'] as num,
         json['scraches'] as int,
         json['dents'] as int,
         json['damages'] as int,
         json['index'] as int,
+        json['hexColor'] as String,
       );
 
   Map<String, dynamic> toJson() =>
@@ -33,10 +42,14 @@ class VehicalInspectionBodyPartItemModel {
           VehicalInspectionBodyPartItemModel instance) =>
       <String, dynamic>{
         'id': instance.id,
-        'part': {'value': instance.part.value},
+        'sideItemId': instance.sideItemId,
+        // 'part': {'value': instance.part.value},
+        'xaxis': instance.xaxis,
+        'yaxis': instance.yaxis,
         'scraches': instance.scraches,
         'dents': instance.dents,
         'damages': instance.damages,
         'index': instance.index,
+        'hexColor': instance.hexColor,
       };
 }

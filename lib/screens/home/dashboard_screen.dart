@@ -10,7 +10,6 @@ import '../../helpers/models/user.dart';
 import '../../providers/auth.dart';
 import '../../providers/dashboard_provider.dart';
 import '../loading_screen.dart';
-import '../vehicals/vehical_inspection_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key key}) : super(key: key);
@@ -166,24 +165,20 @@ class DashboardScreen extends StatelessWidget {
                                 )
                               },
                             ),
-                            if (_currentuser.vehical != null &&
-                                provider.dashboardModel.inspectionPending)
+                            if (_currentuser.vehicals != null &&
+                                _currentuser.vehicals.length > 0)
                               getContainer(
                                 MyFlutterApp.ico_vehicle_inspection,
                                 'Pending Inspection',
                                 Text(
-                                  '1',
+                                  provider.dashboardModel.inspectionPending
+                                      .toString(),
                                 ),
                                 () => {
-                                  Navigator.push(
+                                  Utility.showVehiclesForInspectionDialogue(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          VehicalInspectionScreen(
-                                        _currentuser.vehical.value,
-                                      ),
-                                    ),
-                                  )
+                                    _currentuser.vehicals,
+                                  ).then((value) {})
                                 },
                               ),
                             getContainer(
