@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_map/flutter_image_map.dart';
 import 'package:flutter_randomcolor/flutter_randomcolor.dart';
+import 'package:motorpool/helpers/common/utility.dart';
 import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_body_part_item_model.dart';
 import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_body_side_item_model.dart';
 import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_model.dart';
@@ -12,6 +13,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../helpers/common/constants.dart';
 import '../../providers/vehical_provider.dart';
+import '../../widgets/home/vehicals/vehical_body_inspection_part_card_widget.dart';
 
 class VehicalInspectionBodyScreen extends StatefulWidget {
   final VehicalInspectionModel _model;
@@ -39,9 +41,7 @@ class _VehicalInspectionBodyScreenState
       return ImageMapRegion.fromCircle(
         center: Offset(dx, dy),
         radius: 5,
-        color: hexColor != null
-            ? Color(int.parse(hexColor.substring(1, 7), radix: 16) + 0x80000000)
-            : Colors.black,
+        color: Utility.getColorFromHex(hexColor),
         title: id,
       );
     }
@@ -132,11 +132,11 @@ class _VehicalInspectionBodyScreenState
                     child: Container(
                       width: 280,
                       height: 280,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                        ),
-                      ),
+                      // decoration: BoxDecoration(
+                      //   border: Border.all(
+                      //     color: Colors.black,
+                      //   ),
+                      // ),
                       child: ImageMap(
                         image: image,
                         onTap: (region) {
@@ -384,400 +384,491 @@ class _VehicalInspectionBodyScreenState
                     ),
                   ),
                   Expanded(
-                    child: _selectedSidePart != null
-                        ? Container(
-                            child: SingleChildScrollView(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.all(16),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(
-                                        color: Constants.textColorLight,
-                                      ),
-                                    ),
-                                    child: Row(
+                    child: Column(
+                      children: [
+                        Container(
+                          child: _selectedSidePart != null
+                              ? Container(
+                                  child: SingleChildScrollView(
+                                    child: Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            'Scrach',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Container(
+                                          width: double.infinity,
+                                          padding: const EdgeInsets.all(16),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                              color: Constants.textColorLight,
                                             ),
                                           ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                              padding: new EdgeInsets.all(8),
-                                              decoration: BoxDecoration(
-                                                color: Constants.colorLightGrey,
-                                                border: Border(
-                                                  left: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
-                                                  ),
-                                                  top: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
-                                                  ),
-                                                  bottom: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  if (_selectedSidePart
-                                                          .scraches >
-                                                      0) {
-                                                    setState(() {
-                                                      _selectedSidePart
-                                                          .scraches -= 1;
-                                                    });
-
-                                                    Provider.of<
-                                                            VehicalProvider>(
-                                                      context,
-                                                      listen: false,
-                                                    )
-                                                        .saveBodyInspectionItem(
-                                                            _selectedSidePart)
-                                                        .then((value) {});
-                                                  }
-                                                },
-                                                child: Text('-'),
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: new EdgeInsets.all(8),
-                                              width: 30,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                border: Border.all(
-                                                  color:
-                                                      Constants.textColorLight,
-                                                ),
-                                              ),
-                                              child: Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
                                                 child: Text(
-                                                  _selectedSidePart.scraches
-                                                      .toString(),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: new EdgeInsets.all(8),
-                                              decoration: BoxDecoration(
-                                                color: Constants.colorLightGrey,
-                                                border: Border(
-                                                  right: BorderSide(
-                                                    color: Color.fromRGBO(
-                                                        143, 155, 166, 1),
-                                                  ),
-                                                  top: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
-                                                  ),
-                                                  bottom: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
+                                                  'Scrach',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
                                               ),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    _selectedSidePart
-                                                        .scraches += 1;
-                                                  });
+                                              Row(
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () {
+                                                      if (_selectedSidePart
+                                                              .scraches >
+                                                          0) {
+                                                        setState(() {
+                                                          _selectedSidePart
+                                                              .scraches -= 1;
+                                                        });
 
-                                                  Provider.of<VehicalProvider>(
-                                                    context,
-                                                    listen: false,
-                                                  )
-                                                      .saveBodyInspectionItem(
-                                                          _selectedSidePart)
-                                                      .then((value) {});
-                                                },
-                                                child: Text('+'),
-                                              ),
+                                                        Provider.of<
+                                                                VehicalProvider>(
+                                                          context,
+                                                          listen: false,
+                                                        )
+                                                            .saveBodyInspectionItem(
+                                                                _selectedSidePart)
+                                                            .then((value) {});
+                                                      }
+                                                    },
+                                                    child: Container(
+                                                      padding:
+                                                          new EdgeInsets.all(8),
+                                                      decoration: BoxDecoration(
+                                                        color: Constants
+                                                            .colorLightGrey,
+                                                        border: Border(
+                                                          left: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                          top: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                          bottom: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      child: Text(
+                                                        '-',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        new EdgeInsets.all(8),
+                                                    width: 30,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      border: Border.all(
+                                                        color: Constants
+                                                            .textColorLight,
+                                                      ),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        _selectedSidePart
+                                                            .scraches
+                                                            .toString(),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        _selectedSidePart
+                                                            .scraches += 1;
+                                                      });
+
+                                                      Provider.of<
+                                                              VehicalProvider>(
+                                                        context,
+                                                        listen: false,
+                                                      )
+                                                          .saveBodyInspectionItem(
+                                                              _selectedSidePart)
+                                                          .then((value) {});
+                                                    },
+                                                    child: Container(
+                                                      padding:
+                                                          new EdgeInsets.all(8),
+                                                      decoration: BoxDecoration(
+                                                        color: Constants
+                                                            .colorLightGrey,
+                                                        border: Border(
+                                                          right: BorderSide(
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    143,
+                                                                    155,
+                                                                    166,
+                                                                    1),
+                                                          ),
+                                                          top: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                          bottom: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      child: Text('+'),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          width: double.infinity,
+                                          padding: const EdgeInsets.all(16),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                              color: Constants.textColorLight,
                                             ),
-                                          ],
-                                        )
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  'Damage',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () {
+                                                      if (_selectedSidePart
+                                                              .damages >
+                                                          0) {
+                                                        setState(() {
+                                                          _selectedSidePart
+                                                              .damages -= 1;
+                                                        });
+
+                                                        Provider.of<
+                                                                VehicalProvider>(
+                                                          context,
+                                                          listen: false,
+                                                        )
+                                                            .saveBodyInspectionItem(
+                                                                _selectedSidePart)
+                                                            .then((value) {});
+                                                      }
+                                                    },
+                                                    child: Container(
+                                                      padding:
+                                                          new EdgeInsets.all(8),
+                                                      decoration: BoxDecoration(
+                                                        color: Constants
+                                                            .colorLightGrey,
+                                                        border: Border(
+                                                          left: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                          top: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                          bottom: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      child: Text('-'),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        new EdgeInsets.all(8),
+                                                    width: 30,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      border: Border.all(
+                                                        color: Constants
+                                                            .textColorLight,
+                                                      ),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        _selectedSidePart
+                                                            .damages
+                                                            .toString(),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        _selectedSidePart
+                                                            .damages += 1;
+                                                      });
+
+                                                      Provider.of<
+                                                              VehicalProvider>(
+                                                        context,
+                                                        listen: false,
+                                                      )
+                                                          .saveBodyInspectionItem(
+                                                              _selectedSidePart)
+                                                          .then((value) {});
+                                                    },
+                                                    child: Container(
+                                                      padding:
+                                                          new EdgeInsets.all(8),
+                                                      decoration: BoxDecoration(
+                                                        color: Constants
+                                                            .colorLightGrey,
+                                                        border: Border(
+                                                          right: BorderSide(
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    143,
+                                                                    155,
+                                                                    166,
+                                                                    1),
+                                                          ),
+                                                          top: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                          bottom: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      child: Text('+'),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          width: double.infinity,
+                                          padding: const EdgeInsets.all(16),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                              color: Constants.textColorLight,
+                                            ),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  'Dent',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () {
+                                                      if (_selectedSidePart
+                                                              .dents >
+                                                          0) {
+                                                        setState(() {
+                                                          _selectedSidePart
+                                                              .dents -= 1;
+                                                        });
+
+                                                        Provider.of<
+                                                                VehicalProvider>(
+                                                          context,
+                                                          listen: false,
+                                                        )
+                                                            .saveBodyInspectionItem(
+                                                                _selectedSidePart)
+                                                            .then((value) {});
+                                                      }
+                                                    },
+                                                    child: Container(
+                                                      padding:
+                                                          new EdgeInsets.all(8),
+                                                      decoration: BoxDecoration(
+                                                        color: Constants
+                                                            .colorLightGrey,
+                                                        border: Border(
+                                                          left: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                          top: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                          bottom: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      child: Text('-'),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        new EdgeInsets.all(8),
+                                                    width: 30,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      border: Border.all(
+                                                        color: Constants
+                                                            .textColorLight,
+                                                      ),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        _selectedSidePart.dents
+                                                            .toString(),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        _selectedSidePart
+                                                            .dents += 1;
+                                                      });
+
+                                                      Provider.of<
+                                                              VehicalProvider>(
+                                                        context,
+                                                        listen: false,
+                                                      )
+                                                          .saveBodyInspectionItem(
+                                                              _selectedSidePart)
+                                                          .then((value) {});
+                                                    },
+                                                    child: Container(
+                                                      padding:
+                                                          new EdgeInsets.all(8),
+                                                      decoration: BoxDecoration(
+                                                        color: Constants
+                                                            .colorLightGrey,
+                                                        border: Border(
+                                                          right: BorderSide(
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    143,
+                                                                    155,
+                                                                    166,
+                                                                    1),
+                                                          ),
+                                                          top: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                          bottom: BorderSide(
+                                                            color: Constants
+                                                                .textColorLight,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      child: Text('+'),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.all(16),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(
-                                        color: Constants.textColorLight,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            'Damage',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                              padding: new EdgeInsets.all(8),
-                                              decoration: BoxDecoration(
-                                                color: Constants.colorLightGrey,
-                                                border: Border(
-                                                  left: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
-                                                  ),
-                                                  top: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
-                                                  ),
-                                                  bottom: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  if (_selectedSidePart
-                                                          .damages >
-                                                      0) {
-                                                    setState(() {
-                                                      _selectedSidePart
-                                                          .damages -= 1;
-                                                    });
-
-                                                    Provider.of<
-                                                            VehicalProvider>(
-                                                      context,
-                                                      listen: false,
-                                                    )
-                                                        .saveBodyInspectionItem(
-                                                            _selectedSidePart)
-                                                        .then((value) {});
-                                                  }
-                                                },
-                                                child: Text('-'),
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: new EdgeInsets.all(8),
-                                              width: 30,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                border: Border.all(
-                                                  color:
-                                                      Constants.textColorLight,
-                                                ),
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  _selectedSidePart.damages
-                                                      .toString(),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: new EdgeInsets.all(8),
-                                              decoration: BoxDecoration(
-                                                color: Constants.colorLightGrey,
-                                                border: Border(
-                                                  right: BorderSide(
-                                                    color: Color.fromRGBO(
-                                                        143, 155, 166, 1),
-                                                  ),
-                                                  top: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
-                                                  ),
-                                                  bottom: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    _selectedSidePart.damages +=
-                                                        1;
-                                                  });
-
-                                                  Provider.of<VehicalProvider>(
-                                                    context,
-                                                    listen: false,
-                                                  )
-                                                      .saveBodyInspectionItem(
-                                                          _selectedSidePart)
-                                                      .then((value) {});
-                                                },
-                                                child: Text('+'),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.all(16),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(
-                                        color: Constants.textColorLight,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            'Dent',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                              padding: new EdgeInsets.all(8),
-                                              decoration: BoxDecoration(
-                                                color: Constants.colorLightGrey,
-                                                border: Border(
-                                                  left: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
-                                                  ),
-                                                  top: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
-                                                  ),
-                                                  bottom: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  if (_selectedSidePart.dents >
-                                                      0) {
-                                                    setState(() {
-                                                      _selectedSidePart.dents -=
-                                                          1;
-                                                    });
-
-                                                    Provider.of<
-                                                            VehicalProvider>(
-                                                      context,
-                                                      listen: false,
-                                                    )
-                                                        .saveBodyInspectionItem(
-                                                            _selectedSidePart)
-                                                        .then((value) {});
-                                                  }
-                                                },
-                                                child: Text('-'),
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: new EdgeInsets.all(8),
-                                              width: 30,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                border: Border.all(
-                                                  color:
-                                                      Constants.textColorLight,
-                                                ),
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  _selectedSidePart.dents
-                                                      .toString(),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: new EdgeInsets.all(8),
-                                              decoration: BoxDecoration(
-                                                color: Constants.colorLightGrey,
-                                                border: Border(
-                                                  right: BorderSide(
-                                                    color: Color.fromRGBO(
-                                                        143, 155, 166, 1),
-                                                  ),
-                                                  top: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
-                                                  ),
-                                                  bottom: BorderSide(
-                                                    color: Constants
-                                                        .textColorLight,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    _selectedSidePart.dents +=
-                                                        1;
-                                                  });
-
-                                                  Provider.of<VehicalProvider>(
-                                                    context,
-                                                    listen: false,
-                                                  )
-                                                      .saveBodyInspectionItem(
-                                                          _selectedSidePart)
-                                                      .then((value) {});
-                                                },
-                                                child: Text('+'),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        : Center(
-                            child: Text('please select a part'),
+                                )
+                              : Center(
+                                  child: Text('please select a part'),
+                                ),
+                        ),
+                        Container(
+                          margin: new EdgeInsets.only(
+                            top: 8,
                           ),
+                          padding: new EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('Color'),
+                              Text('Sraches'),
+                              Text('Damages'),
+                              Text('Dents'),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            child: i.parts.length > 0
+                                ? ListView.builder(
+                                    itemCount: i.parts.length,
+                                    itemBuilder: (_a, idx) {
+                                      return InkWell(
+                                        onTap: () => {
+                                          setState(() {
+                                            _selectedSidePart = i.parts[idx];
+                                          })
+                                        },
+                                        child:
+                                            VehicalBodyInspectionPartCardWidget(
+                                          i.parts[idx],
+                                        ),
+                                      );
+                                    },
+                                  )
+                                : Center(
+                                    child: Text("no item so far"),
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

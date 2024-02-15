@@ -693,4 +693,10 @@ class Utility {
   static Future<void> makePhoneCall(String phoneNumber) async {
     await launch("tel://$phoneNumber");
   }
+
+  static Color getColorFromHex(String hexColor) {
+    return hexColor != null
+        ? Color(int.parse(hexColor.substring(1, 7), radix: 16) + 0x80000000)
+        : Colors.black;
+  }
 }
