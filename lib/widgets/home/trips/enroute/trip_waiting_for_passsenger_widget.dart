@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:motorpool/helpers/common/constants.dart';
 import 'package:motorpool/helpers/common/shared_types.dart';
 import 'package:motorpool/helpers/common/utility.dart';
@@ -33,10 +34,25 @@ class _TripWaitingForPassengerWidgetState
 
   @override
   void initState() {
+    final nowTime = DateTime.now();
     final latestItem =
-        widget._tripEnroute.items[widget._tripEnroute.items.length - 1];
-    final seconds = latestItem != null && latestItem.startTime != null
-        ? DateTime.now().difference(latestItem.startTime).inSeconds
+        widget._tripEnroute.items[widget._tripEnroute.items.length - 2];
+    final startTime = latestItem != null && latestItem.startTime != null
+        ? new DateFormat("hh:mm aa").parseLoose(latestItem.start)
+        : null;
+    final updatedTime = new DateTime(
+      nowTime.year,
+      nowTime.month,
+      nowTime.day,
+      startTime.hour,
+      startTime.minute,
+      startTime.second,
+    );
+    // final seconds = latestItem != null && latestItem.startTime != null
+    //     ? DateTime.now().difference(latestItem.startTime).inSeconds
+    //     : 0;
+    final seconds = startTime != null
+        ? DateTime.now().difference(updatedTime).inSeconds
         : 0;
 
     setState(() {
@@ -67,7 +83,7 @@ class _TripWaitingForPassengerWidgetState
             top: 50,
           ),
           child: Text(
-            'WAITING FOR PASSENGER',
+            'WAITING FOR ${widget._tripEnroute.tripType == TripType.Refuelling ? 'REFUELLING' : 'PASSENGER'}',
             style: TextStyle(
               fontSize: 14,
             ),

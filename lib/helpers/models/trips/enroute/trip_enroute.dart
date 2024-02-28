@@ -2,6 +2,7 @@ import 'package:motorpool/helpers/models/trips/enroute/trip_enroute_item.dart';
 
 class TripEnroute {
   final String tripId;
+  final int tripType;
   final String tripRoute;
   final String tripDestination;
   final int tripStatus;
@@ -11,6 +12,7 @@ class TripEnroute {
 
   TripEnroute(
     this.tripId,
+    this.tripType,
     this.tripRoute,
     this.tripDestination,
     this.tripStatus,
@@ -31,6 +33,7 @@ class TripEnroute {
 
     return TripEnroute(
       json['tripId'] as String,
+      json['tripType'] as int,
       json['tripRoute'] as String,
       json['tripDestination'] as String,
       json['tripStatus'] as int,

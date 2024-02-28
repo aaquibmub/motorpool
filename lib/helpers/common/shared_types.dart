@@ -9,6 +9,17 @@ class SaleItemType {
   static const Item = 20;
 }
 
+class TripType {
+  static const Scheduled = 10;
+  static const StartsNow = 20;
+  static const Refuelling = 30;
+
+  static const Today = 400;
+  static const Ongoing = 500;
+  static const Upcoming = 600;
+  static const CurrentMonth = 700;
+}
+
 class TripStatus {
   static const Created = 10;
   static const AssignedToDriver = 20;
