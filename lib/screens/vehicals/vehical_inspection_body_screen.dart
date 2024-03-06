@@ -90,7 +90,7 @@ class _VehicalInspectionBodyScreenState
                   ),
                   GestureDetector(
                     onTapDown: (details) {
-                      final b = context.findRenderObject() as RenderBox;
+                      //final b = context.findRenderObject() as RenderBox;
                       final locPos = details.localPosition;
 
                       final imageWidth = info.image.width;

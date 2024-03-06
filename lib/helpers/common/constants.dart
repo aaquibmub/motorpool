@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Constants {
-  // static const String baseUrl = 'http://135.125.212.110:8095/api/';
+  //static const String baseUrl = 'http://135.125.212.110:8095/api/';
   static const String baseUrl = 'http://10.0.2.2:9000/api/';
   // static const String baseUrl = 'http://127.0.0.1:9000/';
 

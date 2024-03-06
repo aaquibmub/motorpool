@@ -62,8 +62,8 @@ class TripDetailWidget extends StatelessWidget {
                     }).toList(),
                     AddressCardWidget(
                       "VEHICAL",
-                      _tripDetail.vehical?.make,
-                      _tripDetail.vehical?.model,
+                      _tripDetail.vehical?.registrationPlate,
+                      '',
                     ),
                   ],
                 ),
