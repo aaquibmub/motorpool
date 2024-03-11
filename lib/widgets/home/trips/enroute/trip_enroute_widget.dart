@@ -160,13 +160,41 @@ class TripEnrouteWidget extends StatelessWidget {
                   );
                   return;
                 }
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => TripEnrouteScreen(
-                            _tripEnroute.tripId,
-                          )),
-                );
+                if (tripStatus == TripStatus.ArrivedAtPickupLocation ||
+                    tripStatus == TripStatus.ArrivedAtAddress ||
+                    tripStatus == TripStatus.ArrivedAtStop) {
+                  Provider.of<TripProvider>(context, listen: false)
+                      .updateStatus(
+                    TripStatusUpdate(
+                      _tripEnroute.tripId,
+                      tripStatus == TripStatus.ArrivedAtPickupLocation
+                          ? TripStatus.WaitingForPassenger
+                          : tripStatus == TripStatus.ArrivedAtAddress
+                              ? TripStatus.WaitingForAddressActivity
+                              : tripStatus == TripStatus.ArrivedAtStop
+                                  ? TripStatus.WaitingForStopActivity
+                                  : tripStatus,
+                      Utility.getNextTripDestinationId(_tripEnroute),
+                      Utility.getNextTripAddressId(_tripEnroute),
+                      '',
+                    ),
+                  )
+                      .then((response) {
+                    if (response.hasError) {
+                      Utility.errorAlert(context, null, response.msg);
+                      return;
+                    }
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TripEnrouteScreen(
+                                _tripEnroute.tripId,
+                              )),
+                    );
+                  });
+                  return;
+                }
               });
             },
             child: Text(

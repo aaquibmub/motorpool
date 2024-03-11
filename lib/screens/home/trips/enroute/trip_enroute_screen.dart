@@ -58,11 +58,11 @@ class _TripEnrouteScreenState extends State<TripEnrouteScreen> {
                     provider.tripEnroute,
                   );
                   return (provider.tripEnroute.tripStatus ==
-                              TripStatus.ArrivedAtPickupLocation ||
+                              TripStatus.WaitingForPassenger ||
                           provider.tripEnroute.tripStatus ==
-                              TripStatus.ArrivedAtStop ||
+                              TripStatus.WaitingForStopActivity ||
                           provider.tripEnroute.tripStatus ==
-                              TripStatus.ArrivedAtAddress)
+                              TripStatus.WaitingForAddressActivity)
                       ? TripWaitingForPassengerWidget(
                           provider.tripEnroute,
                           // _updateState,
