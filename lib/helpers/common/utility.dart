@@ -106,10 +106,10 @@ class Utility {
             actions: [
               TextButton(
                   onPressed: () {
-                    Navigator.of(ctx).pop();
                     var route = ModalRoute.of(context);
                     if (route != null &&
-                        route.settings.name == Routes.homeScreen) {
+                        (route.settings.name == "/" ||
+                            route.settings.name == Routes.homeScreen)) {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -117,6 +117,7 @@ class Utility {
                         ),
                       );
                     }
+                    Navigator.of(ctx).pop();
                   },
                   child: Text('Okay'))
             ],

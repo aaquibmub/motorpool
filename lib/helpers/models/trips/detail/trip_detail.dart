@@ -1,5 +1,6 @@
 import 'package:motorpool/helpers/models/trips/detail/trip_dropoff.dart';
 import 'package:motorpool/helpers/models/trips/detail/trip_pickup.dart';
+import 'package:motorpool/helpers/models/trips/detail/trip_special_service.dart';
 import 'package:motorpool/helpers/models/trips/detail/trip_stop.dart';
 import 'package:motorpool/helpers/models/vehicals/vehical.dart';
 
@@ -9,6 +10,8 @@ class TripDetail {
   final List<TripStop> stops;
   final List<TripDropoff> dropoffs;
   final Vehical vehical;
+  final List<TripSpecialService> specialServices;
+  final String notes;
 
   TripDetail(
     this.id,
@@ -16,6 +19,8 @@ class TripDetail {
     this.stops,
     this.dropoffs,
     this.vehical,
+    this.specialServices,
+    this.notes,
   );
 
   factory TripDetail.fromJson(dynamic json) {
@@ -45,12 +50,22 @@ class TripDetail {
         dropoffs.add(prod);
       });
     }
+    final List<TripSpecialService> specialServices = [];
+    final exSpecialServices = json['specialServices'] as List<dynamic>;
+    if (exSpecialServices != null) {
+      exSpecialServices.forEach((value) {
+        TripSpecialService prod = TripSpecialService.fromJson((value));
+        specialServices.add(prod);
+      });
+    }
     return TripDetail(
       json['id'] as String,
       pickups,
       stops,
       dropoffs,
       Vehical.fromJson(json['vehical']),
+      specialServices,
+      json['notes'] as String,
     );
   }
 
