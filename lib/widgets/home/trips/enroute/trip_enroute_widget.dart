@@ -195,6 +195,14 @@ class TripEnrouteWidget extends StatelessWidget {
                   });
                   return;
                 }
+
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TripEnrouteScreen(
+                            _tripEnroute.tripId,
+                          )),
+                );
               });
             },
             child: Text(
