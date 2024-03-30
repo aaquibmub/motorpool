@@ -11,15 +11,6 @@ class TripPassengerAddForm extends StatefulWidget {
     String passengerName,
   ) setPassengerNameFn;
   final void Function(
-    DropdownItem<String> ageGroup,
-  ) setAgeGroupFn;
-  final void Function(
-    DropdownItem<String> nationality,
-  ) setNationalityFn;
-  final void Function(
-    String mobileNumber,
-  ) setMobileNumberFn;
-  final void Function(
     DropdownItem<int> opm,
   ) setOpmFn;
   final void Function(
@@ -30,9 +21,6 @@ class TripPassengerAddForm extends StatefulWidget {
   TripPassengerAddForm(
     this.formKey,
     this.setPassengerNameFn,
-    this.setAgeGroupFn,
-    this.setNationalityFn,
-    this.setMobileNumberFn,
     this.setOpmFn,
     this.submitFormFn,
     this.parentContext,
@@ -45,9 +33,6 @@ class TripPassengerAddForm extends StatefulWidget {
 class _TripPassengerAddFormState extends State<TripPassengerAddForm> {
   // final _passwordFocusNode = FocusNode();
   final _passengerNameController = TextEditingController();
-  DropdownItem<String> _selectedAgeGroup;
-  DropdownItem<String> _selectedNationality;
-  final _mobileNumberController = TextEditingController();
   DropdownItem<int> _selectedOpm;
 
   @override
@@ -57,14 +42,6 @@ class _TripPassengerAddFormState extends State<TripPassengerAddForm> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<TripProvider>(
-      context,
-      listen: false,
-    ).getAgrGroupDropDownList();
-    Provider.of<TripProvider>(
-      context,
-      listen: false,
-    ).getNationalityDropDownList();
     Provider.of<TripProvider>(
       context,
       listen: false,
@@ -81,6 +58,7 @@ class _TripPassengerAddFormState extends State<TripPassengerAddForm> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              // Passenger Name
               FormTextField(
                 fieldLabel: 'Passenger Name',
                 hintLabel: 'Type passenger name',
@@ -102,158 +80,9 @@ class _TripPassengerAddFormState extends State<TripPassengerAddForm> {
               SizedBox(
                 height: 30,
               ),
+              // PTC
               Text(
-                'Age Group',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              Container(
-                width: double.infinity,
-                child: Consumer<TripProvider>(builder: (ctx, provider, _) {
-                  return DropdownButton<String>(
-                    isExpanded: true,
-                    value: _selectedAgeGroup?.value,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
-                    onChanged: (String value) {
-                      // This is called when the user selects an item.
-                      setState(() {
-                        final item = provider.ageGroupList
-                            .where((element) => element.value == value)
-                            .first;
-                        if (item != null) {
-                          String text = item.text;
-                          _selectedAgeGroup = DropdownItem(
-                            value,
-                            text,
-                          );
-                          widget.setAgeGroupFn(
-                            _selectedAgeGroup,
-                          );
-                        }
-                      });
-                    },
-                    selectedItemBuilder: (BuildContext context) {
-                      return provider.ageGroupList
-                          .map<Widget>((DropdownItem<String> item) {
-                        return Container(
-                          alignment: Alignment.centerLeft,
-                          constraints: const BoxConstraints(
-                            maxWidth: double.infinity,
-                          ),
-                          child: Text(
-                            item.text,
-                            style: const TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        );
-                      }).toList();
-                    },
-                    items: provider.ageGroupList.map<DropdownMenuItem<String>>(
-                        (DropdownItem<String> value) {
-                      return DropdownMenuItem<String>(
-                        value: value.value,
-                        child: Text(value.text),
-                      );
-                    }).toList(),
-                  );
-                }),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Text(
-                'Nationality',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              Container(
-                width: double.infinity,
-                child: Consumer<TripProvider>(builder: (ctx, provider, _) {
-                  return DropdownButton<String>(
-                    isExpanded: true,
-                    value: _selectedNationality?.value,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
-                    onChanged: (String value) {
-                      // This is called when the user selects an item.
-                      setState(() {
-                        final item = provider.nationalityList
-                            .where((element) => element.value == value)
-                            .first;
-                        if (item != null) {
-                          String text = item.text;
-                          _selectedNationality = DropdownItem(
-                            value,
-                            text,
-                          );
-                          widget.setNationalityFn(
-                            _selectedNationality,
-                          );
-                        }
-                      });
-                    },
-                    selectedItemBuilder: (BuildContext context) {
-                      return provider.nationalityList
-                          .map<Widget>((DropdownItem<String> item) {
-                        return Container(
-                          alignment: Alignment.centerLeft,
-                          constraints: const BoxConstraints(
-                            maxWidth: double.infinity,
-                          ),
-                          child: Text(
-                            item.text,
-                            style: const TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        );
-                      }).toList();
-                    },
-                    items: provider.nationalityList
-                        .map<DropdownMenuItem<String>>(
-                            (DropdownItem<String> value) {
-                      return DropdownMenuItem<String>(
-                        value: value.value,
-                        child: Text(value.text),
-                      );
-                    }).toList(),
-                  );
-                }),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              FormTextField(
-                fieldLabel: 'Mobile Number',
-                hintLabel: 'Type mobile number',
-                controller: _mobileNumberController,
-                validatorFn: (value) {
-                  if (value.isEmpty) {
-                    return 'Mobile number is required';
-                  }
-                  return null;
-                },
-                textInputAction: TextInputAction.next,
-                onFieldSubmittedFn: (_) {
-                  // FocusScope.of(context).requestFocus(_passwordFocusNode);
-                },
-                onSaveFn: (value) {
-                  widget.setMobileNumberFn(value);
-                },
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Text(
-                'OPM',
+                'PTC',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               Container(

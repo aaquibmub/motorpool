@@ -23,33 +23,12 @@ class _TripPassengerAddScreenState extends State<TripPassengerAddScreen> {
   bool _isLoading = false;
 
   String _passengerName;
-  DropdownItem<String> _ageGroup;
-  DropdownItem<String> _nationality;
-  String _mobileNumber;
   DropdownItem<int> _opm;
 
   void _setPassengerName(
     String passengerName,
   ) {
     _passengerName = passengerName;
-  }
-
-  void _setAgeGroup(
-    DropdownItem<String> ageGroup,
-  ) {
-    _ageGroup = ageGroup;
-  }
-
-  void _setNationality(
-    DropdownItem<String> nationality,
-  ) {
-    _nationality = nationality;
-  }
-
-  void _setMobileNumber(
-    String mobileNumber,
-  ) {
-    _mobileNumber = mobileNumber;
   }
 
   void _setOpm(
@@ -93,9 +72,6 @@ class _TripPassengerAddScreenState extends State<TripPassengerAddScreen> {
         TripPassengerModel(
           widget._tripId,
           _passengerName,
-          _ageGroup,
-          _nationality,
-          _mobileNumber,
           _opm,
         ),
       );
@@ -182,9 +158,6 @@ class _TripPassengerAddScreenState extends State<TripPassengerAddScreen> {
                                 TripPassengerAddForm(
                                   _formKey,
                                   _setPassengerName,
-                                  _setAgeGroup,
-                                  _setNationality,
-                                  _setMobileNumber,
                                   _setOpm,
                                   _submit,
                                   context,
