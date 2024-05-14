@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../providers/auth.dart';
 import '../../providers/vehical_provider.dart';
+import '../../screens/home/tabs_screen.dart';
 import '../../screens/vehicals/vehical_inspection_screen.dart';
 import '../models/user.dart';
 import '../models/vehicals/deallocate_vehical_model.dart';
@@ -86,6 +87,36 @@ class Utility {
             actions: [
               TextButton(
                   onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                  child: Text('Okay'))
+            ],
+          );
+        });
+  }
+
+  static void notificationAlert(
+      BuildContext context, String title, String msg) {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text(title ?? "Notification!"),
+            content: Text(msg),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    var route = ModalRoute.of(context);
+                    if (route != null &&
+                        (route.settings.name == "/" ||
+                            route.settings.name == Routes.homeScreen)) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TabsScreen(0), // TripsScreen
+                        ),
+                      );
+                    }
                     Navigator.of(ctx).pop();
                   },
                   child: Text('Okay'))

@@ -8,6 +8,7 @@ import 'package:motorpool/helpers/models/common/notification_payload_model.dart'
 import 'package:motorpool/screens/home/tabs_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../../helpers/common/routes.dart';
 import '../../helpers/models/common/notifications/vehical_deallocation_payload_model.dart';
 import '../../helpers/models/user.dart';
 import '../../providers/auth.dart';
@@ -42,11 +43,21 @@ class _HomeScreenState extends State<HomeScreen> {
             context,
             vdPayload.DeallocationId,
             vdPayload.Vehical,
-          ).then((value) {});
+          ).then((value) {
+            var route = ModalRoute.of(context);
+            if (route != null && route.settings.name == Routes.homeScreen) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TabsScreen(0), // TripsScreen
+                ),
+              );
+            }
+          });
         });
         return Future.value();
       }
-      Utility.errorAlert(
+      Utility.notificationAlert(
         context,
         title,
         body,
@@ -71,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
         if (notification != null) {
           final title = notification.value['title'];
           final body = notification.value['body'];
-          Utility.errorAlert(
+          Utility.notificationAlert(
             context,
             title,
             body,
@@ -85,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
         if (notification != null) {
           final title = notification.value['title'];
           final body = notification.value['body'];
-          Utility.errorAlert(
+          Utility.notificationAlert(
             context,
             title,
             body,

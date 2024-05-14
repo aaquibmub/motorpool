@@ -3,12 +3,14 @@ class Vehical {
   final String make;
   final String model;
   final int modelYear;
+  final String registrationPlate;
 
   Vehical(
     this.id,
     this.make,
     this.model,
     this.modelYear,
+    this.registrationPlate,
   );
 
   factory Vehical.fromJson(dynamic json) {
@@ -18,6 +20,7 @@ class Vehical {
             json['make'] as String,
             json['model'] as String,
             json['modelYear'] as int,
+            json['registrationPlate'] as String,
           )
         : null;
   }

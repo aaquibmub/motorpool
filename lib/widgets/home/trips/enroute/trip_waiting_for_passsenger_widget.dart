@@ -123,11 +123,14 @@ class _TripWaitingForPassengerWidgetState
               ),
             ),
             onPressed: () {
+              final tripStatus = Utility.getNextTripStatus(
+                widget._tripEnroute,
+              );
               Provider.of<TripProvider>(context, listen: false)
                   .updateStatus(
                 TripStatusUpdate(
                   widget._tripEnroute.tripId,
-                  TripStatus.PassengerOnboarded,
+                  tripStatus,
                   Utility.getNextTripDestinationId(widget._tripEnroute),
                   Utility.getNextTripAddressId(widget._tripEnroute),
                   '',
