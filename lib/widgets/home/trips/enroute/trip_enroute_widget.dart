@@ -133,9 +133,14 @@ class TripEnrouteWidget extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              final tripStatus = Utility.getNextTripStatus(
+              var tripStatus = Utility.getNextTripStatus(
                 _tripEnroute,
               );
+
+              if (tripStatus == null) {
+                tripStatus = TripStatus.Completed;
+              }
+
               Provider.of<TripProvider>(context, listen: false)
                   .updateStatus(
                 TripStatusUpdate(
