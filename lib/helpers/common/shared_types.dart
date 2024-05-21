@@ -38,6 +38,7 @@ class TripStatus {
   static const ArrivedAtDropoff = 70;
   static const OdoMeterAtEnd = 80;
   static const Completed = 400;
+  static const Updated = 600;
 }
 
 class DestinationType {

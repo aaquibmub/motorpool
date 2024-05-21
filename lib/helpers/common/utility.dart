@@ -128,6 +128,10 @@ class Utility {
   static int getNextTripStatus(TripEnroute _tripEnroute) {
     final status = _tripEnroute.tripStatus;
 
+    if (status == TripStatus.Completed) {
+      return null;
+    }
+
     if (status == TripStatus.OdoMeterAtEnd) {
       return TripStatus.Completed;
     }
@@ -136,6 +140,9 @@ class Utility {
     final endTrip = nextDestination.completed;
 
     if (endTrip) {
+      if (status == TripStatus.Updated) {
+        return null;
+      }
       return TripStatus.OdoMeterAtEnd;
     }
 
@@ -194,6 +201,10 @@ class Utility {
 
   static String getTripEnrouteButtonText(TripEnroute _tripEnroute) {
     final status = _tripEnroute.tripStatus;
+
+    if (status == TripStatus.Completed) {
+      return "END TRIP";
+    }
 
     if (status == TripStatus.OdoMeterAtEnd) {
       return "END TRIP";
