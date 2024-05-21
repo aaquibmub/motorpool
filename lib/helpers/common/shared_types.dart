@@ -38,6 +38,8 @@ class TripStatus {
   static const ArrivedAtDropoff = 70;
   static const OdoMeterAtEnd = 80;
   static const Completed = 400;
+  static const Cancelled = 500;
+  static const OdoMeterAtCancel = 550;
   static const Updated = 600;
 }
 

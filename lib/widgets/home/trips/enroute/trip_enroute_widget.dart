@@ -137,10 +137,6 @@ class TripEnrouteWidget extends StatelessWidget {
                 _tripEnroute,
               );
 
-              if (tripStatus == null) {
-                tripStatus = TripStatus.Completed;
-              }
-
               Provider.of<TripProvider>(context, listen: false)
                   .updateStatus(
                 TripStatusUpdate(

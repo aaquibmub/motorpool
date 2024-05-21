@@ -44,6 +44,17 @@ class TripCardWidget extends StatelessWidget {
               _updateState();
             });
           }
+          if (_trip.tripStatus.value == TripStatus.Cancelled) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => TripEnrouteScreen(
+                        _trip.id,
+                      )),
+            ).then((value) {
+              _updateState();
+            });
+          }
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

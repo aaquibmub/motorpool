@@ -57,6 +57,7 @@ class _TripEnrouteScreenState extends State<TripEnrouteScreen> {
                   final nextTripStatus = Utility.getNextTripStatus(
                     provider.tripEnroute,
                   );
+
                   return (provider.tripEnroute.tripStatus ==
                               TripStatus.WaitingForPassenger ||
                           provider.tripEnroute.tripStatus ==
@@ -69,7 +70,8 @@ class _TripEnrouteScreenState extends State<TripEnrouteScreen> {
                         )
                       : provider.tripEnroute.tripStatus ==
                                   TripStatus.TripStarted ||
-                              nextTripStatus == TripStatus.OdoMeterAtEnd
+                              nextTripStatus == TripStatus.OdoMeterAtEnd ||
+                              nextTripStatus == TripStatus.OdoMeterAtCancel
                           ? TripOdoMeterWidget(
                               provider.tripEnroute,
                               provider.tripEnroute.tripStatus,
