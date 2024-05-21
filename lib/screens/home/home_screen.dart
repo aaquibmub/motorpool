@@ -20,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Future<dynamic> onMessage(message) async {
+    print('onMessage: ' + message);
     await Provider.of<Auth>(context, listen: false).refreshUserData();
     final notificationStr = message.entries.toList();
     final notification = notificationStr.first;
@@ -68,43 +69,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    print('before firebase messaging');
     final fbm = FirebaseMessaging();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       User currentUser = Provider.of<Auth>(context, listen: false).currentUser;
       fbm.subscribeToTopic(currentUser?.id);
+      print('subscription id: ' + currentUser?.id);
     });
     fbm.requestNotificationPermissions();
+    print('before firebase configuration');
     fbm.configure(
-      onMessage: onMessage,
-      onResume: ((message) {
-        final notificationStr = message.entries.toList();
-        final notification = notificationStr.first;
-        if (notification != null) {
-          final title = notification.value['title'];
-          final body = notification.value['body'];
-          Utility.notificationAlert(
-            context,
-            title,
-            body,
-          );
-        }
-        return;
-      }),
-      onLaunch: ((message) {
-        final notificationStr = message.entries.toList();
-        final notification = notificationStr.first;
-        if (notification != null) {
-          final title = notification.value['title'];
-          final body = notification.value['body'];
-          Utility.notificationAlert(
-            context,
-            title,
-            body,
-          );
-        }
-        return;
-      }),
-    );
+        onMessage: onMessage, onResume: onMessage, onLaunch: onMessage);
+    print('after firebase configuration');
     super.initState();
   }
 
