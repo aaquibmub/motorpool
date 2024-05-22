@@ -120,7 +120,8 @@ class _TripOdoMeterWidgetState extends State<TripOdoMeterWidget> {
         )),
         onPressed: () => _submit(context),
         child: Text(
-          widget._tripNextStatus == TripStatus.OdoMeterAtEnd
+          widget._tripNextStatus == TripStatus.OdoMeterAtEnd ||
+                  widget._tripNextStatus == TripStatus.OdoMeterAtCancel
               ? 'COMPLETE TRIP'
               : 'START',
           style: Theme.of(context).primaryTextTheme.labelLarge,

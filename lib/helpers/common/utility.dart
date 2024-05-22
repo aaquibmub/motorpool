@@ -128,7 +128,8 @@ class Utility {
   static int getNextTripStatus(TripEnroute _tripEnroute) {
     final status = _tripEnroute.tripStatus;
 
-    if (status == TripStatus.Completed) {
+    if (status == TripStatus.Completed ||
+        status == TripStatus.OdoMeterAtCancel) {
       return null;
     }
 
@@ -297,6 +298,52 @@ class Utility {
   static Drawer buildDrawer(BuildContext context) {
     final User _currentuser = Provider.of<Auth>(context).currentUser;
 
+    void _handleOnDutyLink() async {
+      final currentUser =
+          await Provider.of<Auth>(context, listen: false).refreshUserData();
+      final onDuty = currentUser.onDuty != null && currentUser.onDuty;
+      if (!onDuty) {
+        Provider.of<Auth>(context, listen: false)
+            .updateDuty(
+          currentUser.id,
+          !onDuty,
+        )
+            .then((value) {
+          // setst
+        });
+      } else {
+        final vehicalAllocated =
+            currentUser.vehicals != null && currentUser.vehicals.length > 0;
+        if (vehicalAllocated) {
+          final response =
+              await Utility.showVehicalDeallocationByDriverDialogue(
+            context,
+            currentUser.id,
+            currentUser.vehicals[0],
+          );
+
+          Navigator.of(context).pop();
+          if (response.hasError) {
+            Utility.showErrorDialogue(
+              context,
+              response.msg,
+            );
+            return;
+          }
+          _handleOnDutyLink();
+        } else {
+          Provider.of<Auth>(context, listen: false)
+              .updateDuty(
+            currentUser.id,
+            !onDuty,
+          )
+              .then((value) {
+            // setst
+          });
+        }
+      }
+    }
+
     Widget buildMenuItem(
       BuildContext context,
       String title,
@@ -424,62 +471,7 @@ class Utility {
                         _currentuser.onDuty != null && _currentuser.onDuty
                             ? 'Off Duty'
                             : 'On Duty',
-                        () async {
-                          final currentUser =
-                              await Provider.of<Auth>(context, listen: false)
-                                  .refreshUserData();
-                          final onDuty =
-                              currentUser.onDuty != null && currentUser.onDuty;
-                          if (!onDuty) {
-                            Provider.of<Auth>(context, listen: false)
-                                .updateDuty(
-                              currentUser.id,
-                              !onDuty,
-                            )
-                                .then((value) {
-                              // setst
-                            });
-                          } else {
-                            final vehicalAllocated =
-                                currentUser.vehicals != null &&
-                                    currentUser.vehicals.length > 0;
-                            if (vehicalAllocated) {
-                              final response = await Utility
-                                  .showVehicalDeallocationByDriverDialogue(
-                                context,
-                                currentUser.id,
-                                currentUser.vehicals[0],
-                              );
-
-                              Navigator.of(context).pop();
-                              if (response.hasError) {
-                                Utility.showErrorDialogue(
-                                  context,
-                                  response.msg,
-                                );
-                                return;
-                              }
-
-                              Provider.of<Auth>(context, listen: false)
-                                  .updateDuty(
-                                currentUser.id,
-                                !onDuty,
-                              )
-                                  .then((value) {
-                                // setst
-                              });
-                            } else {
-                              Provider.of<Auth>(context, listen: false)
-                                  .updateDuty(
-                                currentUser.id,
-                                !onDuty,
-                              )
-                                  .then((value) {
-                                // setst
-                              });
-                            }
-                          }
-                        },
+                        _handleOnDutyLink,
                       ),
                       buildMenuItem(
                         context,

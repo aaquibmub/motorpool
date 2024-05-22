@@ -133,7 +133,7 @@ class TripEnrouteWidget extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              var tripStatus = Utility.getNextTripStatus(
+              var nextTripStatus = Utility.getNextTripStatus(
                 _tripEnroute,
               );
 
@@ -141,7 +141,7 @@ class TripEnrouteWidget extends StatelessWidget {
                   .updateStatus(
                 TripStatusUpdate(
                   _tripEnroute.tripId,
-                  tripStatus,
+                  nextTripStatus,
                   Utility.getNextTripDestinationId(_tripEnroute),
                   Utility.getNextTripAddressId(_tripEnroute),
                   '',
@@ -152,7 +152,7 @@ class TripEnrouteWidget extends StatelessWidget {
                   Utility.errorAlert(context, null, response.msg);
                   return;
                 }
-                if (tripStatus == TripStatus.Completed) {
+                if (nextTripStatus == null) {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
@@ -161,20 +161,20 @@ class TripEnrouteWidget extends StatelessWidget {
                   );
                   return;
                 }
-                if (tripStatus == TripStatus.ArrivedAtPickupLocation ||
-                    tripStatus == TripStatus.ArrivedAtAddress ||
-                    tripStatus == TripStatus.ArrivedAtStop) {
+                if (nextTripStatus == TripStatus.ArrivedAtPickupLocation ||
+                    nextTripStatus == TripStatus.ArrivedAtAddress ||
+                    nextTripStatus == TripStatus.ArrivedAtStop) {
                   Provider.of<TripProvider>(context, listen: false)
                       .updateStatus(
                     TripStatusUpdate(
                       _tripEnroute.tripId,
-                      tripStatus == TripStatus.ArrivedAtPickupLocation
+                      nextTripStatus == TripStatus.ArrivedAtPickupLocation
                           ? TripStatus.WaitingForPassenger
-                          : tripStatus == TripStatus.ArrivedAtAddress
+                          : nextTripStatus == TripStatus.ArrivedAtAddress
                               ? TripStatus.WaitingForAddressActivity
-                              : tripStatus == TripStatus.ArrivedAtStop
+                              : nextTripStatus == TripStatus.ArrivedAtStop
                                   ? TripStatus.WaitingForStopActivity
-                                  : tripStatus,
+                                  : nextTripStatus,
                       Utility.getNextTripDestinationId(_tripEnroute),
                       Utility.getNextTripAddressId(_tripEnroute),
                       '',

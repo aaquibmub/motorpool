@@ -165,8 +165,8 @@ class DashboardScreen extends StatelessWidget {
                                 )
                               },
                             ),
-                            if (_currentuser.vehicals != null &&
-                                _currentuser.vehicals.length > 0)
+                            if (provider.dashboardModel != null &&
+                                provider.dashboardModel.inspectionPending > 0)
                               getContainer(
                                 MyFlutterApp.ico_vehicle_inspection,
                                 'Pending Inspection',

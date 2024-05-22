@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../helpers/common/constants.dart';
 import '../../../../helpers/common/utility.dart';
+import '../../../../widgets/home/trips/enroute/trip_done_widget.dart';
 import '../../../../widgets/home/trips/enroute/trip_odo_meter_widget.dart';
 import '../../../loading_screen.dart';
 
@@ -54,33 +55,34 @@ class _TripEnrouteScreenState extends State<TripEnrouteScreen> {
               width: deviceSize.width,
               child: Consumer<TripProvider>(
                 builder: (ctx, provider, _) {
+                  final currentStatus = provider.tripEnroute.tripStatus;
+
                   final nextTripStatus = Utility.getNextTripStatus(
                     provider.tripEnroute,
                   );
 
-                  return (provider.tripEnroute.tripStatus ==
-                              TripStatus.WaitingForPassenger ||
-                          provider.tripEnroute.tripStatus ==
-                              TripStatus.WaitingForStopActivity ||
-                          provider.tripEnroute.tripStatus ==
-                              TripStatus.WaitingForAddressActivity)
+                  return (currentStatus == TripStatus.WaitingForPassenger ||
+                          currentStatus == TripStatus.WaitingForStopActivity ||
+                          currentStatus == TripStatus.WaitingForAddressActivity)
                       ? TripWaitingForPassengerWidget(
                           provider.tripEnroute,
                           // _updateState,
                         )
-                      : provider.tripEnroute.tripStatus ==
-                                  TripStatus.TripStarted ||
+                      : currentStatus == TripStatus.TripStarted ||
                               nextTripStatus == TripStatus.OdoMeterAtEnd ||
                               nextTripStatus == TripStatus.OdoMeterAtCancel
                           ? TripOdoMeterWidget(
                               provider.tripEnroute,
-                              provider.tripEnroute.tripStatus,
+                              currentStatus,
                               nextTripStatus,
                             )
-                          : TripEnrouteWidget(
-                              provider.tripEnroute,
-                              // _updateState,
-                            );
+                          : currentStatus == TripStatus.Completed ||
+                                  currentStatus == TripStatus.OdoMeterAtCancel
+                              ? TripDoneWidget(provider.tripEnroute)
+                              : TripEnrouteWidget(
+                                  provider.tripEnroute,
+                                  // _updateState,
+                                );
                 },
               ),
             );
