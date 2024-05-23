@@ -4,13 +4,20 @@ import 'package:motorpool/helpers/common/constants.dart';
 import 'package:motorpool/helpers/common/utility.dart';
 import 'package:motorpool/helpers/models/vehicals/vehical_history.dart';
 import 'package:motorpool/widgets/common/lable_value_wdget.dart';
+import 'package:provider/provider.dart';
+
+import '../../../helpers/models/user.dart';
+import '../../../providers/vehical_provider.dart';
+import '../../../screens/vehicals/vehical_inspection_screen.dart';
 
 class VehicalHistoryCardWidget extends StatefulWidget {
   final VehicalHistory _model;
+  final User _currentUser;
   final Function _updateState;
 
   VehicalHistoryCardWidget(
     this._model,
+    this._currentUser,
     this._updateState,
   );
 
@@ -22,6 +29,7 @@ class VehicalHistoryCardWidget extends StatefulWidget {
 class _VehicalHistoryCardWidgetState extends State<VehicalHistoryCardWidget> {
   @override
   Widget build(BuildContext context) {
+    bool vehicalIsAssigned = widget._model.assignedToUser;
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,6 +83,51 @@ class _VehicalHistoryCardWidgetState extends State<VehicalHistoryCardWidget> {
                         });
                       },
                       child: Text('Meter Reading'),
+                    ),
+                  ),
+                if (widget._model.allocated &&
+                    vehicalIsAssigned &&
+                    !widget._model.inspectionCompleted)
+                  Container(
+                    width: double.infinity,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VehicalInspectionScreen(
+                                widget._model.vehicalId),
+                          ),
+                        );
+                      },
+                      child: Text('Inspection'),
+                    ),
+                  ),
+                if (widget._model.allocated && vehicalIsAssigned)
+                  Container(
+                    width: double.infinity,
+                    child: TextButton(
+                      onPressed: () async {
+                        Provider.of<VehicalProvider>(context, listen: false)
+                            .deallocate(
+                          widget._currentUser.id,
+                          widget._model.vehicalId,
+                        )
+                            .then((value) async {
+                          if (value.hasError) {
+                            Utility.showErrorDialogue(context, value.msg);
+                            return;
+                          }
+                          await Utility.showMeterReadingDialogue(
+                            context,
+                            value.result,
+                            widget._model.plateNumber,
+                          ).then((value1) {
+                            widget._updateState();
+                          });
+                        });
+                      },
+                      child: Text('Deallocate'),
                     ),
                   )
               ],

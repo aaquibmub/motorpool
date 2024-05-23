@@ -5,14 +5,11 @@ import 'package:motorpool/helpers/common/utility.dart';
 import 'package:motorpool/helpers/models/trips/enroute/trip_enroute.dart';
 import 'package:motorpool/helpers/models/trips/enroute/trip_status_update.dart';
 import 'package:motorpool/providers/trip_provider.dart';
-import 'package:motorpool/screens/destinations/add_trip_destination_screen.dart';
 import 'package:motorpool/screens/home/tabs_screen.dart';
 import 'package:motorpool/widgets/home/trips/enroute/trip_enroute_item_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../helpers/common/custom_icons.dart';
 import '../../../../screens/home/trips/enroute/trip_enroute_screen.dart';
-import '../../../../screens/home/trips/enroute/trip_passenger_screen.dart';
 import '../trip_summary_widget.dart';
 
 class TripEnrouteWidget extends StatelessWidget {
@@ -29,55 +26,55 @@ class TripEnrouteWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                height: 40,
-                child: InkWell(
-                  onTap: () {
-                    final int sequence = _tripEnroute
-                        .items[_tripEnroute.items.length - 1].sequence;
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AddTripDestinationScreen(
-                                _tripEnroute.tripId,
-                                sequence,
-                              )),
-                    );
-                  },
-                  child: Icon(
-                    MyFlutterApp.ico_add_stop_navigation_bar,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              Container(
-                child: InkWell(
-                  onTap: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TripPassengerScreen(
-                          _tripEnroute.tripId,
-                        ),
-                      ),
-                    )
-                  },
-                  child: Icon(
-                    MyFlutterApp.ico_add_passenger_navigation_bar,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        // Container(
+        //   decoration: BoxDecoration(
+        //     color: Theme.of(context).primaryColor,
+        //   ),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //     children: [
+        //       Container(
+        //         height: 40,
+        //         child: InkWell(
+        //           onTap: () {
+        //             final int sequence = _tripEnroute
+        //                 .items[_tripEnroute.items.length - 1].sequence;
+        //             Navigator.push(
+        //               context,
+        //               MaterialPageRoute(
+        //                   builder: (context) => AddTripDestinationScreen(
+        //                         _tripEnroute.tripId,
+        //                         sequence,
+        //                       )),
+        //             );
+        //           },
+        //           child: Icon(
+        //             MyFlutterApp.ico_add_stop_navigation_bar,
+        //             color: Colors.white,
+        //           ),
+        //         ),
+        //       ),
+        //       Container(
+        //         child: InkWell(
+        //           onTap: () => {
+        //             Navigator.push(
+        //               context,
+        //               MaterialPageRoute(
+        //                 builder: (context) => TripPassengerScreen(
+        //                   _tripEnroute.tripId,
+        //                 ),
+        //               ),
+        //             )
+        //           },
+        //           child: Icon(
+        //             MyFlutterApp.ico_add_passenger_navigation_bar,
+        //             color: Colors.white,
+        //           ),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
         Expanded(
           child: Container(
             child: _tripEnroute != null

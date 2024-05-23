@@ -10,20 +10,21 @@ class VehicalHistory {
   final DateTime assignedOn;
   final String inspectionId;
   final bool inspectionCompleted;
+  final bool assignedToUser;
 
   VehicalHistory(
-    this.id,
-    this.vehicalId,
-    this.plateNumber,
-    this.make,
-    this.model,
-    this.modelYear,
-    this.allocated,
-    this.odoMeter,
-    this.assignedOn,
-    this.inspectionId,
-    this.inspectionCompleted,
-  );
+      this.id,
+      this.vehicalId,
+      this.plateNumber,
+      this.make,
+      this.model,
+      this.modelYear,
+      this.allocated,
+      this.odoMeter,
+      this.assignedOn,
+      this.inspectionId,
+      this.inspectionCompleted,
+      this.assignedToUser);
 
   factory VehicalHistory.fromJson(dynamic json) {
     return json != null
@@ -41,6 +42,7 @@ class VehicalHistory {
                 : null,
             json['inspectionId'] as String,
             json['inspectionCompleted'] as bool,
+            json['assignedToUser'] as bool,
           )
         : null;
   }
