@@ -20,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Future<dynamic> onMessage(message) async {
-    print('onMessage: ' + message);
+    // print('onMessage: ' + message);
     await Provider.of<Auth>(context, listen: false).refreshUserData();
     final notificationStr = message.entries.toList();
     final notification = notificationStr.first;

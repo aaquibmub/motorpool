@@ -6,8 +6,10 @@ import 'package:motorpool/helpers/models/vehicals/vehical.dart';
 
 class TripDetail {
   final String id;
+  final String type;
   final List<TripPickup> pickups;
   final List<TripStop> stops;
+  final List<TripStop> addresses;
   final List<TripDropoff> dropoffs;
   final Vehical vehical;
   final List<TripSpecialService> specialServices;
@@ -15,8 +17,10 @@ class TripDetail {
 
   TripDetail(
     this.id,
+    this.type,
     this.pickups,
     this.stops,
+    this.addresses,
     this.dropoffs,
     this.vehical,
     this.specialServices,
@@ -42,6 +46,15 @@ class TripDetail {
       });
     }
 
+    final List<TripStop> addresses = [];
+    final exAddresses = json['addresses'] as List<dynamic>;
+    if (exAddresses != null) {
+      exAddresses.forEach((value) {
+        TripStop prod = TripStop.fromJson((value));
+        addresses.add(prod);
+      });
+    }
+
     final List<TripDropoff> dropoffs = [];
     final exDropoffs = json['dropoffs'] as List<dynamic>;
     if (exDropoffs != null) {
@@ -60,8 +73,10 @@ class TripDetail {
     }
     return TripDetail(
       json['id'] as String,
+      json['type'] as String,
       pickups,
       stops,
+      addresses,
       dropoffs,
       Vehical.fromJson(json['vehical']),
       specialServices,

@@ -39,6 +39,11 @@ class TripDetailWidget extends StatelessWidget {
                         "Trip Info",
                       ),
                     ),
+                    AddressCardWidget(
+                      "TRIP TYPE",
+                      _tripDetail.type,
+                      '',
+                    ),
                     ..._tripDetail.pickups.map((t) {
                       return AddressCardWidget(
                         "PICKUP LOCATION",
@@ -49,6 +54,13 @@ class TripDetailWidget extends StatelessWidget {
                     ..._tripDetail.stops.map((t) {
                       return AddressCardWidget(
                         "STOP",
+                        t.address.text,
+                        "",
+                      );
+                    }).toList(),
+                    ..._tripDetail.addresses.map((t) {
+                      return AddressCardWidget(
+                        "ADDRESS",
                         t.address.text,
                         "",
                       );
