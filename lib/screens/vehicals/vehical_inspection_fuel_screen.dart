@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:motorpool/helpers/common/utility.dart';
 import 'package:motorpool/helpers/models/vehicals/inspection/vehical_inspection_model.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -168,15 +169,27 @@ class _VehicalInspectionFuelScreenState
             style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all<Color>(Constants.colorGreen)),
-            onPressed: () => {
-              Provider.of<VehicalProvider>(context, listen: false)
-                  .submitInspection(
+            onPressed: () async {
+              if (widget._model.odoMeter == null) {
+                Utility.showErrorDialogue(context, 'Enter ODO Meter Reading');
+                return;
+              }
+
+              var response =
+                  await Provider.of<VehicalProvider>(context, listen: false)
+                      .submitInspection(
                 widget._model,
-              )
-                  .then((response) {
-                Navigator.of(context)
-                    .pushReplacementNamed(Routes.vehicalsScreen);
-              })
+              );
+
+              if (response.hasError == null || response.hasError) {
+                Utility.showErrorDialogue(
+                  context,
+                  response.msg,
+                );
+                return;
+              }
+
+              Navigator.of(context).pushReplacementNamed(Routes.vehicalsScreen);
             },
             child: Text(
               'SUBMIT',

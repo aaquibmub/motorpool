@@ -315,22 +315,14 @@ class Utility {
         final vehicalAllocated =
             currentUser.vehicals != null && currentUser.vehicals.length > 0;
         if (vehicalAllocated) {
-          final response =
-              await Utility.showVehicalDeallocationByDriverDialogue(
+          Utility.showVehicalDeallocationByDriverDialogue(
             context,
             currentUser.id,
             currentUser.vehicals[0],
-          );
-
-          Navigator.of(context).pop();
-          if (response.hasError) {
-            Utility.showErrorDialogue(
-              context,
-              response.msg,
-            );
-            return;
-          }
-          _handleOnDutyLink();
+          ).then((value) {
+            Navigator.of(context).pop();
+            _handleOnDutyLink();
+          });
         } else {
           Provider.of<Auth>(context, listen: false)
               .updateDuty(
@@ -563,27 +555,95 @@ class Utility {
               Center(
                 child: TextButton(
                   onPressed: () async {
-                    Provider.of<VehicalProvider>(context, listen: false)
-                        .deallocate(
+                    await Utility.showMeterReadingAndDeallocateDialogue(
+                      context,
                       driverId,
                       vehical.value,
-                    )
-                        .then((value) async {
-                      if (value.hasError) {
-                        Navigator.of(ctx).pop(value);
-                        return;
-                      }
-                      await Utility.showMeterReadingDialogue(
-                        context,
-                        value.result,
-                        vehical.text,
-                      ).then((value1) {});
-                      Navigator.of(ctx).pop(value);
+                      vehical.text,
+                    ).then((value1) {
+                      Navigator.of(ctx).pop();
                     });
                   },
                   child: Text('Deallocate'),
                 ),
               ),
+            ],
+          );
+        });
+  }
+
+  static Future showMeterReadingAndDeallocateDialogue(
+      BuildContext context, String id, String vehicleId, String plateNumber) {
+    TextEditingController _meterReadingController = new TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text('Enter ODO meter reading'),
+            content: Container(
+              width: double.infinity,
+              height: 100,
+              child: Column(children: [
+                Text(plateNumber),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 10,
+                    ),
+                    filled: true,
+                    fillColor: Constants.textFieldFillColor,
+                    focusColor: Constants.textFieldFillColor,
+                    focusedBorder: InputBorder.none,
+                  ),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 4,
+                  ),
+                  controller: _meterReadingController,
+                  keyboardType: TextInputType.number,
+                ),
+                // Text('Error'),
+              ]),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final meterReading = int.tryParse(
+                    _meterReadingController.text.toString(),
+                  );
+
+                  if (meterReading == null) {
+                    return;
+                  }
+
+                  final response = await Provider.of<VehicalProvider>(
+                    context,
+                    listen: false,
+                  ).deallocate(id, vehicleId, meterReading);
+
+                  if (response.hasError == null || response.hasError) {
+                    Utility.showErrorDialogue(
+                      context,
+                      response.msg,
+                    );
+                    return;
+                  }
+                  Navigator.of(ctx).pop();
+                },
+                child: Text('Save'),
+              )
             ],
           );
         });

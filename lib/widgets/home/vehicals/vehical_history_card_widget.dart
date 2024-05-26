@@ -4,10 +4,8 @@ import 'package:motorpool/helpers/common/constants.dart';
 import 'package:motorpool/helpers/common/utility.dart';
 import 'package:motorpool/helpers/models/vehicals/vehical_history.dart';
 import 'package:motorpool/widgets/common/lable_value_wdget.dart';
-import 'package:provider/provider.dart';
 
 import '../../../helpers/models/user.dart';
-import '../../../providers/vehical_provider.dart';
 import '../../../screens/vehicals/vehical_inspection_screen.dart';
 
 class VehicalHistoryCardWidget extends StatefulWidget {
@@ -107,24 +105,14 @@ class _VehicalHistoryCardWidgetState extends State<VehicalHistoryCardWidget> {
                   Container(
                     width: double.infinity,
                     child: TextButton(
-                      onPressed: () async {
-                        Provider.of<VehicalProvider>(context, listen: false)
-                            .deallocate(
+                      onPressed: () {
+                        Utility.showMeterReadingAndDeallocateDialogue(
+                          context,
                           widget._currentUser.id,
                           widget._model.vehicalId,
-                        )
-                            .then((value) async {
-                          if (value.hasError) {
-                            Utility.showErrorDialogue(context, value.msg);
-                            return;
-                          }
-                          await Utility.showMeterReadingDialogue(
-                            context,
-                            value.result,
-                            widget._model.plateNumber,
-                          ).then((value1) {
-                            widget._updateState();
-                          });
+                          widget._model.plateNumber,
+                        ).then((value) {
+                          widget._updateState();
                         });
                       },
                       child: Text('Deallocate'),

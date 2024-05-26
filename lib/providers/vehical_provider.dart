@@ -196,19 +196,24 @@ class VehicalProvider with ChangeNotifier {
     }
   }
 
-  Future<void> submitInspection(VehicalInspectionModel model) async {
+  Future<ResponseModel<String>> submitInspection(
+      VehicalInspectionModel model) async {
     final url = '${Constants.baseUrl}vehical/submit-inspection';
     try {
       return await http
           .post(
-            url,
-            headers: {
-              'Content-Type': 'application/json; charset=UTF-8',
-              'Authorization': 'Bearer $authToken',
-            },
-            body: jsonEncode(model.toJson()),
-          )
-          .then((response) {});
+        url,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $authToken',
+        },
+        body: jsonEncode(model.toJson()),
+      )
+          .then((response) {
+        final responseData = json.decode(response.body);
+        ResponseModel<String> result = ResponseModel.fromJson(responseData);
+        return Future.value(result);
+      });
     } catch (error) {
       throw error;
     }
@@ -241,6 +246,7 @@ class VehicalProvider with ChangeNotifier {
   Future<ResponseModel<String>> deallocate(
     String driverId,
     String vehicleId,
+    int odoMeter,
   ) async {
     final url = '${Constants.baseUrl}driver/deallocate-vehical';
     try {
@@ -251,7 +257,11 @@ class VehicalProvider with ChangeNotifier {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $authToken',
         },
-        body: json.encode({'id': driverId, 'vehicalId': vehicleId}),
+        body: json.encode({
+          'id': driverId,
+          'vehicalId': vehicleId,
+          'odoMeter': odoMeter,
+        }),
       )
           .then((response) {
         final responseData = json.decode(response.body);
