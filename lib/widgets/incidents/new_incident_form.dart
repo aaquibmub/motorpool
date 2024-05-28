@@ -42,9 +42,9 @@ class NewIncidentForm extends StatefulWidget {
 
 class _NewIncidentFormState extends State<NewIncidentForm> {
   // final _passwordFocusNode = FocusNode();
-  final _vehicalController = TextEditingController();
   final _driverController = TextEditingController();
   DropdownItem<String> _selectedCategory;
+  DropdownItem<String> _selectedVehical;
 
   @override
   void initState() {
@@ -59,8 +59,8 @@ class _NewIncidentFormState extends State<NewIncidentForm> {
   Widget build(BuildContext context) {
     final User _currentuser = Provider.of<Auth>(context).currentUser;
 
-    _vehicalController.text = _currentuser?.vehicals[0]?.text;
-    widget.setVehicalFn(_currentuser?.vehicals[0]);
+    // _vehicalController.text = _currentuser?.vehicals[0]?.text;
+    // widget.setVehicalFn(_currentuser?.vehicals[0]);
 
     _driverController.text = _currentuser.firstName;
     widget.setDriverFn(DropdownItem<String>(
@@ -148,25 +148,63 @@ class _NewIncidentFormState extends State<NewIncidentForm> {
               SizedBox(
                 height: 30,
               ),
-              FormTextField(
-                readonly: true,
-                fieldLabel: 'Vehical',
-                hintLabel: 'Type user name',
-                controller: _vehicalController,
-                validatorFn: (value) {
-                  if (value.isEmpty) {
-                    return 'Vehical is required';
-                  }
-                  return null;
-                },
-                textInputAction: TextInputAction.next,
-                onFieldSubmittedFn: (_) {
-                  // FocusScope.of(context).requestFocus(_passwordFocusNode);
-                },
-                onSaveFn: (value) {
-                  // widget._model.category = value;
-                  // widget.setModelFn(widget._model);
-                },
+              Text(
+                'Vehicle',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              Container(
+                width: double.infinity,
+                child: DropdownButton<String>(
+                  isExpanded: true,
+                  value: _selectedVehical?.value,
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.deepPurple),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  onChanged: (String value) {
+                    // This is called when the user selects an item.
+                    setState(() {
+                      final item = _currentuser.vehicals
+                          .where((element) => element.value == value)
+                          .first;
+                      if (item != null) {
+                        String text = item.text;
+                        _selectedVehical = DropdownItem(
+                          value,
+                          text,
+                        );
+                        widget.setVehicalFn(
+                          _selectedVehical,
+                        );
+                      }
+                    });
+                  },
+                  selectedItemBuilder: (BuildContext context) {
+                    return _currentuser.vehicals
+                        .map<Widget>((DropdownItem<String> item) {
+                      return Container(
+                        alignment: Alignment.centerLeft,
+                        constraints: const BoxConstraints(
+                          maxWidth: double.infinity,
+                        ),
+                        child: Text(
+                          item.text,
+                          style: const TextStyle(
+                              color: Colors.blue, fontWeight: FontWeight.w600),
+                        ),
+                      );
+                    }).toList();
+                  },
+                  items: _currentuser.vehicals.map<DropdownMenuItem<String>>(
+                      (DropdownItem<String> value) {
+                    return DropdownMenuItem<String>(
+                      value: value.value,
+                      child: Text(value.text),
+                    );
+                  }).toList(),
+                ),
               ),
               SizedBox(
                 height: 30,
@@ -174,11 +212,11 @@ class _NewIncidentFormState extends State<NewIncidentForm> {
               FormTextField(
                 readonly: true,
                 fieldLabel: 'Driver',
-                hintLabel: 'Type user name',
+                hintLabel: 'Type driver name',
                 controller: _driverController,
                 validatorFn: (value) {
                   if (value.isEmpty) {
-                    return 'Vehical is required';
+                    return 'Driver is required';
                   }
                   return null;
                 },

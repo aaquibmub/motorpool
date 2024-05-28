@@ -127,12 +127,11 @@ class VehicalProvider with ChangeNotifier {
         final responseData = json.decode(response.body);
         ResponseModel<VehicalInspectionModel> result =
             ResponseModel<VehicalInspectionModel>.fromJson(responseData);
-        // if (result.hasError) {
-        //   _inspectionResponseModel =
-        //       ResponseModel(null, 'Operation is not allowed to you', true);
-        //   notifyListeners();
-        //   return;
-        // }
+        if (result.hasError) {
+          _inspectionResponseModel = result;
+          notifyListeners();
+          return;
+        }
         final bodyPartItems = result.result.bodyInspectionItems;
         bodyPartItems.forEach((bpi) {
           final bodyParts = bpi.parts;

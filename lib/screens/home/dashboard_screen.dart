@@ -181,18 +181,19 @@ class DashboardScreen extends StatelessWidget {
                                   ).then((value) {})
                                 },
                               ),
-                            getContainer(
-                              MyFlutterApp.ico_vehicle,
-                              'Issues Reported',
-                              Text(
-                                provider.dashboardModel.issuesReported
-                                    .toString(),
+                            if (provider.dashboardModel.assignedVehical != null)
+                              getContainer(
+                                MyFlutterApp.ico_vehicle,
+                                'Issues Reported',
+                                Text(
+                                  provider.dashboardModel.issuesReported
+                                      .toString(),
+                                ),
+                                () => {
+                                  Navigator.of(context).pushReplacementNamed(
+                                      Routes.newIncidentScreen)
+                                },
                               ),
-                              () => {
-                                Navigator.of(context).pushReplacementNamed(
-                                    Routes.newIncidentScreen)
-                              },
-                            ),
                           ],
                         ),
                       ),

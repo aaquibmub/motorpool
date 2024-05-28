@@ -9,6 +9,7 @@ class VehicalInspectionBodyPartItemModel {
   int damages;
   int index;
   String hexColor;
+  String image;
 
   VehicalInspectionBodyPartItemModel(
     this.id,
@@ -20,6 +21,7 @@ class VehicalInspectionBodyPartItemModel {
     this.damages,
     this.index,
     this.hexColor,
+    this.image,
   );
   factory VehicalInspectionBodyPartItemModel.fromJson(dynamic json) =>
       VehicalInspectionBodyPartItemModel(
@@ -33,6 +35,7 @@ class VehicalInspectionBodyPartItemModel {
         json['damages'] as int,
         json['index'] as int,
         json['hexColor'] as String,
+        json['image'] as String,
       );
 
   Map<String, dynamic> toJson() =>
@@ -51,5 +54,6 @@ class VehicalInspectionBodyPartItemModel {
         'damages': instance.damages,
         'index': instance.index,
         'hexColor': instance.hexColor,
+        'image': instance.image,
       };
 }
