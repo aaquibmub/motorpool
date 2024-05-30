@@ -62,7 +62,19 @@ class _HomeScreenState extends State<HomeScreen> {
         context,
         title,
         body,
-      );
+      ).then((value) {
+        var route = ModalRoute.of(context);
+        if (route != null &&
+            (route.settings.name == "/" ||
+                route.settings.name == Routes.homeScreen)) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (ctx) => TabsScreen(0), // TripsScreen
+            ),
+          );
+        }
+      });
     }
     return Future.value();
   }

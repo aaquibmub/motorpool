@@ -11,7 +11,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../providers/auth.dart';
 import '../../providers/vehical_provider.dart';
-import '../../screens/home/tabs_screen.dart';
 import '../../screens/vehicals/vehical_inspection_screen.dart';
 import '../models/user.dart';
 import '../models/vehicals/deallocate_vehical_model.dart';
@@ -95,9 +94,9 @@ class Utility {
         });
   }
 
-  static void notificationAlert(
+  static Future notificationAlert(
       BuildContext context, String title, String msg) {
-    showDialog(
+    return showDialog(
         context: context,
         builder: (ctx) {
           return AlertDialog(
@@ -106,17 +105,6 @@ class Utility {
             actions: [
               TextButton(
                   onPressed: () {
-                    var route = ModalRoute.of(context);
-                    if (route != null &&
-                        (route.settings.name == "/" ||
-                            route.settings.name == Routes.homeScreen)) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TabsScreen(0), // TripsScreen
-                        ),
-                      );
-                    }
                     Navigator.of(ctx).pop();
                   },
                   child: Text('Okay'))
@@ -298,12 +286,12 @@ class Utility {
   static Drawer buildDrawer(BuildContext context) {
     final User _currentuser = Provider.of<Auth>(context).currentUser;
 
-    void _handleOnDutyLink() async {
+    void _handleOnDutyLink(BuildContext ctx) async {
       final currentUser =
-          await Provider.of<Auth>(context, listen: false).refreshUserData();
+          await Provider.of<Auth>(ctx, listen: false).refreshUserData();
       final onDuty = currentUser.onDuty != null && currentUser.onDuty;
       if (!onDuty) {
-        Provider.of<Auth>(context, listen: false)
+        Provider.of<Auth>(ctx, listen: false)
             .updateDuty(
           currentUser.id,
           !onDuty,
@@ -316,12 +304,12 @@ class Utility {
             currentUser.vehicals != null && currentUser.vehicals.length > 0;
         if (vehicalAllocated) {
           Utility.showVehicalDeallocationByDriverDialogue(
-            context,
+            ctx,
             currentUser.id,
             currentUser.vehicals[0],
-          ).then((value) {
-            Navigator.of(context).pop();
-            _handleOnDutyLink();
+          ).then((value) async {
+            Navigator.of(ctx).pop();
+            await _handleOnDutyLink(ctx);
           });
         } else {
           Provider.of<Auth>(context, listen: false)
@@ -463,7 +451,7 @@ class Utility {
                         _currentuser.onDuty != null && _currentuser.onDuty
                             ? 'Off Duty'
                             : 'On Duty',
-                        _handleOnDutyLink,
+                        () async => await _handleOnDutyLink(context),
                       ),
                       buildMenuItem(
                         context,
