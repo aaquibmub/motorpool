@@ -6,6 +6,7 @@ import 'package:motorpool/helpers/common/routes.dart';
 import 'package:motorpool/helpers/models/common/dropdown_item.dart';
 import 'package:motorpool/helpers/models/common/response_model.dart';
 import 'package:motorpool/helpers/models/trips/enroute/trip_enroute.dart';
+import 'package:motorpool/providers/trip_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -324,6 +325,19 @@ class Utility {
       }
     }
 
+    void _handleBackToMotorpoolLink(BuildContext ctx) async {
+      var currentUser = Provider.of<Auth>(ctx, listen: false).currentUser;
+      Provider.of<TripProvider>(ctx, listen: false)
+          .backToMotorpool(currentUser.id)
+          .then((value) {
+        var msg = "Operation Successfull";
+        if (value != "" && value != null) {
+          msg = value;
+        }
+        showErrorDialogue(ctx, msg, 'Back to Motorpool');
+      });
+    }
+
     Widget buildMenuItem(
       BuildContext context,
       String title,
@@ -364,6 +378,7 @@ class Utility {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  // Hello
                   Container(
                     child: Text(
                       'Hello!',
@@ -374,6 +389,7 @@ class Utility {
                       ),
                     ),
                   ),
+                  // Name
                   Container(
                     child: Text(
                       (_currentuser != null ? _currentuser.firstName : ''),
@@ -384,6 +400,7 @@ class Utility {
                       ),
                     ),
                   ),
+                  // Status
                   Container(
                     margin: EdgeInsets.only(top: 16),
                     child: Row(
@@ -428,6 +445,7 @@ class Utility {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      // Home
                       buildMenuItem(
                         context,
                         'Home',
@@ -437,6 +455,7 @@ class Utility {
                           );
                         },
                       ),
+                      // Report an Incident
                       buildMenuItem(
                         context,
                         'Report an Incident',
@@ -446,6 +465,7 @@ class Utility {
                           );
                         },
                       ),
+                      // Off/On Duty
                       buildMenuItem(
                         context,
                         _currentuser.onDuty != null && _currentuser.onDuty
@@ -453,6 +473,13 @@ class Utility {
                             : 'On Duty',
                         () async => await _handleOnDutyLink(context),
                       ),
+                      // Off/On Duty
+                      buildMenuItem(
+                        context,
+                        'Back to Motorpool',
+                        () async => await _handleBackToMotorpoolLink(context),
+                      ),
+                      // Support
                       buildMenuItem(
                         context,
                         'Support',
@@ -758,12 +785,13 @@ class Utility {
         });
   }
 
-  static void showErrorDialogue(BuildContext context, String message) {
+  static void showErrorDialogue(BuildContext context, String message,
+      [String title]) {
     showDialog(
         context: context,
         builder: (ctx) {
           return AlertDialog(
-            title: Text('An error occured'),
+            title: Text(title ?? 'An error occured'),
             content: Text(message),
             actions: [
               TextButton(

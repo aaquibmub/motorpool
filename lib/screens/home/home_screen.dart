@@ -46,13 +46,24 @@ class _HomeScreenState extends State<HomeScreen> {
             vdPayload.Vehical,
           ).then((value) {
             var route = ModalRoute.of(context);
-            if (route != null && route.settings.name == Routes.homeScreen) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TabsScreen(0), // TripsScreen
-                ),
-              );
+            if (route != null) {
+              if ((route.settings.name == "/" ||
+                  route.settings.name == Routes.homeScreen)) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (ctx) => TabsScreen(0), // Dashboard
+                  ),
+                );
+              }
+              if (route.settings.name == Routes.vehicalsScreen) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (ctx) => TabsScreen(2), // Vehicles
+                  ),
+                );
+              }
             }
           });
         });
@@ -64,15 +75,24 @@ class _HomeScreenState extends State<HomeScreen> {
         body,
       ).then((value) {
         var route = ModalRoute.of(context);
-        if (route != null &&
-            (route.settings.name == "/" ||
-                route.settings.name == Routes.homeScreen)) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (ctx) => TabsScreen(0), // TripsScreen
-            ),
-          );
+        if (route != null) {
+          if ((route.settings.name == "/" ||
+              route.settings.name == Routes.homeScreen)) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (ctx) => TabsScreen(0), // Dashboard
+              ),
+            );
+          }
+          if (route.settings.name == Routes.vehicalsScreen) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (ctx) => TabsScreen(2), // Vehicles
+              ),
+            );
+          }
         }
       });
     }

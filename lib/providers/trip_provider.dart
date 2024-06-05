@@ -436,4 +436,31 @@ class TripProvider with ChangeNotifier {
       throw error;
     }
   }
+
+  Future<String> backToMotorpool(String id) async {
+    final url = '${Constants.baseUrl}trip/back-to-motorpool';
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $authToken',
+        },
+        body: jsonEncode({'driverId': id}),
+      );
+      if (response != null) {
+        final responseData = json.decode(response.body);
+        ResponseModel<String> result =
+            ResponseModel<String>.fromJson(responseData);
+        if (result.hasError) {
+          var error = result.msg;
+          return error;
+        }
+        notifyListeners();
+      }
+      return '';
+    } catch (error) {
+      throw error;
+    }
+  }
 }
