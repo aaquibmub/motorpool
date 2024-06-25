@@ -18,6 +18,8 @@ class VehicalInspectionModel {
   num fuelLevel;
   int odoMeter;
 
+  String comments;
+
   VehicalInspectionModel(
     this.id,
     this.inspectionId,
@@ -33,6 +35,7 @@ class VehicalInspectionModel {
     this.bodyInspectionComments,
     this.fuelLevel,
     this.odoMeter,
+    this.comments,
   );
 
   factory VehicalInspectionModel.fromJson(dynamic json) {
@@ -72,6 +75,7 @@ class VehicalInspectionModel {
       json['bodyInspectionComments'] as String,
       json['fuelLevel'] as num,
       json['odoMeter'] as int,
+      json['comments'] as String,
     );
   }
 
@@ -83,5 +87,6 @@ class VehicalInspectionModel {
         'id': instance.id,
         'fuelLevel': instance.fuelLevel,
         'odoMeter': instance.odoMeter,
+        'comments': instance.comments,
       };
 }

@@ -160,6 +160,25 @@ class _VehicalInspectionFuelScreenState
                 },
               ),
             ),
+            Container(
+              child: Text('Comments'),
+            ),
+            Container(
+              child: TextFormField(
+                textAlign: TextAlign.center,
+                initialValue: widget._model.comments,
+                keyboardType: TextInputType.text,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter comments';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  widget._model.comments = value;
+                },
+              ),
+            ),
           ],
         )),
         Container(
