@@ -327,13 +327,10 @@ class Utility {
 
     void _handleBackToMotorpoolLink(BuildContext ctx) async {
       var currentUser = Provider.of<Auth>(ctx, listen: false).currentUser;
-      Provider.of<TripProvider>(ctx, listen: false)
-          .backToMotorpool(currentUser.id)
-          .then((value) {
-        var msg = "Operation Successfull";
-        if (value != "" && value != null) {
-          msg = value;
-        }
+      Utility.showBackToMotorpoolMeterReadingDialogue(
+        ctx,
+        currentUser.id,
+      ).then((msg) async {
         showErrorDialogue(ctx, msg, 'Back to Motorpool');
       });
     }
@@ -473,7 +470,7 @@ class Utility {
                             : 'On Duty',
                         () async => await _handleOnDutyLink(context),
                       ),
-                      // Off/On Duty
+                      // Back to Motorpool
                       buildMenuItem(
                         context,
                         'Back to Motorpool',
@@ -781,6 +778,77 @@ class Utility {
                 )
               ]),
             ),
+          );
+        });
+  }
+
+  static Future showBackToMotorpoolMeterReadingDialogue(
+    BuildContext context,
+    String userId,
+  ) {
+    TextEditingController _meterReadingController = new TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text('Enter ODO meter reading'),
+            content: Container(
+              width: double.infinity,
+              height: 100,
+              child: Column(children: [
+                TextField(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 10,
+                    ),
+                    filled: true,
+                    fillColor: Constants.textFieldFillColor,
+                    focusColor: Constants.textFieldFillColor,
+                    focusedBorder: InputBorder.none,
+                  ),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 4,
+                  ),
+                  controller: _meterReadingController,
+                  keyboardType: TextInputType.number,
+                ),
+                // Text('Error'),
+              ]),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final meterReading = int.tryParse(
+                    _meterReadingController.text.toString(),
+                  );
+
+                  if (meterReading == null) {
+                    return;
+                  }
+
+                  final response =
+                      await Provider.of<TripProvider>(ctx, listen: false)
+                          .backToMotorpool(userId, meterReading);
+
+                  var msg = "Operation Successfull";
+                  if (response != "" && response != null) {
+                    msg = response;
+                  }
+                  Navigator.of(context).pop(msg);
+                },
+                child: Text('DONE'),
+              )
+            ],
           );
         });
   }

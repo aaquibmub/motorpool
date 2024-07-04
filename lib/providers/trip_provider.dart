@@ -437,7 +437,10 @@ class TripProvider with ChangeNotifier {
     }
   }
 
-  Future<String> backToMotorpool(String id) async {
+  Future<String> backToMotorpool(
+    String id,
+    int odoMeter,
+  ) async {
     final url = '${Constants.baseUrl}trip/back-to-motorpool';
     try {
       final response = await http.post(
@@ -446,7 +449,7 @@ class TripProvider with ChangeNotifier {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $authToken',
         },
-        body: jsonEncode({'driverId': id}),
+        body: jsonEncode({'driverId': id, 'odoMeter': odoMeter}),
       );
       if (response != null) {
         final responseData = json.decode(response.body);
