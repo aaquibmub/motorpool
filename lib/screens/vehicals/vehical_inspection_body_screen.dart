@@ -50,6 +50,22 @@ class _VehicalInspectionBodyScreenState
       );
     }
 
+    void _handleRemoveBodyPart(itemId, id) {
+      Provider.of<VehicalProvider>(
+        context,
+        listen: false,
+      ).removeBodyInspectionItem(id).then((value) {
+        widget._model.bodyInspectionItems.forEach((f) {
+          if (f.id == itemId) {
+            f.parts.removeWhere((element) => element.id == id);
+          }
+        });
+        setState(() {
+          _selectedSidePart = null;
+        });
+      });
+    }
+
     Future<ImageInfo> getImageInfo(Image img) async {
       final c = Completer<ImageInfo>();
       img.image.resolve(ImageConfiguration.empty).addListener(
@@ -896,6 +912,7 @@ class _VehicalInspectionBodyScreenState
                               Text('Sraches'),
                               Text('Damages'),
                               Text('Dents'),
+                              Text('Action'),
                             ],
                           ),
                         ),
@@ -906,18 +923,21 @@ class _VehicalInspectionBodyScreenState
                                     itemCount: i.parts.length,
                                     itemBuilder: (_a, idx) {
                                       return InkWell(
-                                        onTap: () => {
-                                          setState(() {
-                                            _selectedSidePart = i.parts[idx];
-                                          })
-                                        },
-                                        child:
-                                            VehicalBodyInspectionPartCardWidget(
-                                          i.parts[idx],
-                                        ),
-                                      );
-                                    },
-                                  )
+                                          onTap: () => {
+                                                setState(() {
+                                                  _selectedSidePart =
+                                                      i.parts[idx];
+                                                })
+                                              },
+                                          child:
+                                              VehicalBodyInspectionPartCardWidget(
+                                                  i.parts[idx],
+                                                  () => {
+                                                        _handleRemoveBodyPart(
+                                                            i.id,
+                                                            i.parts[idx].id)
+                                                      }));
+                                    })
                                 : Center(
                                     child: Text("no item so far"),
                                   ),

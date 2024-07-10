@@ -5,9 +5,11 @@ import '../../../helpers/models/vehicals/inspection/vehical_inspection_body_part
 
 class VehicalBodyInspectionPartCardWidget extends StatelessWidget {
   final VehicalInspectionBodyPartItemModel _model;
+  final Function onRemove;
 
   VehicalBodyInspectionPartCardWidget(
     this._model,
+    this.onRemove,
   );
 
   @override
@@ -45,6 +47,12 @@ class VehicalBodyInspectionPartCardWidget extends StatelessWidget {
           ),
           Text(
             _model.dents.toString(),
+          ),
+          Center(
+            child: InkWell(
+              onTap: onRemove,
+              child: Text('x'),
+            ),
           ),
         ],
       ),

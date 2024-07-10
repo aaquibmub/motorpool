@@ -195,6 +195,20 @@ class VehicalProvider with ChangeNotifier {
     }
   }
 
+  Future<void> removeBodyInspectionItem(String id) async {
+    final url = '${Constants.baseUrl}vehical/remove-body-item/$id';
+    try {
+      return await http.delete(
+        url,
+        headers: {
+          'Authorization': 'Bearer $authToken',
+        },
+      ).then((response) {});
+    } catch (error) {
+      throw error;
+    }
+  }
+
   Future<ResponseModel<String>> submitInspection(
       VehicalInspectionModel model) async {
     final url = '${Constants.baseUrl}vehical/submit-inspection';
