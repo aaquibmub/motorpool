@@ -50,9 +50,12 @@ class VehicalBodyInspectionPartCardWidget extends StatelessWidget {
           ),
           Center(
             child: InkWell(
-              onTap: onRemove,
-              child: Text('x'),
-            ),
+                onTap: onRemove,
+                child: Image.asset(
+                  'assets/icons/actions/ico-delete.png',
+                  width: 20,
+                  height: 20,
+                )),
           ),
         ],
       ),

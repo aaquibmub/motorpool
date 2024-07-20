@@ -72,6 +72,7 @@ flutter:
     - assets/images/inspections/body-roof.png
     - assets/svgs/trip_screen/ico-add-dropoff.svg
     - assets/svgs/trip_screen/ico-add-stop-navigation-bar.svg
+    - assets/icons/actions/ico-delete.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
