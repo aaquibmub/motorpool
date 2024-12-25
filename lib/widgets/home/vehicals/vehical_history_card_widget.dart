@@ -65,9 +65,8 @@ class _VehicalHistoryCardWidgetState extends State<VehicalHistoryCardWidget> {
                   DateFormat('yyyy-MM-dd – kk:mm')
                       .format(widget._model.assignedOn),
                 ),
-                if (!widget._model.allocated &&
-                    (widget._model.odoMeter == null ||
-                        widget._model.odoMeter == ''))
+                if ((widget._model.odoMeter == null ||
+                    widget._model.odoMeter == ''))
                   Container(
                     width: double.infinity,
                     child: TextButton(

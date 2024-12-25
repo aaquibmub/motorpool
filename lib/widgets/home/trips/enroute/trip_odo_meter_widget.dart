@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:motorpool/helpers/common/shared_types.dart';
 import 'package:motorpool/helpers/models/trips/enroute/trip_status_update.dart';
 import 'package:motorpool/widgets/home/trips/enroute/trip_odo_meter_form.dart';
 import 'package:provider/provider.dart';
@@ -120,10 +119,11 @@ class _TripOdoMeterWidgetState extends State<TripOdoMeterWidget> {
         )),
         onPressed: () => _submit(context),
         child: Text(
-          widget._tripNextStatus == TripStatus.OdoMeterAtEnd ||
-                  widget._tripNextStatus == TripStatus.OdoMeterAtCancel
-              ? 'COMPLETE TRIP'
-              : 'START',
+          // widget._tripNextStatus == TripStatus.OdoMeterAtEnd ||
+          //         widget._tripNextStatus == TripStatus.OdoMeterAtCancel
+          //     ? 'COMPLETE TRIP'
+          //     :
+          'START',
           style: Theme.of(context).primaryTextTheme.labelLarge,
         ),
       );

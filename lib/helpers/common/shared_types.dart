@@ -24,7 +24,7 @@ class TripStatus {
   static const Created = 10;
   static const AssignedToDriver = 20;
   static const TripStarted = 30;
-  static const OdoMeterAtStart = 35;
+  // static const OdoMeterAtStart = 35;
   static const VehicalDispatched = 40;
   static const ArrivedAtPickupLocation = 50;
   static const WaitingForPassenger = 52;
@@ -36,11 +36,12 @@ class TripStatus {
   static const WaitingForAddressActivity = 67;
   static const TripResumedAfterAddress = 68;
   static const ArrivedAtDropoff = 70;
-  static const OdoMeterAtEnd = 80;
+  // static const OdoMeterAtEnd = 80;
   static const Completed = 400;
   static const Cancelled = 500;
-  static const OdoMeterAtCancel = 550;
+  // static const OdoMeterAtCancel = 550;
   static const Updated = 600;
+  static const BackToMotorPool = 700;
 }
 
 class DestinationType {
@@ -59,4 +60,8 @@ class DamageLevel {
 
   static const M1 = 50;
   static const M2 = 60;
+}
+
+class ResponseErrorAction {
+  static const UpdateVehicleOdometer = 10;
 }

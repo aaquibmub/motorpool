@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import '../../../../helpers/common/constants.dart';
 import '../../../../helpers/common/utility.dart';
 import '../../../../widgets/home/trips/enroute/trip_done_widget.dart';
-import '../../../../widgets/home/trips/enroute/trip_odo_meter_widget.dart';
 import '../../../loading_screen.dart';
 
 class TripEnrouteScreen extends StatefulWidget {
@@ -68,21 +67,23 @@ class _TripEnrouteScreenState extends State<TripEnrouteScreen> {
                           provider.tripEnroute,
                           // _updateState,
                         )
-                      : currentStatus == TripStatus.TripStarted ||
-                              nextTripStatus == TripStatus.OdoMeterAtEnd ||
-                              nextTripStatus == TripStatus.OdoMeterAtCancel
-                          ? TripOdoMeterWidget(
+                      :
+                      // currentStatus == TripStatus.TripStarted
+                      //     || nextTripStatus == TripStatus.OdoMeterAtEnd
+                      //     || nextTripStatus == TripStatus.OdoMeterAtCancel
+                      //     ? TripOdoMeterWidget(
+                      //         provider.tripEnroute,
+                      //         currentStatus,
+                      //         nextTripStatus,
+                      //       )
+                      //     :
+                      currentStatus == TripStatus.Completed
+                          // || currentStatus == TripStatus.OdoMeterAtCancel
+                          ? TripDoneWidget(provider.tripEnroute)
+                          : TripEnrouteWidget(
                               provider.tripEnroute,
-                              currentStatus,
-                              nextTripStatus,
-                            )
-                          : currentStatus == TripStatus.Completed ||
-                                  currentStatus == TripStatus.OdoMeterAtCancel
-                              ? TripDoneWidget(provider.tripEnroute)
-                              : TripEnrouteWidget(
-                                  provider.tripEnroute,
-                                  // _updateState,
-                                );
+                              // _updateState,
+                            );
                 },
               ),
             );

@@ -117,18 +117,19 @@ class Utility {
   static int getNextTripStatus(TripEnroute _tripEnroute) {
     final status = _tripEnroute.tripStatus;
 
-    if (status == TripStatus.Completed ||
-        status == TripStatus.OdoMeterAtCancel) {
+    if (status == TripStatus.BackToMotorPool
+        //  ||status == TripStatus.OdoMeterAtCancel
+        ) {
       return null;
     }
 
     if (status == TripStatus.Cancelled) {
-      return TripStatus.OdoMeterAtCancel;
+      return TripStatus.BackToMotorPool;
     }
 
-    if (status == TripStatus.OdoMeterAtEnd) {
-      return TripStatus.Completed;
-    }
+    // if (status == TripStatus.OdoMeterAtEnd) {
+    //   return TripStatus.Completed;
+    // }
 
     final nextDestination = _tripEnroute.items[_tripEnroute.items.length - 1];
     final endTrip = nextDestination.completed;
@@ -137,16 +138,17 @@ class Utility {
       if (status == TripStatus.Updated) {
         return null;
       }
-      return TripStatus.OdoMeterAtEnd;
+      return TripStatus.Completed;
     }
 
     if (status == TripStatus.TripStarted) {
-      return TripStatus.OdoMeterAtStart;
-    }
-
-    if (status == TripStatus.OdoMeterAtStart) {
       return TripStatus.VehicalDispatched;
     }
+
+    // if (status == TripStatus.OdoMeterAtStart) {
+    //   return TripStatus.VehicalDispatched;
+    // }
+
     if (status == TripStatus.VehicalDispatched) {
       return TripStatus.ArrivedAtPickupLocation;
     }
@@ -200,18 +202,22 @@ class Utility {
   static String getTripEnrouteButtonText(TripEnroute _tripEnroute) {
     final status = _tripEnroute.tripStatus;
 
-    if (status == TripStatus.OdoMeterAtEnd) {
-      return "END TRIP";
+    // if (status == TripStatus.OdoMeterAtEnd) {
+    //   return "END TRIP";
+    // }
+
+    if (status == TripStatus.Completed) {
+      return "Back to Motorpool";
     }
 
     final nextDestination = _tripEnroute.items[_tripEnroute.items.length - 1];
     final endTrip = nextDestination.completed;
 
     if (endTrip) {
-      return "METER READING";
+      return "COMPLETE";
     }
 
-    if (status == TripStatus.OdoMeterAtStart) {
+    if (status == TripStatus.TripStarted) {
       return "DISPATCH";
     }
     if (status == TripStatus.VehicalDispatched) {

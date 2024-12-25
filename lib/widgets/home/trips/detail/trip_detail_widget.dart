@@ -120,6 +120,14 @@ class TripDetailWidget extends StatelessWidget {
                       context,
                       response.msg,
                     );
+                    if (response.errorAction ==
+                        ResponseErrorAction.UpdateVehicleOdometer) {
+                      Utility.showMeterReadingDialogue(
+                        context,
+                        response.id,
+                        response.label,
+                      ).then((value) {});
+                    }
                     return;
                   }
                   Navigator.pushReplacement(
