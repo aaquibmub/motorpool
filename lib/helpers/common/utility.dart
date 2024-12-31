@@ -722,16 +722,14 @@ class Utility {
                   if (meterReading == null) {
                     return;
                   }
-
-                  final response = await Provider.of<VehicalProvider>(
-                    context,
-                    listen: false,
-                  ).updateVehicalOdoMeter(
-                    DeallocateVehicalModel(
-                      id,
-                      meterReading,
-                    ),
+                  final param = DeallocateVehicalModel(
+                    id,
+                    meterReading,
                   );
+                  final response = await Provider.of<VehicalProvider>(
+                    ctx,
+                    listen: false,
+                  ).updateVehicalOdoMeter(param);
 
                   if (response.hasError == null || response.hasError) {
                     Utility.showErrorDialogue(
